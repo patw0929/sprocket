@@ -44,7 +44,7 @@ SprocketStream::<<<{
     @_end!
 
   _end: !->
-    return unless @_endCalled and @_nodeCollection.isStable!
+    return unless @_endCalled and @_nodeCollection.isStable
     return @_emitErrorInternal '[SprocketStream] Already ended' unless @_endWhenStablize
     
     process.nextTick @_endWhenStablize

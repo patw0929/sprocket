@@ -20,6 +20,7 @@ VinylSuperNode::<<< {buildDependencies}
  */
 !function VinylNode (@keyPath)
   @vinyl = @dependencies = void
+  @isStable = false
 
 VinylNode::<<< {
   canBeEntry: -> @dependencies.length

@@ -13,19 +13,74 @@ module.exports = VinylNodeCollection
 
 !function VinylNodeCollection
   @_nodes = {}
-  @_count = 0
-  @_stableCount = 0
+/*
+ * VinylNodeCollection.prototype
+ */
+const {prototype} = VinylNodeCollection
+/*
+ * Public APIs
+ */
+prototype <<< {
+  isStable:~
+    ->
+      for keyPath, vn of @_nodes when not vn.isStable
+        return false
+      true
 
-const DIRECTIVE_REGEX = /^(.*=\s*(require|include|require_tree|include_tree)\s+([\w\.\/-]+))$/gm
-const DIRECTIVE_TEST_REGEX = /^(require|include)(_tree)?$/
-
-VinylNodeCollection::<<< {
   matchFilepath: (filepathMatcher, fromNode) ->
     const array = for keyPath, vn of @_nodes
       when vn.matchFilepath filepathMatcher and vn isnt fromNode
         vn
     array.sort (l, r) -> l.vinyl.path - r.vinyl.path
 
+  createNodeWith: (/* rawKeyPath */) ->
+    const [keyPath, keyPathWithMin] = @_parseKeyPath it
+    @_createNode keyPathWithMin || keyPath
+
+  createNode: !(vinyl, errorHandler) ->
+    const [keyPath, keyPathWithMin] = @_parseKeyPath vinyl.relative
+    const fromNode = @_createNode keyPathWithMin || keyPath
+    @_updateNode fromNode, vinyl
+
+  updateNode: !(vinyl, errorHandler) ->
+    const fromNode = @_findNodeAfterUpdated vinyl
+    if fromNode
+      @_updateNode fromNode, vinyl
+    else
+      errorHandler "[VinylNodeCollection] Can't update node (#{ vinyl.path })"
+
+  finalizeNode: !(vinyl, errorHandler) ->
+    const fromNode = @_findNodeAfterUpdated vinyl
+    if fromNode
+      @_finalizeNode fromNode, vinyl
+    else
+      errorHandler "[VinylNodeCollection] Can't finalize node (#{ vinyl.path })"
+
+  generateEntries: (isProduction) ->
+    const vinyls = {}
+
+    for keyPath, node of @_nodes when node.canBeEntry!
+      const state = new RequireState!
+      node.buildDependencies state, @
+      const baseAndExtnames = RequireState.keyPath2BaseAndExtnames {
+        keyPath
+        isProduction
+        extname: path.extname(node.vinyl.path)
+      }
+
+      if isProduction
+        state.concatFile vinyls, baseAndExtnames
+      else
+        state.buildManifestFile vinyls, baseAndExtnames
+    Object.keys vinyls .map -> vinyls[it]
+}
+/*
+ * Private APIs
+ */
+const DIRECTIVE_REGEX = /^(.*=\s*(require|include|require_tree|include_tree)\s+([\w\.\/-]+))$/gm
+const DIRECTIVE_TEST_REGEX = /^(require|include)(_tree)?$/
+
+prototype<<< {
   _parseKeyPath: (filepath) ->
     const [keyPath, firstExtname] = filepath.split '.'
     if 'min' is firstExtname
@@ -38,17 +93,7 @@ VinylNodeCollection::<<< {
       that
     else
       # console.log "insert path (#{ keyPath}) into nodes(#{ @_count})..."
-      @_count++
       @_nodes[keyPath] = new VinylNode keyPath
-
-  createNodeWith: (/* rawKeyPath */) ->
-    const [keyPath, keyPathWithMin] = @_parseKeyPath it
-    @_createNode keyPathWithMin || keyPath
-
-  createNode: !(vinyl, errorHandler) ->
-    const [keyPath, keyPathWithMin] = @_parseKeyPath vinyl.relative
-    const fromNode = @_createNode keyPathWithMin || keyPath
-    @_updateNode fromNode, vinyl
 
   _updateNode: !(fromNode, vinyl) ->
     fromNode <<< {vinyl}
@@ -75,44 +120,8 @@ VinylNodeCollection::<<< {
         @_nodes[keyPath]
       return fromNode if fromNode
 
-  updateNode: !(vinyl, errorHandler) ->
-    const fromNode = @_findNodeAfterUpdated vinyl
-    if fromNode
-      @_updateNode fromNode, vinyl
-    else
-      errorHandler "[VinylNodeCollection] Can't update node (#{ vinyl.path })"
-
   _finalizeNode: !(fromNode, vinyl) ->
-    @_stableCount++
+    fromNode.isStable = true
     @_updateNode fromNode, vinyl
     # console.log @_count, @_stableCount
-
-  finalizeNode: !(vinyl, errorHandler) ->
-    const fromNode = @_findNodeAfterUpdated vinyl
-    if fromNode
-      @_finalizeNode fromNode, vinyl
-    else
-      errorHandler "[VinylNodeCollection] Can't finalize node (#{ vinyl.path })"
-
-  isStable: -> @_stableCount is @_count
-
-  generateEntries: (isProduction) ->
-    const vinyls = {}
-
-    for keyPath, node of @_nodes when node.canBeEntry!
-      const state = new RequireState!
-      node.buildDependencies state, @
-      const baseAndExtnames = RequireState.keyPath2BaseAndExtnames {
-        keyPath
-        isProduction
-        extname: path.extname(node.vinyl.path)
-      }
-
-      if isProduction
-        state.concatFile vinyls, baseAndExtnames
-      else
-        state.buildManifestFile vinyls, baseAndExtnames
-
-
-    Object.keys vinyls .map -> vinyls[it]
 }
