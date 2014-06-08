@@ -26,12 +26,12 @@ VinylNodeCollection::<<< {
         vn
     array.sort (l, r) -> l.vinyl.path - r.vinyl.path
 
-  _parseRelativeAndExtname: (relative) ->
-    lastExtname = path.extname relative
-    while lastExtname and '.min' isnt lastExtname
-      relative.=replace new RegExp("#{ lastExtname }$"), ''
-      lastExtname = path.extname relative
-    [relative, lastExtname]
+  _parseKeyPath: (filepath) ->
+    const [keyPath, firstExtname] = filepath.split '.'
+    if 'min' is firstExtname
+      [keyPath, "#{keyPath}__iLoveSprocket__min"]
+    else
+      [keyPath, void]
 
   _createNode: (keyPath) ->
     if @_nodes[keyPath]
@@ -41,41 +41,46 @@ VinylNodeCollection::<<< {
       @_count++
       @_nodes[keyPath] = new VinylNode keyPath
 
+  createNodeWith: (/* rawKeyPath */) ->
+    const [keyPath, keyPathWithMin] = @_parseKeyPath it
+    @_createNode keyPathWithMin || keyPath
+
   createNode: !(vinyl, errorHandler) ->
-    const [relative, lastExtname] = @_parseRelativeAndExtname vinyl.relative
-    @_updateNode @_createNode(relative), vinyl
+    const [keyPath, keyPathWithMin] = @_parseKeyPath vinyl.relative
+    const fromNode = @_createNode keyPathWithMin || keyPath
+    @_updateNode fromNode, vinyl
 
   _updateNode: !(fromNode, vinyl) ->
     fromNode <<< {vinyl}
-    if void is fromNode.dependencies 
-      const contents = vinyl.contents.toString!
-
-      fromNode.dependencies = while DIRECTIVE_REGEX.exec contents
-        const [result, replacement, directive, keyPath] = that
-        const directiveResult = directive.match DIRECTIVE_TEST_REGEX
-        const Ctor = if '_tree' is directiveResult.2 then VinylSuperNode
-                      else VinylNodeEdge
-        new Ctor @, fromNode, 'require' is directiveResult.1, keyPath
-
-    fromNode
-
-  _checkIsMinified: !(vinyl, relative, lastExtname, errorHandler, methodName) ->
+    return if fromNode.dependencies 
     #
-    # Can't find node. Maybe it has been minified?
-    const origRel = relative.replace new RegExp("#{ lastExtname }$"), ''
-    # console.log 'Cant find ' relative, origRel, Object.keys(@_nodes)
-    if '.min' is lastExtname and origRel of @_nodes
-      # Okay
-      @[methodName] @_nodes[origRel], vinyl
-    else
-      errorHandler "[VinylNodeCollection] Can't finalize node (#{ vinyl.path })"
+    const contents = vinyl.contents.toString!
+
+    fromNode.dependencies = while DIRECTIVE_REGEX.exec contents
+      const [result, replacement, directive, keyPath] = that
+      const directiveResult = directive.match DIRECTIVE_TEST_REGEX
+      const Ctor = if '_tree' is directiveResult.2 then VinylSuperNode
+                    else VinylNodeEdge
+      new Ctor @, fromNode, 'require' is directiveResult.1, keyPath
+
+  _findNodeAfterUpdated: !(vinyl) ->
+    const relativePaths = [vinyl.relative]
+    relativePaths.push path.relative(vinyl.base, that) if vinyl.revOrigPath
+    #
+    for filepath in relativePaths
+      const [keyPath, keyPathWithMin] = @_parseKeyPath filepath
+      const fromNode = if keyPathWithMin and @_nodes[keyPathWithMin]
+        that
+      else
+        @_nodes[keyPath]
+      return fromNode if fromNode
 
   updateNode: !(vinyl, errorHandler) ->
-    const [relative, lastExtname] = @_parseRelativeAndExtname vinyl.relative
-    if @_nodes[relative]
-      @_updateNode that, vinyl 
+    const fromNode = @_findNodeAfterUpdated vinyl
+    if fromNode
+      @_updateNode fromNode, vinyl
     else
-      @_checkIsMinified vinyl, relative, lastExtname, errorHandler, '_updateNode'
+      errorHandler "[VinylNodeCollection] Can't update node (#{ vinyl.path })"
 
   _finalizeNode: !(fromNode, vinyl) ->
     @_stableCount++
@@ -83,11 +88,11 @@ VinylNodeCollection::<<< {
     # console.log @_count, @_stableCount
 
   finalizeNode: !(vinyl, errorHandler) ->
-    const [relative, lastExtname] = @_parseRelativeAndExtname vinyl.relative
-    if @_nodes[relative]
-      @_finalizeNode that, vinyl
+    const fromNode = @_findNodeAfterUpdated vinyl
+    if fromNode
+      @_finalizeNode fromNode, vinyl
     else
-      @_checkIsMinified vinyl, relative, lastExtname, errorHandler, '_finalizeNode'
+      errorHandler "[VinylNodeCollection] Can't finalize node (#{ vinyl.path })"
 
   isStable: -> @_stableCount is @_count
 
