@@ -1,0 +1,41 @@
+{
+  "name": "gulp-sprocket",
+  "version": "0.0.0",
+  "description": "Opinioned asset build tools. Inspired from ruby Sprocket and gulpjs.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --compilers ls:LiveScript"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tomchentw/gulp-sprocket"
+  },
+  "keywords": [
+    "LiveScript",
+    "gulp"
+  ],
+  "author": {
+    "name": "tomchentw",
+    "email": "developer@tomchentw.com",
+    "url": "https://github.com/tomchentw"
+  },
+  "license": {
+    "type": "MIT",
+    "url": "http://tomchentw.mit-license.org"
+  },
+  "bugs": {
+    "url": "https://github.com/tomchentw/gulp-sprocket/issues"
+  },
+  "homepage": "https://github.com/tomchentw/gulp-sprocket",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "LiveScript": "^1.2.0",
+    "mocha": "^1.17.1",
+    "should": "^3.1.2",
+    "gulp": "^3.5.2",
+    "gulp-bump": "^0.1.5",
+    "gulp-livescript": "^0.2.0",
+    "gulp-conventional-changelog": "^0.1.2"
+  }
+}
