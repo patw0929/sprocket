@@ -1,5 +1,6 @@
 require! {
   path
+  nconf
 }
 require! {
   SupportedExtname: './helpers/supported_extname'
@@ -18,14 +19,17 @@ module.exports = SprocketEnvironment
 /*
  * SprocketEnvironment
  */
-!function SprocketEnvironment (options || {})
-  @basePath = options.basePath || 'tmp/public'
-  @javascriptsRelativePath = options.javascriptsRelativePath || 'assets'
-  @stylesheetsRelativePath = options.stylesheetsRelativePath || 'assets'
-
+!function SprocketEnvironment (options)
+  [@[key] = val for key, val of options || {}]
+/*
+ * SprocketEnvironment.prototype
+ */
 const {prototype} = SprocketEnvironment
 
 prototype<<< {
+  isProduction:~
+    -> 'production' is nconf.get 'NODE_ENV'
+
   javascriptsPath:~
     -> path.join @basePath, @javascriptsRelativePath
 
