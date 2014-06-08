@@ -4,6 +4,7 @@ require! {
 }
 require! {
   SupportedExtname: './helpers/supported_extname'
+  RequireState: '../vinyl_node_collection/require_state'
 }
 
 const SupportedExtnames = [
@@ -39,12 +40,10 @@ prototype<<< {
 
 SupportedExtnames.forEach !({title, extname}) ->
   prototype["#{ title }ManifestPath"] = (keyPath) ->
-    mainfestPath @["#{ title }Path"], keyPath, extname
-/*
- * Helpers
- */
-function mainfestPath (basePath, keyPath, extname)
-  path.join do
-    basePath
-    path.dirname keyPath
-    "#{ path.basename(keyPath) }.#{ extname }.manifest.json"
+    path.join do
+      @["#{ title }Path"]
+      RequireState.keyPath2Filepath {
+        keyPath
+        isProduction: @isProduction
+        extname: ".#{ extname }#{ RequireState.MANIFEST_EXTNAME }"
+      }

@@ -5,5 +5,5 @@ module.exports = VinylSuperNode
     keyPath = fromNode.filepathFrom keyPath
   @filepathMatcher = new RegExp "^#{ keyPath }"
 
-VinylSuperNode::_toList = !(state, collection) ->
+VinylSuperNode::_buildDependencies = !(state, collection) ->
   state.addNode collection.matchFilepath @filepathMatcher, @fromNode

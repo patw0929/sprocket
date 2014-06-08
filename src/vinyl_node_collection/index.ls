@@ -1,7 +1,6 @@
 require! {
   util
   path
-  File: vinyl
 }
 require! {
   VinylNodeEdge: './vinyl_node_edge'
@@ -97,22 +96,18 @@ VinylNodeCollection::<<< {
 
     for keyPath, node of @_nodes when node.canBeEntry!
       const state = new RequireState!
-      node.toList state, @
+      node.buildDependencies state, @
+      const filepath = RequireState.keyPath2Filepath {
+        keyPath
+        isProduction
+        extname: path.extname(node.vinyl.path)
+      }
 
-      const basename = [
-        path.basename(keyPath)
-        path.extname(node.vinyl.path)
-        '.manifest.json'
-      ]
-      basename.splice 1, 0, '.min' if isProduction
-      keyPath = path.join path.dirname(keyPath), basename.join('')
+      if isProduction
+        state.concatFile vinyls, keyPath, filepath
+      else
+        state.buildManifestFile vinyls, keyPath, filepath
 
-      vinyls[keyPath] = new File do
-        path: keyPath
-        contents: new Buffer JSON.stringify state.dumpNodes!map (vn) ->
-          const {vinyl} = vn
-          vinyls[vn.keyPath] = vinyl
-          vinyl.relative
 
     Object.keys vinyls .map -> vinyls[it]
 }

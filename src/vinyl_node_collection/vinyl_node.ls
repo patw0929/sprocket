@@ -8,11 +8,16 @@ require! {
 
 module.exports = VinylNode
 
-VinylNodeEdge::toList = VinylSuperNode::toList = (state, collection) ->
-  state.pushState @isRequireState
-  try     @_toList state, collection
-  finally state.popState!
+VinylNodeEdge::<<< {buildDependencies}
+VinylSuperNode::<<< {buildDependencies}
 
+!function buildDependencies (state, collection)
+  state.pushState @isRequireState
+  try     @_buildDependencies state, collection
+  finally state.popState!
+/*
+ * VinylNode
+ */
 !function VinylNode (@keyPath)
   @vinyl = @dependencies = void
 
@@ -27,8 +32,8 @@ VinylNode::<<< {
   matchFilepath: (filepathMatcher) ->
     @vinyl.path.match filepathMatcher
 
-  toList: !(state, collection) ->
+  buildDependencies: !(state, collection) ->
     return if state.requiredBefore @keyPath
-    @dependencies.forEach !-> it.toList state, collection
+    @dependencies.forEach !-> it.buildDependencies state, collection
     state.addNode [@] unless state.requiredBefore @keyPath
 }
