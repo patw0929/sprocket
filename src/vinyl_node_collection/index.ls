@@ -102,16 +102,16 @@ VinylNodeCollection::<<< {
     for keyPath, node of @_nodes when node.canBeEntry!
       const state = new RequireState!
       node.buildDependencies state, @
-      const filepath = RequireState.keyPath2Filepath {
+      const baseAndExtnames = RequireState.keyPath2BaseAndExtnames {
         keyPath
         isProduction
         extname: path.extname(node.vinyl.path)
       }
 
       if isProduction
-        state.concatFile vinyls, keyPath, filepath
+        state.concatFile vinyls, baseAndExtnames
       else
-        state.buildManifestFile vinyls, keyPath, filepath
+        state.buildManifestFile vinyls, baseAndExtnames
 
 
     Object.keys vinyls .map -> vinyls[it]

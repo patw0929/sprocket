@@ -40,10 +40,9 @@ prototype<<< {
 
 SupportedExtnames.forEach !({title, extname}) ->
   prototype["#{ title }ManifestPath"] = (keyPath) ->
-    path.join do
-      @["#{ title }Path"]
-      RequireState.keyPath2Filepath {
-        keyPath
-        isProduction: @isProduction
-        extname: ".#{ extname }#{ RequireState.MANIFEST_EXTNAME }"
-      }
+    const baseAndExtnames = RequireState.keyPath2BaseAndExtnames {
+      keyPath
+      isProduction: @isProduction
+      extname: ".#{ extname }#{ RequireState.MANIFEST_EXTNAME }"
+    }
+    path.join @["#{ title }Path"], baseAndExtnames.join('')
