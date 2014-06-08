@@ -27,7 +27,15 @@
     "url": "https://github.com/tomchentw/gulp-sprocket/issues"
   },
   "homepage": "https://github.com/tomchentw/gulp-sprocket",
-  "dependencies": {},
+  "dependencies": {
+    "vinyl": "^0.2.3",
+    "gulp-filter": "^0.4.1",
+    "gulp-minify-css": "^0.3.4",
+    "gulp-rename": "^1.2.0",
+    "gulp-uglify": "^0.3.0",
+    "gulp-livescript": "^0.3.0",
+    "gulp-sass": "^0.7.2"
+  },
   "devDependencies": {
     "LiveScript": "^1.2.0",
     "mocha": "^1.17.1",
