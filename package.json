@@ -35,7 +35,8 @@
     "gulp-uglify": "^0.3.0",
     "gulp-livescript": "^0.3.0",
     "gulp-sass": "^0.7.2",
-    "nconf": "^0.6.9"
+    "nconf": "^0.6.9",
+    "gulp-jshint": "^1.6.2"
   },
   "devDependencies": {
     "LiveScript": "^1.2.0",
