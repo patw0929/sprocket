@@ -1,7 +1,14 @@
-module.exports = VinylNodeEdge
+module.exports = Edge
+Edge <<< {Circular}
 
-!function VinylNodeEdge (@fromNode, @isRequireState, options)
+!function Edge (@fromNode, @isRequireState, options)
   @toNode = options.collection.createNodeWith options.keyPath
 
-VinylNodeEdge::_buildDependencies = !(state, collection) ->
+_buildDependencies = !(state, collection) ->
   @toNode.buildDependencies state, collection
+
+Edge::<<< {_buildDependencies}
+Circular::<<< {_buildDependencies}
+
+!function Circular (@fromNode, @isRequireState, options)
+  @toNode = fromNode

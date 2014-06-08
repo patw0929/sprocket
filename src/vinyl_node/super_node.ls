@@ -1,11 +1,11 @@
-module.exports = VinylSuperNode
+module.exports = SuperNode
 
-!function VinylSuperNode (@fromNode, @isRequireState, {keyPath})
+!function SuperNode (@fromNode, @isRequireState, {keyPath})
   if '.' is keyPath.charAt 0 # relative
     keyPath = fromNode.filepathFrom keyPath
   @_filepathMatcher = new RegExp "^#{ keyPath }"
 
-VinylSuperNode::<<<{
+SuperNode::<<<{
 
   _buildDependencies: !(state, collection) ->
     state.addNode @_matchFilepath collection._nodes

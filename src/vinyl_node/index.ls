@@ -43,6 +43,7 @@ prototype<<< {
  */
 
 Edge::<<< {buildDependencies}
+Edge.Circular::<<< {buildDependencies}
 SuperNode::<<< {buildDependencies}
 
 !function buildDependencies (state, collection)
