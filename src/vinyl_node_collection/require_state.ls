@@ -68,9 +68,10 @@ RequireState::<<< {
       contents: new Buffer JSON.stringify [filepath]
 
   buildManifestFile: !(vinyls, baseAndExtnames) ->
+    const filepath = baseAndExtnames.join('')
     baseAndExtnames.push MANIFEST_EXTNAME
 
-    vinyls[baseAndExtnames.0] = new File do
+    vinyls[filepath] = new File do
       path: baseAndExtnames.join('')
       contents: new Buffer JSON.stringify @_nodes.map (vn) ->
         const {vinyl} = vn
