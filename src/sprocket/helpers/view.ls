@@ -1,5 +1,6 @@
 require! {
   os
+  fs
   path
 }
 
@@ -7,7 +8,7 @@ module.exports = SprocketViewHelpers
 /*
  * SprocketViewHelpers
  */
-!function SprocketViewHelpers (options)
+!function SprocketViewHelpers (@environment, options)
   [@[key] = val for key, val of options || {}]
 
   for key of SprocketViewHelpers::
@@ -27,7 +28,7 @@ SprocketViewHelpers::<<< {
     .join os.EOL
 
   stylesheetLinkTag: (keyPath) ->
-    getManifestAsJso @environment.stylesheetsManifestPath keyPath
+    getManifestAsJson @environment.stylesheetsManifestPath keyPath
     .map ~> """
 <link rel=\"stylesheet\" href=\"#{
   path.join @environment.stylesheetsRelativePath, it

@@ -1,9 +1,18 @@
 require! {
   path
 }
+require! {
+  SupportedExtname: './helpers/supported_extname'
+}
 
-const TitleExtnameMappings = {javascripts: 'js', stylesheets: 'css'}
-SprocketEnvironment <<< {TitleExtnameMappings}
+const SupportedExtnames = [
+  
+  new SupportedExtname 'javascripts' 'js' <[ ls ]>
+
+  new SupportedExtname 'stylesheets' 'css' <[ scss ]>
+]
+
+SprocketEnvironment <<< {SupportedExtnames}
 
 module.exports = SprocketEnvironment
 /*
@@ -14,7 +23,7 @@ module.exports = SprocketEnvironment
   @javascriptsRelativePath = options.javascriptsRelativePath || 'assets'
   @stylesheetsRelativePath = options.stylesheetsRelativePath || 'assets'
 
-const {prototype} = SprocketEnvironment::
+const {prototype} = SprocketEnvironment
 
 prototype<<< {
   javascriptsPath:~
@@ -24,9 +33,9 @@ prototype<<< {
     -> path.join @basePath, @stylesheetsRelativePath
 }
 
-for title, extname of TitleExtnameMappings
-  prototype["#{ title }ManifestPath"] = let title = title, extname = extname
-    (keyPath) -> mainfestPath @["#{ title }Path"], keyPath, extname
+SupportedExtnames.forEach !({title, extname}) ->
+  prototype["#{ title }ManifestPath"] = (keyPath) ->
+    mainfestPath @["#{ title }Path"], keyPath, extname
 /*
  * Helpers
  */
@@ -34,4 +43,4 @@ function mainfestPath (basePath, keyPath, extname)
   path.join do
     basePath
     path.dirname keyPath
-    "#{ path.basename(keyPath) }#{ extname }.manifest.json"
+    "#{ path.basename(keyPath) }.#{ extname }.manifest.json"

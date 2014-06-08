@@ -1,4 +1,7 @@
 require! {
+  path
+}
+require! {
   VinylNodeEdge: './vinyl_node_edge'
   VinylSuperNode: './vinyl_super_node'
 }
