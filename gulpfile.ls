@@ -1,7 +1,5 @@
 require! {
   gulp
-  'gulp-util'
-  'gulp-sprocket': './src'
   'gulp-livescript'
   'gulp-bump'
   'gulp-conventional-changelog'
@@ -23,9 +21,9 @@ gulp.task 'release' <[ build bump ]> ->
 gulp.task 'build' ->
   return gulp.src 'src/index.ls'
   .pipe gulp-livescript bare: true
-  .pipe gulp.dest '.'
+  .pipe gulp.dest 'lib'
 
 gulp.task 'bump' ->
   return gulp.src 'package.json'
-  .pipe gulp-bump gulp-util.env{type or 'patch'}
+  .pipe gulp-bump process.env{TYPE or 'patch'}
   .pipe gulp.dest '.'
