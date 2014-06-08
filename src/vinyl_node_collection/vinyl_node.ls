@@ -21,9 +21,13 @@ VinylSuperNode::<<< {buildDependencies}
 !function VinylNode (@keyPath)
   @vinyl = @dependencies = void
   @isStable = false
-
-VinylNode::<<< {
-  canBeEntry: -> @dependencies.length
+/*
+ * VinylNode.prototype
+ */
+const {prototype} = VinylNode
+prototype<<< {
+  hasDependencies:~
+    -> @dependencies.length
 
   filepathFrom: (keyPath) ->
     path.join do

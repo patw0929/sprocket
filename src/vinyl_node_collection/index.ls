@@ -27,12 +27,6 @@ prototype <<< {
         return false
       true
 
-  matchFilepath: (filepathMatcher, fromNode) ->
-    const array = for keyPath, vn of @_nodes
-      when vn.matchFilepath filepathMatcher and vn isnt fromNode
-        vn
-    array.sort (l, r) -> l.vinyl.path - r.vinyl.path
-
   createNodeWith: (/* rawKeyPath */) ->
     const [keyPath, keyPathWithMin] = @_parseKeyPath it
     @_createNode keyPathWithMin || keyPath
@@ -59,7 +53,7 @@ prototype <<< {
   generateEntries: (isProduction) ->
     const vinyls = {}
 
-    for keyPath, node of @_nodes when node.canBeEntry!
+    for keyPath, node of @_nodes when node.hasDependencies
       const state = new RequireState!
       node.buildDependencies state, @
       const baseAndExtnames = RequireState.keyPath2BaseAndExtnames {
