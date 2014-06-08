@@ -7,7 +7,7 @@ require! {
   VinylNodeCollection: '../vinyl_node_collection'
 }
 
-const {Transform} = stream
+const {Transform, PassThrough} = stream
 
 module.exports = SprocketStream
 /*
@@ -18,13 +18,15 @@ util.inherits SprocketStream, Transform
   return new SprocketStream (options) unless @ instanceof SprocketStream
   options ||= {}
   options.objectMode = true
-
+  #
   Transform.call @, options
-
+  #
   @_endWhenStablize = Transform::end.bind @
   @_endCalled = false
-  @_nodeCollection = new VinylNodeCollection!
   @_emitErrorInternal = @emit.bind @, 'error'
+  #
+  @_environment = options.environment
+  @_nodeCollection = new VinylNodeCollection!
   createInternalStreams @, options.extname, options.extensions || {}
 
 SprocketStream::<<<{
@@ -47,12 +49,14 @@ SprocketStream::<<<{
     
     process.nextTick @_endWhenStablize
     @_endWhenStablize = void
-    @_nodeCollection.generateEntries!forEach @push, @
+    @_nodeCollection
+      .generateEntries @_environment.isProduction
+      .forEach @push, @
 }
 /*
  * Helpers
  */
-function createInternalStreams (stream, targetExtname, extensions)
+!function createInternalStreams (stream, targetExtname, extensions)
   const _internalStreams = stream._internalStreams = {}
 
   const _dispatchEndStream = new Transform objectMode: true
@@ -68,6 +72,9 @@ function createInternalStreams (stream, targetExtname, extensions)
     done!
 
   for extname, configureFn of extensions
-    _internalStreams[".#{ extname }"] = configureFn do
+    const passThrough = new PassThrough objectMode: true
+    _internalStreams[".#{ extname }"] = passThrough
+
+    configureFn stream._environment, passThrough, do
       if extname is targetExtname then _targetEndStream
       else _dispatchEndStream

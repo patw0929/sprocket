@@ -4,10 +4,12 @@ require! {
   'gulp-rename'
 }
 
-module.exports = (dest) ->
-  const filter = gulp-filter '!**/*.min.css'
-  filter.pipe gulp-minify-css!
+module.exports = !(environment, src, dest) ->
+  if environment.isProduction
+    const filter = gulp-filter '!**/*.min.css'
+    src.=pipe filter
+    .pipe gulp-minify-css!
     .pipe gulp-rename extname: '.min.css'
     .pipe filter.restore!
-    .pipe dest
-  filter
+  #
+  src.pipe dest

@@ -2,6 +2,6 @@ require! {
   'gulp-livescript'
 }
 
-module.exports = (dest) ->
-  gulp-livescript!
-    ..pipe dest
+module.exports = !(environment, src, dest) ->
+  src.pipe gulp-livescript!
+  .pipe dest

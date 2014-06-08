@@ -92,18 +92,20 @@ VinylNodeCollection::<<< {
 
   isStable: -> @_stableCount is @_count
 
-  generateEntries: ->
+  generateEntries: (isProduction) ->
     const vinyls = {}
 
     for keyPath, node of @_nodes when node.canBeEntry!
       const state = new RequireState!
       node.toList state, @
 
-      keyPath = path.join do
-        path.dirname keyPath
-        "#{ path.basename(keyPath) }#{
-          path.extname(node.vinyl.path) 
-        }.manifest.json"
+      const basename = [
+        path.basename(keyPath)
+        path.extname(node.vinyl.path)
+        '.manifest.json'
+      ]
+      basename.splice 1, 0, '.min' if isProduction
+      keyPath = path.join path.dirname(keyPath), basename.join('')
 
       vinyls[keyPath] = new File do
         path: keyPath

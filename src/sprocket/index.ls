@@ -16,7 +16,7 @@ Sprocket.CoC = CoC
  * Convention over Configuration
  */
 function CoC
-  nconf.defaults do
+  nconf.env!argv!.defaults do
     NODE_ENV: 'development'
 
   new Sprocket do
@@ -33,7 +33,7 @@ const {SupportedExtnames} = SprocketEnvironment
   @environment = new SprocketEnvironment @options.environment
 
   SupportedExtnames.forEach !(se) ->
-    @["_#{ se.title }"] = se.createStream!
+    @["_#{ se.title }"] = se.createStream @environment
   , @
 
   @gulp = new SprocketGulpHelper @environment, @options.gulp
