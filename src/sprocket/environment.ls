@@ -4,7 +4,7 @@ require! {
 }
 require! {
   SupportedExtname: './helpers/supported_extname'
-  RequireState: '../vinyl_node_collection/require_state'
+  RequireState: '../vinyl_node/require_state'
 }
 
 const SupportedExtnames = [

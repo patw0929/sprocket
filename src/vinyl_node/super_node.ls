@@ -1,6 +1,6 @@
 module.exports = VinylSuperNode
 
-!function VinylSuperNode (collection, @fromNode, @isRequireState, keyPath)
+!function VinylSuperNode (@fromNode, @isRequireState, {keyPath})
   if '.' is keyPath.charAt 0 # relative
     keyPath = fromNode.filepathFrom keyPath
   @_filepathMatcher = new RegExp "^#{ keyPath }"

@@ -2,19 +2,15 @@ require! {
   path
 }
 require! {
-  VinylNodeEdge: './vinyl_node_edge'
-  VinylSuperNode: './vinyl_super_node'
+  Collection: './collection'
+  Edge: './edge'
+  SuperNode: './super_node'
+  RequireState: './require_state'
 }
 
 module.exports = VinylNode
-
-VinylNodeEdge::<<< {buildDependencies}
-VinylSuperNode::<<< {buildDependencies}
-
-!function buildDependencies (state, collection)
-  state.pushState @isRequireState
-  try     @_buildDependencies state, collection
-  finally state.popState!
+VinylNode <<< {Collection, RequireState}
+Collection <<< {VinylNode, Edge, SuperNode}
 /*
  * VinylNode
  */
@@ -42,3 +38,14 @@ prototype<<< {
     @dependencies.forEach !-> it.buildDependencies state, collection
     state.addNode [@] unless state.requiredBefore @keyPath
 }
+/*
+ * Private APIs
+ */
+
+Edge::<<< {buildDependencies}
+SuperNode::<<< {buildDependencies}
+
+!function buildDependencies (state, collection)
+  state.pushState @isRequireState
+  try     @_buildDependencies state, collection
+  finally state.popState!

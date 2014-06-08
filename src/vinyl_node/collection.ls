@@ -3,20 +3,17 @@ require! {
   path
 }
 require! {
-  VinylNodeEdge: './vinyl_node_edge'
-  VinylSuperNode: './vinyl_super_node'
-  VinylNode: './vinyl_node'
   RequireState: './require_state'
 }
 
-module.exports = VinylNodeCollection
+module.exports = Collection
 
-!function VinylNodeCollection
+!function Collection
   @_nodes = {}
 /*
- * VinylNodeCollection.prototype
+ * Collection.prototype
  */
-const {prototype} = VinylNodeCollection
+const {prototype} = Collection
 /*
  * Public APIs
  */
@@ -41,14 +38,14 @@ prototype <<< {
     if fromNode
       @_updateNode fromNode, vinyl
     else
-      errorHandler "[VinylNodeCollection] Can't update node (#{ vinyl.path })"
+      errorHandler "[VinylNode.Collection] Can't update node (#{ vinyl.path })"
 
   finalizeNode: !(vinyl, errorHandler) ->
     const fromNode = @_findNodeAfterUpdated vinyl
     if fromNode
       @_finalizeNode fromNode, vinyl
     else
-      errorHandler "[VinylNodeCollection] Can't finalize node (#{ vinyl.path })"
+      errorHandler "[VinylNode.Collection] Can't finalize node (#{ vinyl.path })"
 
   generateEntries: (isProduction) ->
     const vinyls = {}
@@ -87,7 +84,7 @@ prototype<<< {
       that
     else
       # console.log "insert path (#{ keyPath}) into nodes(#{ @_count})..."
-      @_nodes[keyPath] = new VinylNode keyPath
+      @_nodes[keyPath] = new @constructor.VinylNode keyPath
 
   _updateNode: !(fromNode, vinyl) ->
     fromNode <<< {vinyl}
@@ -98,9 +95,12 @@ prototype<<< {
     fromNode.dependencies = while DIRECTIVE_REGEX.exec contents
       const [result, replacement, directive, keyPath] = that
       const directiveResult = directive.match DIRECTIVE_TEST_REGEX
-      const Ctor = if '_tree' is directiveResult.2 then VinylSuperNode
-                    else VinylNodeEdge
-      new Ctor @, fromNode, 'require' is directiveResult.1, keyPath
+      const Ctor = if '_tree' is directiveResult.2 then @constructor.SuperNode
+                   else @constructor.Edge
+      new Ctor fromNode, 'require' is directiveResult.1, {
+        collection: @
+        keyPath
+      }
 
   _findNodeAfterUpdated: !(vinyl) ->
     const relativePaths = [vinyl.relative]

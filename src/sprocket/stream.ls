@@ -4,7 +4,7 @@ require! {
   stream
 }
 require! {
-  VinylNodeCollection: '../vinyl_node_collection'
+  VinylNode: '../vinyl_node'
 }
 
 const {Transform, PassThrough} = stream
@@ -26,7 +26,7 @@ util.inherits SprocketStream, Transform
   @_emitErrorInternal = @emit.bind @, 'error'
   #
   @_environment = options.environment
-  @_nodeCollection = new VinylNodeCollection!
+  @_nodeCollection = new VinylNode.Collection!
   createInternalStreams @, options.extname, options.extensions || {}
 
 SprocketStream::<<<{
