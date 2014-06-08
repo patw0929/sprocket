@@ -19,7 +19,7 @@ gulp.task 'release' <[ build bump ]> ->
  *
  */
 gulp.task 'build' ->
-  return gulp.src 'src/index.ls'
+  return gulp.src 'src/**/*.ls'
   .pipe gulp-livescript bare: true
   .pipe gulp.dest 'lib'
 
