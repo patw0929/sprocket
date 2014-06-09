@@ -1,11 +1,20 @@
+require! {
+  util
+  path
+}
+
 module.exports = SuperNode
-
-!function SuperNode (@fromNode, @isRequireState, {keyPath})
+SuperNode <<< {Directory}
+#
+# internal
+# returns parsed keyPath
+function BaseSuperNode (@fromNode, @isRequireState, {keyPath})
   if '.' is keyPath.charAt 0 # relative
-    keyPath = fromNode._filepathFrom keyPath
-  @_filepathMatcher = new RegExp "^#{ keyPath }"
+    fromNode._filepathFrom keyPath
+  else
+    keyPath
 
-SuperNode::<<<{
+BaseSuperNode::<<<{
 
   _buildDependencies: !(state, collection) ->
     @_matchFilepath collection._nodes
@@ -16,3 +25,14 @@ SuperNode::<<<{
     for keyPath, vn of _nodes
       vn if vn._matchFilepath @ and vn isnt @fromNode
 }
+
+
+util.inherits SuperNode, BaseSuperNode
+!function SuperNode
+  const keyPath = BaseSuperNode ...
+  @_filepathMatcher = new RegExp "^#{ keyPath }"
+
+util.inherits Directory, BaseSuperNode
+!function Directory
+  const keyPath = BaseSuperNode ...
+  @_filepathMatcher = new RegExp "^#{ keyPath }((?!#{ path.sep }).)*$"

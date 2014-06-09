@@ -11,5 +11,9 @@ Edge::_buildDependencies = !(state, collection) ->
   @toNode = fromNode
 
 Circular::_buildDependencies = !(state, collection) ->
+  #
+  # We cannot call toNode.buildDependencies here since
+  # it would call recursively and overflow the stack!
+  #
   const {toNode} = @
   state.addNode [toNode] unless state.requiredBefore toNode.keyPath

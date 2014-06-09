@@ -68,10 +68,15 @@ prototype <<< {
 /*
  * Private APIs
  */
-const DIRECTIVE_REGEX = /^.*=\s*(require|include)(_self|_tree)?(\s+([\w\.\/-]+))?$/gm
+const DIRECTIVE_REGEX = //^.*=\s*
+  (require|include)
+  (_self|_directory|_tree)
+  ?(\s+([\w\.\/-]+))?$
+//gm
 
 function getEdgeCtor (constructor, targetDirective, isRequireState)
   switch targetDirective
+  | '_directory' => return constructor.SuperNode.Directory
   | '_tree' => return constructor.SuperNode
   | '_self' =>
       return constructor.Edge.Circular if isRequireState

@@ -38,6 +38,7 @@ prototype<<< {
     path.join do
       path.dirname @vinyl.path
       keyPath
+      path.sep
 
   _matchFilepath: (superNode) ->
     @vinyl.path.match superNode._filepathMatcher
@@ -46,6 +47,7 @@ prototype<<< {
 Edge::<<< {buildDependencies}
 Edge.Circular::<<< {buildDependencies}
 SuperNode::<<< {buildDependencies}
+SuperNode.Directory::<<< {buildDependencies}
 
 !function buildDependencies (state, collection)
   state.pushState @isRequireState
