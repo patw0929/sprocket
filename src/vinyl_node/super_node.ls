@@ -19,7 +19,7 @@ BaseSuperNode::<<<{
   _buildDependencies: !(state, collection) ->
     @_matchFilepath collection._nodes
     .sort (l, r) -> l.vinyl.path - r.vinyl.path
-    |> state.addNode
+    |> state.addNodeArray
 
   _matchFilepath: (_nodes) ->
     for keyPath, vn of _nodes

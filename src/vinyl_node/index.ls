@@ -28,7 +28,7 @@ prototype<<< {
   buildDependencies: !(state, collection) ->
     return if state.requiredBefore @keyPath
     @dependencies.forEach !-> it.buildDependencies state, collection
-    state.addNode [@] unless state.requiredBefore @keyPath
+    state.addNode @ unless state.requiredBefore @keyPath
 }
 /*
  * Private APIs

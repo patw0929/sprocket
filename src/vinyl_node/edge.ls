@@ -16,4 +16,4 @@ Circular::_buildDependencies = !(state, collection) ->
   # it would call recursively and overflow the stack!
   #
   const {toNode} = @
-  state.addNode [toNode] unless state.requiredBefore toNode.keyPath
+  state.addNode toNode unless state.requiredBefore toNode.keyPath

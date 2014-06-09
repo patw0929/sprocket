@@ -15,6 +15,7 @@ RequireState <<< {keyPath2BaseAndExtnames, MANIFEST_EXTNAME}
   @_inRequireStates = [true]
   @_keyPaths = {}
   @_nodes = []
+  @_totalBufferSize = 0
   @_md5 = crypto.createHash 'md5'
 
 function keyPath2BaseAndExtnames ({keyPath, isProduction, extname})
@@ -36,25 +37,25 @@ RequireState::<<< {
   requiredBefore: (keyPath) ->
     @_inRequireStates[*-1] and keyPath of @_keyPaths
 
-  addNode: !(nodes) ->
-    (node) <~! nodes.forEach
-    const {keyPath} = node
+  addNode: !(node) ->
+    const {vinyl, keyPath} = node
     return if @requiredBefore keyPath
     @_keyPaths[keyPath] = true
     @_nodes.push node
+    @_totalBufferSize += that.length if vinyl.contents
+
+  addNodeArray: !-> it.forEach @addNode, @
 
   concatFile: !(vinyls, [basename, extnames]) ->
-    const {length} = @_nodes
-    const buffers = []
-    totalSize = length * EOL_BUF.length
+    const {_nodes} = @
+    const contents = new Buffer(@_totalBufferSize + _nodes.length * EOL_BUF.length)
+    #
+    targetStart = 0
+    for node in _nodes when node.vinyl.contents
+      for sourceBuffer in [that, EOL_BUF]
+        sourceBuffer.copy contents, targetStart
+        targetStart += sourceBuffer.length
 
-    @_nodes.forEach !->
-      if it.vinyl.contents
-        totalSize += that.length
-        buffers.push that
-      buffers.push EOL_BUF
-
-    const contents = Buffer.concat buffers, totalSize
     const fingerprint = @_md5.update contents .digest 'hex' .slice 0, 32
     const filepath = "#basename-#fingerprint#extnames"
 
