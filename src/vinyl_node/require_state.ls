@@ -65,7 +65,7 @@ RequireState::<<< {
     const manifestFilepath = basename + extnames + MANIFEST_EXTNAME
     vinyls[manifestFilepath] = new File do
       path: manifestFilepath
-      contents: new Buffer JSON.stringify [filepath]
+      contents: bufferFromPaths [filepath]
 
   buildManifestFile: !(vinyls, baseAndExtnames) ->
     const filepath = baseAndExtnames.join('')
@@ -73,8 +73,11 @@ RequireState::<<< {
 
     vinyls[filepath] = new File do
       path: baseAndExtnames.join('')
-      contents: new Buffer JSON.stringify @_nodes.map (vn) ->
+      contents: bufferFromPaths @_nodes.map (vn) ->
         const {vinyl} = vn
         vinyls[vn.keyPath] = vinyl
         vinyl.relative
 }
+
+function bufferFromPaths (pathsArray)
+  new Buffer JSON.stringify pathsArray, null, 2
