@@ -25,14 +25,6 @@ prototype<<< {
   hasDependencies:~
     -> @dependencies.length
 
-  filepathFrom: (keyPath) ->
-    path.join do
-      path.dirname @vinyl.path
-      keyPath
-
-  matchFilepath: (filepathMatcher) ->
-    @vinyl.path.match filepathMatcher
-
   buildDependencies: !(state, collection) ->
     return if state.requiredBefore @keyPath
     @dependencies.forEach !-> it.buildDependencies state, collection
@@ -41,6 +33,15 @@ prototype<<< {
 /*
  * Private APIs
  */
+prototype<<< {
+  _filepathFrom: (keyPath) ->
+    path.join do
+      path.dirname @vinyl.path
+      keyPath
+
+  _matchFilepath: (superNode) ->
+    @vinyl.path.match superNode._filepathMatcher
+}
 
 Edge::<<< {buildDependencies}
 Edge.Circular::<<< {buildDependencies}

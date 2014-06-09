@@ -2,17 +2,17 @@ module.exports = SuperNode
 
 !function SuperNode (@fromNode, @isRequireState, {keyPath})
   if '.' is keyPath.charAt 0 # relative
-    keyPath = fromNode.filepathFrom keyPath
+    keyPath = fromNode._filepathFrom keyPath
   @_filepathMatcher = new RegExp "^#{ keyPath }"
 
 SuperNode::<<<{
 
   _buildDependencies: !(state, collection) ->
-    state.addNode @_matchFilepath collection._nodes
+    @_matchFilepath collection._nodes
+    .sort (l, r) -> l.vinyl.path - r.vinyl.path
+    |> state.addNode
 
   _matchFilepath: (_nodes) ->
-    const array = for keyPath, vn of @_nodes
-      when vn.matchFilepath @_filepathMatcher and vn isnt @fromNode
-        vn
-    array.sort (l, r) -> l.vinyl.path - r.vinyl.path
+    for keyPath, vn of _nodes
+      vn if vn._matchFilepath @ and vn isnt @fromNode
 }

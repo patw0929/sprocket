@@ -68,8 +68,15 @@ prototype <<< {
 /*
  * Private APIs
  */
-const DIRECTIVE_REGEX = /^(.*=\s*(require|include|require_tree|include_tree)\s+([\w\.\/-]+))$/gm
-const DIRECTIVE_TEST_REGEX = /^(require|include)(_tree)?$/
+const DIRECTIVE_REGEX = /^.*=\s*(require|include)(_self|_tree)?(\s+([\w\.\/-]+))?$/gm
+
+function getEdgeCtor (constructor, importDirective, targetDirective)
+  if '_tree' is targetDirective
+    constructor.SuperNode
+  else if '_self' is targetDirective and 'require' is importDirective
+    constructor.Edge.Circular
+  else
+    constructor.Edge
 
 prototype<<< {
   _parseKeyPath: (filepath) ->
@@ -93,13 +100,12 @@ prototype<<< {
     const contents = vinyl.contents.toString!
 
     fromNode.dependencies = while DIRECTIVE_REGEX.exec contents
-      const [result, replacement, directive, keyPath] = that
-      const directiveResult = directive.match DIRECTIVE_TEST_REGEX
-      const Ctor = if '_tree' is directiveResult.2 then @constructor.SuperNode
-                   else @constructor.Edge
-      new Ctor fromNode, 'require' is directiveResult.1, {
+      const importDirective = that.1
+      const Ctor = getEdgeCtor @constructor, importDirective, that.2
+
+      new Ctor fromNode, 'require' is importDirective, {
         collection: @
-        keyPath
+        keyPath: that.4
       }
 
   _findNodeAfterUpdated: !(vinyl) ->
