@@ -4,7 +4,7 @@ require! {
 }
 require! {
   SupportedExtname: './helpers/supported_extname'
-  RequireState: '../vinyl_node/require_state'
+  SprocketRequireState: './vinyl_node/require_state'
 }
 
 const SupportedExtnames = [
@@ -40,9 +40,9 @@ prototype<<< {
 
 SupportedExtnames.forEach !({title, extname}) ->
   prototype["#{ title }ManifestPath"] = (keyPath) ->
-    const baseAndExtnames = RequireState.keyPath2BaseAndExtnames {
+    const baseAndExtnames = SprocketRequireState.keyPath2BaseAndExtnames {
       keyPath
       isProduction: @isProduction
-      extname: ".#{ extname }#{ RequireState.MANIFEST_EXTNAME }"
+      extname: ".#{ extname }#{ SprocketRequireState.MANIFEST_EXTNAME }"
     }
     path.join @["#{ title }Path"], baseAndExtnames.join('')

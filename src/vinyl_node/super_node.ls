@@ -26,7 +26,6 @@ BaseSuperNode::<<<{
       vn if vn._matchFilepath @ and vn isnt @fromNode
 }
 
-
 util.inherits SuperNode, BaseSuperNode
 !function SuperNode
   const keyPath = BaseSuperNode ...

@@ -50,24 +50,6 @@ prototype <<< {
       @_finalizeNode fromNode, vinyl
     else
       errorHandler "[VinylNode.Collection] Can't finalize node (#{ vinyl.path })"
-
-  generateEntries: (isProduction) ->
-    const vinyls = {}
-
-    for keyPath, node of @_nodes when node.hasDependencies
-      const state = new @constructor.RequireState!
-      node.buildDependencies state, @
-      const baseAndExtnames = RequireState.keyPath2BaseAndExtnames {
-        keyPath
-        isProduction
-        extname: path.extname(node.vinyl.path)
-      }
-
-      if isProduction
-        state.concatFile vinyls, baseAndExtnames
-      else
-        state.buildManifestFile vinyls, baseAndExtnames
-    Object.keys vinyls .map -> vinyls[it]
 }
 /*
  * Private APIs
