@@ -70,13 +70,12 @@ prototype <<< {
  */
 const DIRECTIVE_REGEX = /^.*=\s*(require|include)(_self|_tree)?(\s+([\w\.\/-]+))?$/gm
 
-function getEdgeCtor (constructor, importDirective, targetDirective)
-  if '_tree' is targetDirective
-    constructor.SuperNode
-  else if '_self' is targetDirective and 'require' is importDirective
-    constructor.Edge.Circular
-  else
-    constructor.Edge
+function getEdgeCtor (constructor, targetDirective, isRequireState)
+  switch targetDirective
+  | '_tree' => return constructor.SuperNode
+  | '_self' =>
+      return constructor.Edge.Circular if isRequireState
+  constructor.Edge # default
 
 prototype<<< {
   _parseKeyPath: (filepath) ->
@@ -87,23 +86,18 @@ prototype<<< {
       [keyPath, void]
 
   _createNode: (keyPath) ->
-    if @_nodes[keyPath]
-      that
-    else
-      # console.log "insert path (#{ keyPath}) into nodes(#{ @_count})..."
-      @_nodes[keyPath] = new @constructor.VinylNode keyPath
+    @_nodes[keyPath] ||= new @constructor.VinylNode keyPath
 
   _updateNode: !(fromNode, vinyl) ->
     fromNode <<< {vinyl}
     return if fromNode.dependencies 
-    #
     const contents = vinyl.contents.toString!
-
+    #
     fromNode.dependencies = while DIRECTIVE_REGEX.exec contents
-      const importDirective = that.1
-      const Ctor = getEdgeCtor @constructor, importDirective, that.2
+      const isRequireState = 'require' is that.1
+      const Ctor = getEdgeCtor @constructor, that.2, isRequireState
 
-      new Ctor fromNode, 'require' is importDirective, {
+      new Ctor fromNode, isRequireState, {
         collection: @
         keyPath: that.4
       }
@@ -123,5 +117,4 @@ prototype<<< {
   _finalizeNode: !(fromNode, vinyl) ->
     fromNode.isStable = true
     @_updateNode fromNode, vinyl
-    # console.log @_count, @_stableCount
 }
