@@ -3,9 +3,6 @@ require! {
   path
   stream
 }
-require! {
-  SprocketCollection: './vinyl_node'
-}
 
 const {Transform, PassThrough} = stream
 
@@ -26,7 +23,7 @@ util.inherits SprocketStream, Transform
   @_emitErrorInternal = @emit.bind @, 'error'
   #
   @_environment = options.environment
-  @_nodeCollection = new SprocketCollection!
+  @_nodeCollection = options.collection
   createInternalStreams @, options.extname, options.extensions || {}
 
 SprocketStream::<<<{

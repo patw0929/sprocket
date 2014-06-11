@@ -1,6 +1,9 @@
 require! {
   gulp
 }
+require! {
+  SprocketEnvironment: '../environment'
+}
 
 module.exports = SprocketGulpHelpers
 /*
@@ -8,9 +11,11 @@ module.exports = SprocketGulpHelpers
  */
 !function SprocketGulpHelpers (@environment, options)
   [@[key] = val for key, val of options || {}]
+/*
+ * SprocketGulpHelpers.prototype
+ */
+const {prototype} = SprocketGulpHelpers
 
-SprocketGulpHelpers::<<< {
-  javascriptsDest: -> gulp.dest @environment.javascriptsPath
-
-  stylesheetsDest: -> gulp.dest @environment.stylesheetsPath
-}
+Object.keys SprocketEnvironment.SUPPORTED_ANCESTORS .forEach !(ancestor) ->
+  prototype["#{ ancestor }Dest"] = ->
+    gulp.dest @environment["#{ ancestor }Path"]

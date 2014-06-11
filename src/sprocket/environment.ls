@@ -3,18 +3,15 @@ require! {
   nconf
 }
 require! {
-  SupportedExtname: './helpers/supported_extname'
   SprocketRequireState: './vinyl_node/require_state'
 }
 
-const SupportedExtnames = [
-  
-  new SupportedExtname 'javascripts' 'js' <[ ls ]>
+const SUPPORTED_ANCESTORS = {
+  javascripts: 'js'
+  stylesheets: 'css'
+}
 
-  new SupportedExtname 'stylesheets' 'css' <[ scss ]>
-]
-
-SprocketEnvironment <<< {SupportedExtnames}
+SprocketEnvironment <<< {SUPPORTED_ANCESTORS}
 
 module.exports = SprocketEnvironment
 /*
@@ -30,19 +27,18 @@ const {prototype} = SprocketEnvironment
 prototype<<< {
   isProduction:~
     -> 'production' is nconf.get 'NODE_ENV'
-
-  javascriptsPath:~
-    -> path.join @basePath, @javascriptsRelativePath
-
-  stylesheetsPath:~
-    -> path.join @basePath, @stylesheetsRelativePath
 }
 
-SupportedExtnames.forEach !({title, extname}) ->
-  prototype["#{ title }ManifestPath"] = (keyPath) ->
+Object.keys SUPPORTED_ANCESTORS .forEach !(ancestor) ->
+  Object.defineProperty prototype, "#{ ancestor }Path", do
+    get: -> path.join @basePath, @["#{ ancestor }RelativePath"]
+
+  const extname = SUPPORTED_ANCESTORS[ancestor]
+
+  prototype["#{ ancestor }ManifestPath"] = (keyPath) ->
     const baseAndExtnames = SprocketRequireState.keyPath2BaseAndExtnames {
       keyPath
       isProduction: @isProduction
       extname: ".#{ extname }#{ SprocketRequireState.MANIFEST_EXTNAME }"
     }
-    path.join @["#{ title }Path"], baseAndExtnames.join('')
+    path.join @["#{ ancestor }Path"], baseAndExtnames.join('')
