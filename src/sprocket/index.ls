@@ -56,6 +56,7 @@ prototype<<< {
     unless ancestor of SUPPORTED_ANCESTORS
       throw "Currently we only support #{ SUPPORTED_ANCESTORS.join ',' }"
 
+    @_nodeCollections[ancestor] ||= new SprocketCollection!
     extnames.forEach !(extension) -> @[extension] = handler
     , @["_#{ ancestor }Extensions"]
     @
@@ -66,7 +67,7 @@ prototype<<< {
 
     new SprocketStream do
       environment: @environment
-      collection: @_nodeCollections[ancestor] ||= new SprocketCollection!
+      collection: @_nodeCollections[ancestor]
       extname: SUPPORTED_ANCESTORS[ancestor]
       extensions: @["_#{ ancestor }Extensions"]
 }
