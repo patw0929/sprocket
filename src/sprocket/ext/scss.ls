@@ -4,13 +4,12 @@ require! {
 }
 
 module.exports = !(environment, src, dest) ->
+  const {isProduction} = environment
   const options = do
-    includePaths: <[
-      bower_components/twbs-bootstrap-sass/vendor/assets/stylesheets
-    ]>
-    outputStyle: if environment.isProduction then 'compressed' else 'nested'
+    includePaths: environment.basePaths
+    outputStyle: if isProduction then 'compressed' else 'nested'
   src.=pipe gulp-sass options
-  if environment.isProduction
+  if isProduction
     src.=pipe gulp-rename extname: '.min.css'
   #
   src.pipe dest

@@ -24,7 +24,7 @@ const {prototype} = Collection
 prototype <<< {
   isStable:~
     ->
-      for keyPath, vn of @_nodes when not vn.isStable
+      for keyPath, vn of @_nodes when not vn.isStable!
         return false
       true
 
@@ -44,12 +44,13 @@ prototype <<< {
     else
       errorHandler "[VinylNode.Collection] Can't update node (#{ vinyl.path })"
 
-  finalizeNode: !(vinyl, errorHandler) ->
+  finalizeNode: (vinyl, errorHandler) ->
     const fromNode = @_findNodeAfterUpdated vinyl
     if fromNode
       @_finalizeNode fromNode, vinyl
     else
       errorHandler "[VinylNode.Collection] Can't finalize node (#{ vinyl.path })"
+    fromNode
 }
 /*
  * Private APIs
@@ -106,6 +107,6 @@ prototype<<< {
       return fromNode if fromNode
 
   _finalizeNode: !(fromNode, vinyl) ->
-    fromNode.isStable = true
+    fromNode._isStable = true
     @_updateNode fromNode, vinyl
 }

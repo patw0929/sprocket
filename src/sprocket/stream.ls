@@ -24,6 +24,7 @@ util.inherits SprocketStream, Transform
   #
   @_environment = options.environment
   @_nodeCollection = options.collection
+  @_nodeCollection.updateVersion!
   createInternalStreams @, options.extname, options.extensions || {}
 
 SprocketStream::<<<{
@@ -31,6 +32,7 @@ SprocketStream::<<<{
     @_internalStreams[path.extname file.path].write file
 
   _transform: !(file, _, done) ->
+    @_environment.addBasePath file.base
     @_nodeCollection.createNode file, @_emitErrorInternal
     @_dispatchInternal file
     done!

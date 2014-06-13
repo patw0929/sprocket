@@ -19,6 +19,7 @@ module.exports = SprocketEnvironment
  */
 !function SprocketEnvironment (options)
   [@[key] = val for key, val of options || {}]
+  @_basePaths = []
 /*
  * SprocketEnvironment.prototype
  */
@@ -27,6 +28,14 @@ const {prototype} = SprocketEnvironment
 prototype<<< {
   isProduction:~
     -> 'production' is nconf.get 'NODE_ENV'
+
+  basePaths:~
+    -> @_basePaths# returns a direct reference
+
+  addBasePath: ->
+    const {_basePaths} = @
+    [return false for basePath in _basePaths when basePath is it]
+    !!_basePaths.push it
 }
 
 Object.keys SUPPORTED_ANCESTORS .forEach !(ancestor) ->

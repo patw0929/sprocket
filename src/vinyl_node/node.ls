@@ -12,12 +12,14 @@ module.exports = Node
  */
 !function Node (@keyPath)
   @vinyl = @dependencies = void
-  @isStable = false
+  @_isStable = false
 /*
  * Node.prototype
  */
 const {prototype} = Node
 prototype<<< {
+  isStable: -> @_isStable
+
   hasDependencies:~
     -> @dependencies.length
 
