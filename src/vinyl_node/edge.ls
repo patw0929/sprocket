@@ -1,13 +1,15 @@
 module.exports = Edge
 Edge <<< {Circular}
 
-!function Edge (@fromNode, @isRequireState, options)
-  @toNode = options.collection.createNodeWith options.keyPath
+!function Edge (collection, @fromNode, options)
+  {@isRequireState} = options
+  @toNode = collection.createNodeWith options.keyPath
 
 Edge::_buildDependencies = !(state, collection) ->
   @toNode.buildDependencies state, collection
 
-!function Circular (@fromNode, @isRequireState, options)
+!function Circular (collection, @fromNode, options)
+  {@isRequireState} = options
   @toNode = fromNode
 
 Circular::_buildDependencies = !(state, collection) ->

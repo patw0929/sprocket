@@ -11,7 +11,7 @@ module.exports = Node
  * Node
  */
 !function Node (@keyPath)
-  @vinyl = @dependencies = void
+  @vinyl = @_dependencies = @_edges = void
   @_isStable = false
 /*
  * Node.prototype
@@ -21,17 +21,51 @@ prototype<<< {
   isStable: -> @_isStable
 
   hasDependencies:~
-    -> @dependencies.length
+    -> @_edges.length
 
   buildDependencies: !(state, collection) ->
     return if state.requiredBefore @keyPath
-    @dependencies.forEach !-> it.buildDependencies state, collection
+    @_edges.forEach !-> it.buildDependencies state, collection
     state.addNode @ unless state.requiredBefore @keyPath
 }
 /*
  * Private APIs
  */
+const DIRECTIVE_REGEX = //^.*=\s*
+  (require|include)
+  (_self|_directory|_tree)
+  ?(\s+([\w\.\/-]+))?$
+//gm
+
+function getEdgeCtor (collection, options)
+  const {constructor} = collection
+  switch options.targetDirective
+  | '_directory' => return constructor.SuperNode.Directory
+  | '_tree' => return constructor.SuperNode
+  | '_self' =>
+      return constructor.Edge.Circular if options.isRequireState
+  constructor.Edge # default
+
 prototype<<< {
+  _parseDependencies: ->
+    const contents = @vinyl.contents.toString!
+    #
+    while DIRECTIVE_REGEX.exec contents
+      isRequireState: 'require' is that.1
+      targetDirective: that.2
+      keyPath: that.4
+
+  _updateVinyl: !(vinyl) -> @ <<< {vinyl}
+
+  _updateDependencies: !(collection) ->
+    const dependencies = @_parseDependencies @vinyl.contents.toString!
+    return if JSON.stringify(dependencies) is JSON.stringify(@_dependencies)
+    #
+    @_dependencies = dependencies
+    @_edges = dependencies.map ->
+      new (getEdgeCtor collection, it) collection, @, it
+    , @
+
   _filepathFrom: (keyPath) ->
     path.join do
       path.dirname @vinyl.path

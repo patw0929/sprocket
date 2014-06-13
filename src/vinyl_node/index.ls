@@ -35,12 +35,13 @@ prototype <<< {
   createNode: !(vinyl, errorHandler) ->
     const [keyPath, keyPathWithMin] = @_parseKeyPath vinyl.relative
     const fromNode = @_createNode keyPathWithMin || keyPath
-    @_updateNode fromNode, vinyl
+    fromNode._updateVinyl vinyl
+    fromNode._updateDependencies @
 
   updateNode: !(vinyl, errorHandler) ->
     const fromNode = @_findNodeAfterUpdated vinyl
     if fromNode
-      @_updateNode fromNode, vinyl
+      fromNode._updateVinyl vinyl
     else
       errorHandler "[VinylNode.Collection] Can't update node (#{ vinyl.path })"
 
@@ -55,20 +56,6 @@ prototype <<< {
 /*
  * Private APIs
  */
-const DIRECTIVE_REGEX = //^.*=\s*
-  (require|include)
-  (_self|_directory|_tree)
-  ?(\s+([\w\.\/-]+))?$
-//gm
-
-function getEdgeCtor (constructor, targetDirective, isRequireState)
-  switch targetDirective
-  | '_directory' => return constructor.SuperNode.Directory
-  | '_tree' => return constructor.SuperNode
-  | '_self' =>
-      return constructor.Edge.Circular if isRequireState
-  constructor.Edge # default
-
 prototype<<< {
   _parseKeyPath: (filepath) ->
     const [keyPath, firstExtname] = filepath.split '.'
@@ -79,20 +66,6 @@ prototype<<< {
 
   _createNode: (keyPath) ->
     @_nodes[keyPath] ||= new @constructor.Node keyPath
-
-  _updateNode: !(fromNode, vinyl) ->
-    fromNode <<< {vinyl}
-    return if fromNode.dependencies
-    const contents = vinyl.contents.toString!
-    #
-    fromNode.dependencies = while DIRECTIVE_REGEX.exec contents
-      const isRequireState = 'require' is that.1
-      const Ctor = getEdgeCtor @constructor, that.2, isRequireState
-
-      new Ctor fromNode, isRequireState, {
-        collection: @
-        keyPath: that.4
-      }
 
   _findNodeAfterUpdated: !(vinyl) ->
     const relativePaths = [vinyl.relative]
@@ -108,5 +81,5 @@ prototype<<< {
 
   _finalizeNode: !(fromNode, vinyl) ->
     fromNode._isStable = true
-    @_updateNode fromNode, vinyl
+    fromNode._updateVinyl vinyl
 }

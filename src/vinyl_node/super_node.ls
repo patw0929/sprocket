@@ -8,7 +8,8 @@ SuperNode <<< {Directory}
 #
 # internal
 # returns parsed keyPath
-function BaseSuperNode (@fromNode, @isRequireState, {keyPath})
+function BaseSuperNode (collection, @fromNode, options)
+  {@isRequireState, keyPath} = options
   if '.' is keyPath.charAt 0 # relative
     fromNode._filepathFrom keyPath
   else
