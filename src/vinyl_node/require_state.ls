@@ -21,6 +21,4 @@ RequireState::<<< {
     @_keyPaths[keyPath] = true
     @_nodes.push node
     @_totalBufferSize += that.length if vinyl.contents
-
-  addNodeArray: !-> it.forEach @addNode, @
 }

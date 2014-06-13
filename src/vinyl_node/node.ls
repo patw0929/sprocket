@@ -1,7 +1,4 @@
 require! {
-  path
-}
-require! {
   Edge: './edge'
   SuperNode: './super_node'
 }
@@ -11,7 +8,12 @@ module.exports = Node
  * Node
  */
 !function Node (@keyPath)
-  @vinyl = @_dependencies = @_edges = void
+  @vinyl = void
+  #
+  # private properties
+  #
+  @_dependencies = ''
+  @_edges = []
   @_isStable = false
 /*
  * Node.prototype
@@ -20,7 +22,10 @@ const {prototype} = Node
 prototype<<< {
   isStable: -> @_isStable
 
-  hasDependencies:~
+  path:~
+    -> @vinyl.path
+
+  hasAnyEdges:~
     -> @_edges.length
 
   buildDependencies: !(state, collection) ->
@@ -46,34 +51,27 @@ function getEdgeCtor (collection, options)
       return constructor.Edge.Circular if options.isRequireState
   constructor.Edge # default
 
+function parseDependencies (contents)
+  while DIRECTIVE_REGEX.exec contents
+    isRequireState: 'require' is that.1
+    targetDirective: that.2
+    keyPath: that.4
+
 prototype<<< {
-  _parseDependencies: ->
-    const contents = @vinyl.contents.toString!
-    #
-    while DIRECTIVE_REGEX.exec contents
-      isRequireState: 'require' is that.1
-      targetDirective: that.2
-      keyPath: that.4
 
-  _updateVinyl: !(vinyl) -> @ <<< {vinyl}
-
-  _updateDependencies: !(collection) ->
-    const dependencies = @_parseDependencies @vinyl.contents.toString!
-    return if JSON.stringify(dependencies) is JSON.stringify(@_dependencies)
+  _updateDependencies: (collection) ->
+    const dependencies = parseDependencies @vinyl.contents.toString!
+    const stringified = JSON.stringify dependencies
+    return if stringified is @_dependencies
     #
-    @_dependencies = dependencies
     @_edges = dependencies.map ->
       new (getEdgeCtor collection, it) collection, @, it
     , @
-
-  _filepathFrom: (keyPath) ->
-    path.join do
-      path.dirname @vinyl.path
-      keyPath
-      path.sep
+    @_dependencies = stringified
+    @
 
   _matchFilepath: (superNode) ->
-    @vinyl.path.match superNode._filepathMatcher
+    @path.match superNode._filepathMatcher
 }
 
 Edge::<<< {buildDependencies}

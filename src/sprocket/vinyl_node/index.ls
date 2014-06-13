@@ -36,7 +36,7 @@ SprocketCollection::<<< {
   generateEntries: (isProduction) ->
     const vinyls = {}
 
-    for keyPath, node of @_nodes when node.hasDependencies
+    for keyPath, node of @_nodes when node.hasAnyEdges
       const state = new @constructor.RequireState!
       node.buildDependencies state, @
       const baseAndExtnames = SprocketRequireState.keyPath2BaseAndExtnames {

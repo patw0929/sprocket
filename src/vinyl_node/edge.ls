@@ -3,7 +3,7 @@ Edge <<< {Circular}
 
 !function Edge (collection, @fromNode, options)
   {@isRequireState} = options
-  @toNode = collection.createNodeWith options.keyPath
+  @toNode = collection._createNodeWith options.keyPath
 
 Edge::_buildDependencies = !(state, collection) ->
   @toNode.buildDependencies state, collection

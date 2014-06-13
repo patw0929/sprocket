@@ -28,27 +28,24 @@ prototype <<< {
         return false
       true
 
-  createNodeWith: (/* rawKeyPath */) ->
-    const [keyPath, keyPathWithMin] = @_parseKeyPath it
-    @_createNode keyPathWithMin || keyPath
-
   createNode: !(vinyl, errorHandler) ->
     const [keyPath, keyPathWithMin] = @_parseKeyPath vinyl.relative
     const fromNode = @_createNode keyPathWithMin || keyPath
-    fromNode._updateVinyl vinyl
+    fromNode <<< {vinyl}
     fromNode._updateDependencies @
 
   updateNode: !(vinyl, errorHandler) ->
     const fromNode = @_findNodeAfterUpdated vinyl
     if fromNode
-      fromNode._updateVinyl vinyl
+      fromNode <<< {vinyl}
     else
       errorHandler "[VinylNode.Collection] Can't update node (#{ vinyl.path })"
 
   finalizeNode: (vinyl, errorHandler) ->
     const fromNode = @_findNodeAfterUpdated vinyl
     if fromNode
-      @_finalizeNode fromNode, vinyl
+      fromNode._isStable = true
+      fromNode <<< {vinyl}
     else
       errorHandler "[VinylNode.Collection] Can't finalize node (#{ vinyl.path })"
     fromNode
@@ -64,6 +61,10 @@ prototype<<< {
     else
       [keyPath, void]
 
+  _createNodeWith: (/* rawKeyPath */) ->
+    const [keyPath, keyPathWithMin] = @_parseKeyPath it
+    @_createNode keyPathWithMin || keyPath
+
   _createNode: (keyPath) ->
     @_nodes[keyPath] ||= new @constructor.Node keyPath
 
@@ -78,8 +79,4 @@ prototype<<< {
       else
         @_nodes[keyPath]
       return fromNode if fromNode
-
-  _finalizeNode: !(fromNode, vinyl) ->
-    fromNode._isStable = true
-    fromNode._updateVinyl vinyl
 }

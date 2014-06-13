@@ -10,21 +10,26 @@ SuperNode <<< {Directory}
 # returns parsed keyPath
 function BaseSuperNode (collection, @fromNode, options)
   {@isRequireState, keyPath} = options
-  if '.' is keyPath.charAt 0 # relative
-    fromNode._filepathFrom keyPath
+  if '.' is keyPath.charAt 0
+    # is relative, translate to absolute path
+    path.join path.dirname(fromNode.path), keyPath, path.sep
   else
     keyPath
+
+function pathSortFn (l, r)
+  l.path - r.path
 
 BaseSuperNode::<<<{
 
   _buildDependencies: !(state, collection) ->
-    @_matchFilepath collection._nodes
-    .sort (l, r) -> l.vinyl.path - r.vinyl.path
-    |> state.addNodeArray
+    @_filepathMatchedNodes collection._nodes
+    .sort pathSortFn
+    .forEach state.addNode, state
 
-  _matchFilepath: (_nodes) ->
+  _filepathMatchedNodes: (_nodes) ->
+    const {fromNode, _filepathMatcher} = @
     for keyPath, vn of _nodes
-      vn if vn._matchFilepath @ and vn isnt @fromNode
+      vn if vn isnt fromNode and vn.path.match _filepathMatcher
 }
 
 util.inherits SuperNode, BaseSuperNode
