@@ -28,6 +28,7 @@
   },
   "homepage": "https://github.com/tomchentw/gulp-sprocket",
   "dependencies": {
+    "through2": "^1.0.0",
     "vinyl": "^0.2.3",
     "gulp-filter": "^0.4.1",
     "gulp-minify-css": "^0.3.4",
@@ -41,11 +42,11 @@
   "devDependencies": {
     "LiveScript": "^1.2.0",
     "mocha": "^1.17.1",
-    "should": "^3.3.2",
-    "gulp": "^3.7.0",
-    "gulp-util": "^2.2.16",
-    "gulp-bump": "^0.1.8",
-    "gulp-livescript": "^0.3.0",
-    "gulp-conventional-changelog": "^0.1.2"
+    "should": "^4.0.4",
+    "gulp": "^3.5.2",
+    "gulp-util": "^2.2.17",
+    "gulp-bump": "^0.1.5",
+    "gulp-livescript": "^1.0.0",
+    "conventional-changelog": "0.0.11"
   }
 }
