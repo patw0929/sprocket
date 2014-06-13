@@ -1,8 +1,4 @@
 require! {
-  nconf
-}
-
-require! {
   SprocketStream: './stream'
   SprocketCollection: './vinyl_node'
   SprocketEnvironment: './environment'
@@ -10,27 +6,8 @@ require! {
   SprocketViewHelper: './helpers/view'
 }
 
-module.exports = CoC
-CoC <<< {Sprocket}
-CoC.Sprocket.Stream = SprocketStream
-/*
- * Convention over Configuration
- */
-function CoC
-  nconf.env!argv!.defaults do
-    NODE_ENV: 'development'
-
-  new Sprocket do
-    environment: do
-      basePath: 'tmp/public'
-      javascriptsRelativePath: 'assets'
-      stylesheetsRelativePath: 'assets'
-  #
-  .registerHandler 'javascripts' <[ ls ]> require('./ext/ls')
-  .registerHandler 'javascripts' <[ js ]> require('./ext/js')
-  #
-  .registerHandler 'stylesheets' <[ scss sass ]> require('./ext/scss')
-  .registerHandler 'stylesheets' <[ css ]> require('./ext/css')
+module.exports = Sprocket
+Sprocket.Stream = SprocketStream
 /*
  * Sprocket
  */

@@ -1,10 +1,28 @@
 require! {
-  through2
+  nconf
 }
 
-module.exports = (options || {}) -> 
-  !function modifyFile (file, enc, done)
-    @push file
-    done!
+require! {
+  Sprocket: './sprocket'
+}
+module.exports = CoC
 
-  through2.obj modifyFile
+CoC <<< {Sprocket}
+/*
+ * Convention over Configuration
+ */
+function CoC
+  nconf.env!argv!.defaults do
+    NODE_ENV: 'development'
+
+  new Sprocket do
+    environment: do
+      basePath: 'tmp/public'
+      javascriptsRelativePath: 'assets'
+      stylesheetsRelativePath: 'assets'
+  #
+  .registerHandler 'javascripts' <[ ls ]> require('./sprocket/ext/ls')
+  .registerHandler 'javascripts' <[ js ]> require('./sprocket/ext/js')
+  #
+  .registerHandler 'stylesheets' <[ scss sass ]> require('./sprocket/ext/scss')
+  .registerHandler 'stylesheets' <[ css ]> require('./sprocket/ext/css')

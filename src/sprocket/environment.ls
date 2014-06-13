@@ -30,7 +30,12 @@ prototype<<< {
     -> 'production' is nconf.get 'NODE_ENV'
 
   basePaths:~
-    -> @_basePaths# returns a direct reference
+    #
+    # HACK: 
+    # returns a direct reference for gulp-sass.options.includePaths
+    # since it is lazy evaluated during transforming state
+    #
+    -> @_basePaths
 
   addBasePath: ->
     const {_basePaths} = @

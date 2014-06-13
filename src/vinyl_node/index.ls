@@ -70,6 +70,10 @@ prototype<<< {
 
   _findNodeAfterUpdated: !(vinyl) ->
     const relativePaths = [vinyl.relative]
+    #
+    # HACK:
+    # gulp-rename will store original name in revOrigPath
+    #
     relativePaths.push path.relative(vinyl.base, that) if vinyl.revOrigPath
     #
     for filepath in relativePaths
