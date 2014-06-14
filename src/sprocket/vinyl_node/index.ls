@@ -40,18 +40,16 @@ SprocketCollection::<<< {
     for keyPath, node of @_nodes when node.hasAnyEdges
       const state = new @constructor.RequireState!
       node.buildDependencies state, @
-      const manifestFile = do
-        state[if isProduction then 'concatFile' else 'buildManifestFile'] do
-          vinyls, {
-            keyPath
-            isProduction
-            extname: path.extname(node.vinyl.path)
-          }
-      @_manifestFiles[manifestFile.path] = manifestFile
+      #
+      state[if isProduction then 'concatFile' else 'buildManifestFile'] do
+        @_manifestFiles, vinyls, {
+          keyPath
+          isProduction
+          extname: path.extname(node.vinyl.path)
+        }
 
     Object.keys vinyls .map -> vinyls[it]
 
   getManifestContent: (options) ->
-    const filepath = SprocketRequireState.getManifestFilepath options
-    @_manifestFiles[filepath].contents.toString!
+    @_manifestFiles[SprocketRequireState.getManifestFilepath options]
 }

@@ -75,7 +75,6 @@ function getManifestAsJson (sprocket, ancestor, keyPath)
     keyPath: keyPath
     isProduction: sprocket.environment.isProduction
     extname: ".#{ SUPPORTED_ANCESTORS[ancestor] }"
-  |> JSON.parse
 
 getManifestAsJson.javascripts = 'javascriptIncludeTag'
 

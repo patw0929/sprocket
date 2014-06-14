@@ -32,7 +32,7 @@ const EOL_BUF = new Buffer os.EOL
 
 SprocketRequireState::<<< {
 
-  concatFile: (vinyls, options) ->
+  concatFile: !(manifestFiles, vinyls, options) ->
     const baseAndExtnames = keyPath2BaseAndExtnames options
     const basename = baseAndExtnames.0
     const {_nodes} = @
@@ -51,19 +51,13 @@ SprocketRequireState::<<< {
       path: filepath
       contents: contents
     #
-    const manifestFilepath = getManifestFilepath baseAndExtnames
-    vinyls[manifestFilepath] = new File do
-      path: manifestFilepath
-      contents: bufferFromPaths [filepath]
+    createManifestVinyl manifestFiles, vinyls, baseAndExtnames, [filepath]
 
-  buildManifestFile: (vinyls, options) ->
-    const manifestFilepath = getManifestFilepath options
-    vinyls[manifestFilepath] = new File do
-      path: manifestFilepath
-      contents: bufferFromPaths @_nodes.map (vn) ->
-        const {vinyl} = vn
-        vinyls[vn.keyPath] = vinyl
-        vinyl.relative
+  buildManifestFile: !(manifestFiles, vinyls, options) ->
+    createManifestVinyl manifestFiles, vinyls, options,  @_nodes.map (vn) ->
+      const {vinyl} = vn
+      vinyls[vn.keyPath] = vinyl
+      vinyl.relative
 }
 const MANIFEST_BASENAME = '-manifest'
 const MANIFEST_EXTNAME = '.json'
@@ -76,5 +70,9 @@ function keyPath2BaseAndExtnames ({keyPath, isProduction, extname})
     extnames.join('')
   ]
 
-function bufferFromPaths (pathsArray)
-  new Buffer JSON.stringify pathsArray, null, 2
+!function createManifestVinyl (manifestFiles, vinyls, options, pathsArray)
+  const manifestFilepath = getManifestFilepath options
+  vinyls[manifestFilepath] = new File do
+    path: manifestFilepath
+    contents: new Buffer JSON.stringify pathsArray, null, 2
+  manifestFiles[manifestFilepath] = pathsArray
