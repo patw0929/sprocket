@@ -1,7 +1,9 @@
 require! {
   fs
+  path
   should
   mocha
+  gulp
   gutil: 'gulp-util'
   Sprocket: '../src'
 }
@@ -9,18 +11,23 @@ require! {
 (...) <-! describe 'sprocket'
 
 it 'should compile livescript file to javascript' !(done) ->
-  const ls = sprocket!
-  const fakeFile = new gutil.File do
-      base: 'test/fixtures'
-      cwd: 'test/fixtures'
-      path: 'test/fixtures/file.ls'
-      contents: fs.readFileSync 'test/fixtures/file.ls'
+  @timeout 5000
+  const sprocket = Sprocket!
 
-  ls.once 'data' !(expectedFile) ->
-    should.exist expectedFile
-    should.exist expectedFile.path
-    should.exist expectedFile.contents 
-    String expectedFile.contents .should.equal fs.readFileSync('test/fixtures/file.ls', 'utf8')
+  gulp.src <[
+    examples/client/javascripts/**/*.js
+    examples/client/javascripts/**/*.ls
+  ]>
+  .pipe sprocket.createJavascriptsStream!
+  .on 'data' !(expectedFile) ->
+    const basename = path.basename expectedFile.path
+    return unless 'application-manifest.js.json' is basename
+
+    JSON.stringify([
+      "utils.js",
+      "controllers/FooterCtrl.js",
+      "models/User.js",
+      "controllers/NavCtrl.js",
+      "application.js"
+    ], null, 2).should.equal expectedFile.contents.toString!
     done!
-
-  ls.write fakeFile
