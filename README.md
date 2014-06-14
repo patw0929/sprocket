@@ -31,6 +31,8 @@ In the nodejs community, there're many tools that try to solve the problem of as
 
 This project aims to be the `sprocket` in the nodejs community.
 
+### [Help Wanted](https://github.com/tomchentw/sprocket/issues?labels=help+wanted&page=1&state=open)
+
 
 ## Project philosophy
 
