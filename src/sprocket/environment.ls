@@ -42,17 +42,3 @@ prototype<<< {
     [return false for basePath in _basePaths when basePath is it]
     !!_basePaths.push it
 }
-
-Object.keys SUPPORTED_ANCESTORS .forEach !(ancestor) ->
-  Object.defineProperty prototype, "#{ ancestor }Path", do
-    get: -> path.join @basePath, @["#{ ancestor }RelativePath"]
-
-  const extname = SUPPORTED_ANCESTORS[ancestor]
-
-  prototype["#{ ancestor }ManifestPath"] = (keyPath) ->
-    const baseAndExtnames = SprocketRequireState.keyPath2BaseAndExtnames {
-      keyPath
-      isProduction: @isProduction
-      extname: ".#{ extname }#{ SprocketRequireState.MANIFEST_EXTNAME }"
-    }
-    path.join @["#{ ancestor }Path"], baseAndExtnames.join('')

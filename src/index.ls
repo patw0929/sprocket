@@ -15,11 +15,7 @@ function CoC
   nconf.env!argv!.defaults do
     NODE_ENV: 'development'
 
-  new Sprocket do
-    environment: do
-      basePath: 'tmp/public'
-      javascriptsRelativePath: 'assets'
-      stylesheetsRelativePath: 'assets'
+  new Sprocket!
   #
   .registerHandler 'javascripts' <[ ls ]> require('./sprocket/ext/ls')
   .registerHandler 'javascripts' <[ js ]> require('./sprocket/ext/js')

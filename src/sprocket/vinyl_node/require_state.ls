@@ -9,31 +9,32 @@ require! {
   RequireState: '../../vinyl_node/require_state'
 }
 
-const MANIFEST_EXTNAME = '.manifest.json'
-
 module.exports = SprocketRequireState
-SprocketRequireState <<< {keyPath2BaseAndExtnames, MANIFEST_EXTNAME}
+SprocketRequireState <<< {getManifestFilepath}
 
-function keyPath2BaseAndExtnames ({keyPath, isProduction, extname})
-  const extnames = [extname]
-  extnames.unshift '.min' if isProduction
-  [
-    path.join path.dirname(keyPath), path.basename(keyPath)
-    extnames.join('')
-  ]
+/*                           ({keyPath, isProduction, extname}) */
+function getManifestFilepath (baseAndExtnames)
+  baseAndExtnames = keyPath2BaseAndExtnames ...& unless Array.isArray baseAndExtnames
+  baseAndExtnames.push MANIFEST_EXTNAME
+  baseAndExtnames.join('')
 /*
  * SprocketRequireState
  */
 util.inherits SprocketRequireState, RequireState
+[SprocketRequireState[k] = v for k, v of RequireState]
 !function SprocketRequireState
   RequireState ...
   @_md5 = crypto.createHash 'md5'
 /*
  * SprocketRequireState.prototype
  */
+const EOL_BUF = new Buffer os.EOL
+
 SprocketRequireState::<<< {
 
-  concatFile: !(vinyls, [basename, extnames]) ->
+  concatFile: (vinyls, options) ->
+    const baseAndExtnames = keyPath2BaseAndExtnames options
+    const basename = baseAndExtnames.0
     const {_nodes} = @
     const contents = new Buffer(@_totalBufferSize + _nodes.length * EOL_BUF.length)
     #
@@ -44,29 +45,36 @@ SprocketRequireState::<<< {
         targetStart += sourceBuffer.length
 
     const fingerprint = @_md5.update contents .digest 'hex' .slice 0, 32
-    const filepath = "#basename-#fingerprint#extnames"
+    const filepath = "#basename-#fingerprint#{ baseAndExtnames.1 }"
 
     vinyls[basename] = new File do
       path: filepath
       contents: contents
-
-    const manifestFilepath = basename + extnames + MANIFEST_EXTNAME
+    #
+    const manifestFilepath = getManifestFilepath baseAndExtnames
     vinyls[manifestFilepath] = new File do
       path: manifestFilepath
       contents: bufferFromPaths [filepath]
 
-  buildManifestFile: !(vinyls, baseAndExtnames) ->
-    const filepath = baseAndExtnames.join('')
-    baseAndExtnames.push MANIFEST_EXTNAME
-
-    vinyls[filepath] = new File do
-      path: baseAndExtnames.join('')
+  buildManifestFile: (vinyls, options) ->
+    const manifestFilepath = getManifestFilepath options
+    vinyls[manifestFilepath] = new File do
+      path: manifestFilepath
       contents: bufferFromPaths @_nodes.map (vn) ->
         const {vinyl} = vn
         vinyls[vn.keyPath] = vinyl
         vinyl.relative
 }
-const EOL_BUF = new Buffer os.EOL
+const MANIFEST_BASENAME = '-manifest'
+const MANIFEST_EXTNAME = '.json'
+
+function keyPath2BaseAndExtnames ({keyPath, isProduction, extname})
+  const extnames = [extname]
+  extnames.unshift '.min' if isProduction
+  [
+    path.join path.dirname(keyPath), "#{ path.basename(keyPath) }#{ MANIFEST_BASENAME }"
+    extnames.join('')
+  ]
 
 function bufferFromPaths (pathsArray)
   new Buffer JSON.stringify pathsArray, null, 2

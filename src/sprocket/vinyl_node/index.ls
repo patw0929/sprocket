@@ -19,6 +19,7 @@ SprocketCollection.Node = SprocketNode
 
 !function SprocketCollection
   Collection ...
+  @_manifestFiles = {}
 
 SprocketCollection::<<< {
   updateVersion: !-> @_version = Date.now!
@@ -39,15 +40,18 @@ SprocketCollection::<<< {
     for keyPath, node of @_nodes when node.hasAnyEdges
       const state = new @constructor.RequireState!
       node.buildDependencies state, @
-      const baseAndExtnames = SprocketRequireState.keyPath2BaseAndExtnames {
-        keyPath
-        isProduction
-        extname: path.extname(node.vinyl.path)
-      }
+      const manifestFile = do
+        state[if isProduction then 'concatFile' else 'buildManifestFile'] do
+          vinyls, {
+            keyPath
+            isProduction
+            extname: path.extname(node.vinyl.path)
+          }
+      @_manifestFiles[manifestFile.path] = manifestFile
 
-      if isProduction
-        state.concatFile vinyls, baseAndExtnames
-      else
-        state.buildManifestFile vinyls, baseAndExtnames
     Object.keys vinyls .map -> vinyls[it]
+
+  getManifestContent: (options) ->
+    const filepath = SprocketRequireState.getManifestFilepath options
+    @_manifestFiles[filepath].contents.toString!
 }
