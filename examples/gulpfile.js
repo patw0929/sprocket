@@ -5,8 +5,9 @@ var sprocket = Sprocket();
 
 gulp.task('js', function () {
   return gulp.src([
-    'examples/client/javascripts/**/*.js',
-    'examples/client/javascripts/**/*.ls'
-  ]).pipe(sprocket.createJavascriptsStream())
-  .pipe(gulp.dest('examples/tmp/assets'));
+    'client/javascripts/**/*.js',
+    'client/javascripts/**/*.ls'
+  ])
+  .pipe(sprocket.createJavascriptsStream())
+  .pipe(gulp.dest('tmp/public/assets'));
 });
