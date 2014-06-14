@@ -15,6 +15,7 @@ SprocketRequireState <<< {getManifestFilepath}
 /*                           ({keyPath, isProduction, extname}) */
 function getManifestFilepath (baseAndExtnames)
   baseAndExtnames = keyPath2BaseAndExtnames ...& unless Array.isArray baseAndExtnames
+  baseAndExtnames.splice 1, 0, MANIFEST_BASENAME
   baseAndExtnames.push MANIFEST_EXTNAME
   baseAndExtnames.join('')
 /*
@@ -66,7 +67,7 @@ function keyPath2BaseAndExtnames ({keyPath, isProduction, extname})
   const extnames = [extname]
   extnames.unshift '.min' if isProduction
   [
-    path.join path.dirname(keyPath), "#{ path.basename(keyPath) }#{ MANIFEST_BASENAME }"
+    path.join path.dirname(keyPath), path.basename(keyPath)
     extnames.join('')
   ]
 
