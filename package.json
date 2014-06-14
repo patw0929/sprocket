@@ -30,14 +30,14 @@
   "dependencies": {
     "through2": "^1.0.0",
     "vinyl": "^0.2.3",
-    "gulp-filter": "^0.4.1",
-    "gulp-minify-css": "^0.3.4",
-    "gulp-rename": "^1.2.0",
-    "gulp-uglify": "^0.3.0",
-    "gulp-livescript": "^0.3.0",
-    "gulp-sass": "^0.7.2",
     "nconf": "^0.6.9",
-    "gulp-jshint": "^1.6.2"
+    "gulp-filter": "^0.4.1",
+    "gulp-rename": "^1.2.0",
+    "gulp-livescript": "^1.0.1",
+    "gulp-jshint": "^1.6.2",
+    "gulp-uglify": "^0.3.0",
+    "gulp-sass": "^0.7.2",
+    "gulp-minify-css": "^0.3.4"
   },
   "devDependencies": {
     "LiveScript": "^1.2.0",
