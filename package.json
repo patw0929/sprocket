@@ -1,8 +1,8 @@
 {
   "name": "sprocket",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Opinioned asset build tools. Inspired from ruby Sprocket and gulpjs.",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "mocha --compilers ls:LiveScript"
   },

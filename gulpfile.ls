@@ -29,7 +29,7 @@ gulp.task 'release' <[ build bump ]> !(done) ->
 gulp.task 'build' ->
   gulp.src 'src/**/*.ls'
   .pipe gulp-livescript bare: true
-  .pipe gulp.dest '.'
+  .pipe gulp.dest 'lib'
 
 gulp.task 'bump' ->
   gulp.src 'package.json'
