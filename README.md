@@ -65,7 +65,7 @@ If your team is in the transition state from one to another, say from JavaScript
 
 ## Example
 
-See the [`examples`](https://github.com/tomchentw/sprocket/tree/master/examples) folder and a complete [`gulpfile.js`]() for a real word example.
+See the [`examples`](https://github.com/tomchentw/sprocket/tree/master/examples) folder and a complete [`gulpfile.js`](https://github.com/tomchentw/sprocket/blob/master/examples/gulpfile.js) for a real word example.
 
 
 ## Usage
@@ -174,7 +174,7 @@ Currently only value `javascripts` or `stylesheets` are allowed.
 
 ### sprocket.createViewHelpers(options)
 
-This would return a [helper object]() that can serve as `locals` in building htmls.
+This would return a [helper object](#helper-object) that can serve as `locals` in building htmls.
 
 #### options
 Type: `Object`
@@ -195,7 +195,7 @@ Default value is four spaces since we use 2 space for indent and `html->(head/bo
 
 ### helper object
 
-A object returned by [sprocket.createViewHelpers(options)](). You can freely extend/modify the helper object since these functions are bounded.
+A object returned by [sprocket.createViewHelpers(options)](#sprocketcreateviewhelpersoptions). You can freely extend/modify the helper object since these functions are bounded.
 
 #### javascriptIncludeTag(filename) / javascript_include_tag(filename)
 Type: `Function`
