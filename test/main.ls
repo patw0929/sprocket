@@ -1,15 +1,15 @@
 require! {
   fs
-  gutil: 'gulp-util'
-  'gulp-sprocket': '../src'
   should
   mocha
+  gutil: 'gulp-util'
+  Sprocket: '../src'
 }
 
-(...) <-! describe 'gulp-sprocket'
+(...) <-! describe 'sprocket'
 
 it 'should compile livescript file to javascript' !(done) ->
-  const ls = gulp-sprocket!
+  const ls = sprocket!
   const fakeFile = new gutil.File do
       base: 'test/fixtures'
       cwd: 'test/fixtures'

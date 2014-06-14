@@ -1,4 +1,4 @@
-# gulp-sprocket [![Travis CI][travis-image]][travis-url] [![Quality][codeclimate-image]][codeclimate-url] [![Coverage][coveralls-image]][coveralls-url] [![Dependencies][gemnasium-image]][gemnasium-url]
+# sprocket [![Travis CI][travis-image]][travis-url] [![Quality][codeclimate-image]][codeclimate-url] [![Coverage][coveralls-image]][coveralls-url] [![Dependencies][gemnasium-image]][gemnasium-url]
 > Opinioned asset build tools. Inspired from ruby Sprocket and gulpjs.
 
 [![Version][npm-image]][npm-url]
@@ -8,7 +8,7 @@
 
 <table>
 <tr> 
-<td>Package</td><td>gulp-sprocket</td>
+<td>Package</td><td>sprocket</td>
 </tr>
 <tr>
 <td>Description</td>
@@ -44,16 +44,16 @@
 5. Create new Pull Request
 
 
-[npm-image]: https://img.shields.io/npm/v/gulp-sprocket.svg
-[npm-url]: https://www.npmjs.org/package/gulp-sprocket
+[npm-image]: https://img.shields.io/npm/v/sprocket.svg
+[npm-url]: https://www.npmjs.org/package/sprocket
 
-[travis-image]: https://travis-ci.org/tomchentw/gulp-sprocket.svg?branch=master
-[travis-url]: https://travis-ci.org/tomchentw/gulp-sprocket
-[codeclimate-image]: https://img.shields.io/codeclimate/github/tomchentw/gulp-sprocket.svg
-[codeclimate-url]: https://codeclimate.com/github/tomchentw/gulp-sprocket
-[coveralls-image]: https://img.shields.io/coveralls/tomchentw/gulp-sprocket.svg
-[coveralls-url]: https://coveralls.io/r/tomchentw/gulp-sprocket
-[gemnasium-image]: https://gemnasium.com/tomchentw/gulp-sprocket.svg
-[gemnasium-url]: https://gemnasium.com/tomchentw/gulp-sprocket
-[david-dm-image]: https://david-dm.org/tomchentw/gulp-sprocket/dev-status.svg?theme=shields.io
-[david-dm-url]: https://david-dm.org/tomchentw/gulp-sprocket#info=devDependencies
+[travis-image]: https://travis-ci.org/tomchentw/sprocket.svg?branch=master
+[travis-url]: https://travis-ci.org/tomchentw/sprocket
+[codeclimate-image]: https://img.shields.io/codeclimate/github/tomchentw/sprocket.svg
+[codeclimate-url]: https://codeclimate.com/github/tomchentw/sprocket
+[coveralls-image]: https://img.shields.io/coveralls/tomchentw/sprocket.svg
+[coveralls-url]: https://coveralls.io/r/tomchentw/sprocket
+[gemnasium-image]: https://gemnasium.com/tomchentw/sprocket.svg
+[gemnasium-url]: https://gemnasium.com/tomchentw/sprocket
+[david-dm-image]: https://david-dm.org/tomchentw/sprocket/dev-status.svg?theme=shields.io
+[david-dm-url]: https://david-dm.org/tomchentw/sprocket#info=devDependencies
