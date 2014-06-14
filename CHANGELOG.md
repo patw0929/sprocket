@@ -1,0 +1,29 @@
+### 0.0.2 (2014-06-14)
+
+
+#### Bug Fixes
+
+* **RequireState:** manifest filepath ([975eae15](https://github.com/tomchentw/sprocket/commit/975eae15e8012163601ac0e410e0c33c1fee8c44))
+* **SprocketRequireState:** MANIFEST_BASENAME only in getManifestFilepath ([dca05971](https://github.com/tomchentw/sprocket/commit/dca0597109816dd870ad19518e8cd3e7d2f509c7))
+* **VinylNode.SuperNode:** recursively build dependencies in forEach ([1acc430d](https://github.com/tomchentw/sprocket/commit/1acc430d47ca0f54c0952e4bc836f48eaec69dc5))
+* **VinylNodeCollection:** bugs with prefilled .min files ([3f46854a](https://github.com/tomchentw/sprocket/commit/3f46854a54f60fe2f3b563db5fe2381ab6375c26))
+
+
+#### Features
+
+* **Edge.Circular:** add circular for require_self ([20573608](https://github.com/tomchentw/sprocket/commit/20573608203acfc17c70501fb9de6346b9e4c114))
+* **RequireState:** extract manifest creation code and prettify it ([05fe4920](https://github.com/tomchentw/sprocket/commit/05fe49208d0ea2e6e10943b2b1f4b9b1f6b1e301))
+* **Sprocket:**
+  * better API for expose and watch ([13b1fb46](https://github.com/tomchentw/sprocket/commit/13b1fb46ce9e3e75bd10cb380e1402c0faccfa75))
+  * add development environment support ([0903d0f3](https://github.com/tomchentw/sprocket/commit/0903d0f30c8c41973ba8aaf1966d257b936dd122))
+  * add environment, gulp and view helpers ([dd1a8b8a](https://github.com/tomchentw/sprocket/commit/dd1a8b8a6c66ef59e04ebdbe452f9c38aa8cf6c9))
+* **SprocketCollection:** store dependencies as object ([ca03e82b](https://github.com/tomchentw/sprocket/commit/ca03e82bb9d667d146fd0ab218ef8a3bef77f3f8))
+* **SuperNode.Directory:** add require_directory support ([cddbe83a](https://github.com/tomchentw/sprocket/commit/cddbe83afc705f0fa8e1de6056fd61e06aa39041))
+* **SupportedExtname:** extract as class and fix several bugs ([21cfa5ed](https://github.com/tomchentw/sprocket/commit/21cfa5ed41fb2ffade004ae2dea4479990e6a120))
+* **VinylNode:**
+  * fix dependencies changes while watcher active ([331d6b57](https://github.com/tomchentw/sprocket/commit/331d6b5726b60b12137891021b0aeeef1c0650c1))
+  * export Collection and other classes ([cc573bf4](https://github.com/tomchentw/sprocket/commit/cc573bf4e2e0a90f59a9513a45238d1cad4a67e1))
+* **VinylNode.Collection:** add require_self support and update directive regex ([4d1c6d6b](https://github.com/tomchentw/sprocket/commit/4d1c6d6bc8b1d40e88d9c8eda45098b9380df52c))
+* **VinylNodeCollection:** add reversioning support ([38e1a804](https://github.com/tomchentw/sprocket/commit/38e1a804e57a754150603ccca174a3d17dcb3a0e))
+
+
