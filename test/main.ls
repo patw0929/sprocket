@@ -10,7 +10,7 @@ require! {
 
 (...) <-! describe 'sprocket'
 
-it 'should compile livescript file to javascript' !(done) ->
+it 'should generate correct manifest json based on dependencies' !(done) ->
   @timeout 5000
   const sprocket = Sprocket!
 
@@ -23,11 +23,6 @@ it 'should compile livescript file to javascript' !(done) ->
     const basename = path.basename expectedFile.path
     return unless 'application-manifest.js.json' is basename
 
-    JSON.stringify([
-      "utils.js",
-      "controllers/FooterCtrl.js",
-      "models/User.js",
-      "controllers/NavCtrl.js",
-      "application.js"
-    ], null, 2).should.equal expectedFile.contents.toString!
+    (err, data) <-! fs.readFile 'test/fixtures/application-manifest.js.json', 'utf8'
+    String expectedFile.contents .should.equal data
     done!

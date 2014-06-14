@@ -1,0 +1,7 @@
+[
+  "utils.js",
+  "controllers/FooterCtrl.js",
+  "models/User.js",
+  "controllers/NavCtrl.js",
+  "application.js"
+]
