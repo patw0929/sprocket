@@ -24,7 +24,7 @@ BaseSuperNode::<<<{
   _buildDependencies: !(state, collection) ->
     @_filepathMatchedNodes collection._nodes
     .sort pathSortFn
-    .forEach state.addNode, state
+    .forEach !-> it.buildDependencies state, collection
 
   _filepathMatchedNodes: (_nodes) ->
     const {fromNode, _filepathMatcher} = @
