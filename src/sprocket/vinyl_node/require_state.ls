@@ -30,6 +30,7 @@ util.inherits SprocketRequireState, RequireState
  * SprocketRequireState.prototype
  */
 const EOL_BUF = new Buffer os.EOL
+const MINIFIED_EXTNAME = '.min'
 
 SprocketRequireState::<<< {
 
@@ -57,6 +58,12 @@ SprocketRequireState::<<< {
   buildManifestFile: !(manifestFiles, vinyls, options) ->
     createManifestVinyl manifestFiles, vinyls, options,  @_nodes.map (vn) ->
       const {vinyl} = vn
+      const filepath = vinyl.path
+      extname = path.extname filepath
+      const basename = path.basename filepath, extname
+      extname = "#{ MINIFIED_EXTNAME }#{ extname }" if options.isProduction
+      #
+      vinyl.path = path.join path.dirname(filepath), "#{ basename }#{ extname }"
       vinyls[vn.keyPath] = vinyl
       vinyl.relative
 }
@@ -65,7 +72,7 @@ const MANIFEST_EXTNAME = '.json'
 
 function keyPath2BaseAndExtnames ({keyPath, isProduction, extname})
   const extnames = [extname]
-  extnames.unshift '.min' if isProduction
+  extnames.unshift MINIFIED_EXTNAME if isProduction
   [
     path.join path.dirname(keyPath), path.basename(keyPath)
     extnames.join('')

@@ -32,7 +32,6 @@
     "vinyl": "^0.2.3",
     "nconf": "^0.6.9",
     "gulp-filter": "^0.4.1",
-    "gulp-rename": "^1.2.0",
     "gulp-livescript": "^1.0.1",
     "gulp-jshint": "^1.6.2",
     "gulp-uglify": "^0.3.0",

@@ -2,7 +2,6 @@ require! {
   'gulp-jshint'
   'gulp-filter'
   'gulp-uglify'
-  'gulp-rename'
 }
 
 module.exports = !(environment, src, dest) ->
@@ -11,9 +10,7 @@ module.exports = !(environment, src, dest) ->
   .pipe gulp-jshint!
   .pipe gulp-jshint.reporter('default')
   #
-  if environment.isProduction
-    src.=pipe gulp-uglify!
-    .pipe gulp-rename extname: '.min.js'
+  src.=pipe gulp-uglify! if environment.isProduction
   src.=pipe filter.restore!
   #
   src.pipe dest

@@ -68,19 +68,10 @@ prototype<<< {
   _createNode: (keyPath) ->
     @_nodes[keyPath] ||= new @constructor.Node keyPath
 
-  _findNodeAfterUpdated: !(vinyl) ->
-    const relativePaths = [vinyl.relative]
-    #
-    # HACK:
-    # gulp-rename will store original name in revOrigPath
-    #
-    relativePaths.push path.relative(vinyl.base, that) if vinyl.revOrigPath
-    #
-    for filepath in relativePaths
-      const [keyPath, keyPathWithMin] = @_parseKeyPath filepath
-      const fromNode = if keyPathWithMin and @_nodes[keyPathWithMin]
-        that
-      else
-        @_nodes[keyPath]
-      return fromNode if fromNode
+  _findNodeAfterUpdated: (vinyl) ->
+    const [keyPath, keyPathWithMin] = @_parseKeyPath vinyl.relative
+    if keyPathWithMin and @_nodes[keyPathWithMin]
+      that
+    else
+      @_nodes[keyPath]
 }
