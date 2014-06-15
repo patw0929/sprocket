@@ -69,6 +69,25 @@ If your team is in the transition state from one to another, say from JavaScript
 
 See the [`examples`](https://github.com/tomchentw/sprocket/tree/master/examples) folder and a complete [`gulpfile.js`](https://github.com/tomchentw/sprocket/blob/master/examples/gulpfile.js) for a real word example.
 
+### In Development
+
+```shell
+cd examples
+npm install
+gulp server
+```
+It will start a connect server on port 5000, as well as a livereload server on port 35729, automatically watch changes and recompile the aseets. Look at the compiled [`index.html`](https://github.com/tomchentw/sprocket/blob/master/examples/client/views/index.jade) to see how `javascript_include_tag` get transformed into the `<script ...>` tags.
+
+### For Production
+
+```shell
+export NODE_ENV=production
+gulp html
+node index.js
+```
+
+It will compile and concat javascripts and stylesheets into one files with versioning support. You need to just run once `gulp html` before releasing your new version.
+
 
 ## Usage
 
