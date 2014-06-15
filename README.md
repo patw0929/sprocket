@@ -91,6 +91,16 @@ It will compile and concat javascripts and stylesheets into one files with versi
 
 ## Usage
 
+It's simple and works just like rails does. Typical steps are:
+
+1. create a [`application.js`](https://github.com/tomchentw/sprocket/blob/master/examples/client/javascripts/application.js) as an entry point
+2. use [`javascriptIncludeTag`](#javascriptincludetagfilename--javascript_include_tagfilename) inside [`index.jade`](https://github.com/tomchentw/sprocket/blob/master/examples/client/views/index.jade#L19) to include `application.js` as script tag(s).
+3. create a [`gulpfile.js`](https://github.com/tomchentw/sprocket/blob/master/examples/gulpfile.js#L6) to initialize a [`sprocket`](#sprocketcreatejavascriptsstream) instance and compile assets.
+4. output the compiled assets and htmls to a folder and serve them in [`index.js`](https://github.com/tomchentw/sprocket/blob/master/examples/index.js#L14)
+
+
+## API docs
+
 We use [vinyl](https://github.com/wearefractal/vinyl) as an abstraction layer of File. So it'll play nicely with [gulpjs](http://gulpjs.com/)
 
 First, open your `gulpfile` and require `sprocket`.
@@ -103,7 +113,7 @@ var Sprocket = require('sprocket');
 Then, create a `sprocket` instance:
 
 ```javascript
-var sprocket = Sprocket();// with conventions
+var sprocket = Sprocket();// create with conventions
 ```
 
 The returned instance would have these methods:
@@ -173,16 +183,18 @@ Say, you have `bower_components/jquery/dist/jquery.js` installded and use the ab
 In your `application.js` header:
 
 ```javascript
-//*= require jquery/dist/jquery
+//= require jquery/dist/jquery
 ```
 
 If you want to require the precompiled assets located in `bower_components/angular/angular.min.js`:
 
 ```javascript
-//*= require angular/angular.min
+/*
+ *= require angular/angular.min
+ */
 ```
 
-Please notice they're **different**.  The former sprocket will minify for you. The latter sprocket will not minify agian.
+Please notice they're **different**. In the former one, sprocket will minify `jquery`. In contrast, sprocket will use minified version of `angularjs` and won't minify agian.
 
 It's recommended to require minified libraries directly since it could save your time and get a better code for libraries who use *Google Closure Compiler* like `angularjs`.
 
@@ -225,6 +237,12 @@ Yes, underscored versions are also provided.
 
 It would create a (list of) `<script></script>` tag(s) so that the generated html could references to the right assets.
 
+```jade
+html
+  head
+    != javascriptIncludeTag("application")
+```
+
 ##### filename
 Type: `String`
 
@@ -244,6 +262,12 @@ Type: `String`
 **Notice:** Sprocket directives are using relative path.  
 
 It should relative to your globbing paths.
+
+```jade
+html
+  head
+    != stylesheet_link_tag("application")
+```
 
 
 ## Contributing
