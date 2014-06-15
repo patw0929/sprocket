@@ -1,6 +1,5 @@
 require! {
   path
-  nconf
 }
 require! {
   SprocketRequireState: './vinyl_node/require_state'
@@ -19,6 +18,7 @@ module.exports = SprocketEnvironment
  */
 !function SprocketEnvironment (options)
   [@[key] = val for key, val of options || {}]
+  @_isProduction = 'production' is process.env.NODE_ENV
   @_basePaths = []
 /*
  * SprocketEnvironment.prototype
@@ -27,7 +27,7 @@ const {prototype} = SprocketEnvironment
 
 prototype<<< {
   isProduction:~
-    -> 'production' is nconf.get 'NODE_ENV'
+    -> @_isProduction
 
   basePaths:~
     #

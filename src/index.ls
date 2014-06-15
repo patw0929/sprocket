@@ -1,8 +1,4 @@
 require! {
-  nconf
-}
-
-require! {
   Sprocket: './sprocket'
 }
 module.exports = CoC
@@ -12,9 +8,6 @@ CoC <<< {Sprocket}
  * Convention over Configuration
  */
 function CoC
-  nconf.env!argv!.defaults do
-    NODE_ENV: 'development'
-
   new Sprocket!
   #
   .registerHandler 'javascripts' <[ ls ]> require('./sprocket/ext/ls')
