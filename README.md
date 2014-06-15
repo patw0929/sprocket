@@ -43,13 +43,13 @@ It also has great readibility and lots of syntax sugar just like you're writting
 ### Convention over Configuration
 The sprocket based projects have three conventions:
 
-* Seamlessly Integration (Optimization)
+* Seamless Integration (Optimization)
 * Dependency Management (Injection)
 * Language Extensions Support
 
 Let's talk about them sequentially.
 
-### Seamlessly Integration (Optimization)
+### Seamless Integration (Optimization)
 Why seamless integration is so important? It makes developers **focus on the business logic**, don't care about optimization stuffs. It just works!
 
 When you're ready to release a new version, `sprocket` automatically *minify and concact* them together for you. Thus provides best network performance under the hood.
