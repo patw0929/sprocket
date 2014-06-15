@@ -1,5 +1,5 @@
 //= require utils
 function FooterCtrl(){
-  consoleLog('FooterCtrl');
+  utils.consoleLog('FooterCtrl');
 }
 this.FooterCtrl = FooterCtrl;

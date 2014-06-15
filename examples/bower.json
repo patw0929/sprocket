@@ -1,0 +1,21 @@
+{
+  "name": "examples",
+  "main": "index.js",
+  "version": "0.0.2",
+  "homepage": "https://github.com/tomchentw/sprocket",
+  "authors": [
+    "tomchentw <developer@tomchentw.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "bootstrap-sass-official": "~3.1.1+2"
+  }
+}

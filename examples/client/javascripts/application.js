@@ -4,6 +4,6 @@
  *= require_tree .
  */
 
-this.consoleLog('application.js');
+utils.consoleLog('application.js');
 new NavCtrl();
 new FooterCtrl();

@@ -1,8 +1,8 @@
 (function (global) {
   
-  function consoleLog (argument) {
-    if (typeof console !== 'undefined' && typeof console.log !== 'undefined') {
-      return console.log.apply(console, argument);
+  function consoleLog () {
+    if ((typeof console !== 'undefined') && (typeof console.log !== 'undefined')) {
+      return console.log.apply(console, arguments);
     }
   }
 
