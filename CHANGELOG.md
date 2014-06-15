@@ -1,3 +1,18 @@
+## 0.1.0 (2014-06-15)
+
+
+#### Features
+
+* **SprocketEnvironment:** remove nconf dependency ([61318e3a](https://github.com/tomchentw/sprocket/commit/61318e3a576a0be0b8c6c03ab4ea5fac8eafc102))
+
+
+#### Breaking Changes
+
+* remove nconf support, please set process.env.NODE_ENV directly
+
+ ([61318e3a](https://github.com/tomchentw/sprocket/commit/61318e3a576a0be0b8c6c03ab4ea5fac8eafc102))
+
+
 ### 0.0.2 (2014-06-14)
 
 
