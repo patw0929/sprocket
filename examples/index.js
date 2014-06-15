@@ -1,19 +1,16 @@
 var connect = require('connect');
-var nconf = require('nconf');
-
-nconf.env().argv().defaults({
-  NODE_ENV: 'development',
-  PORT: 5000
-});
-
+var PORT = process.env.PORT || 5000;
+var NODE_ENV = process.env.NODE_ENV || 'development';
+/*
+ * start a static file server
+ */
 var server = connect()
   .use(connect['static']('public', {
     maxAge: Infinity
   }));
-if ('production' !== nconf.get('NODE_ENV')) {
+if ('production' !== NODE_ENV) {
   server.use(connect['static']('tmp/public'));
 }
-server.listen(nconf.get('PORT'), function () {
-  console.log("Connect server in " + nconf.get('NODE_ENV') +
-    " started at PORT " + nconf.get('PORT'));
+server.listen(PORT, function () {
+  console.log("Connect server in " + NODE_ENV + " started at PORT " + PORT);
 });

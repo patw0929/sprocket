@@ -82,8 +82,7 @@ It will start a connect server on port 5000, as well as a livereload server on p
 
 ```shell
 export NODE_ENV=production
-gulp html
-node index.js
+npm start
 ```
 
 It will compile and concat javascripts and stylesheets into one files with versioning support. You need to just run once `gulp html` before releasing your new version.
