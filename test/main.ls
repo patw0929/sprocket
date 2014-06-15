@@ -5,8 +5,9 @@ require! {
   mocha
   gulp
   gutil: 'gulp-util'
-  Sprocket: '../src'
 }
+
+const Sprocket = require if process.env.TRAVIS then '../lib' else '../src'
 
 (...) <-! describe 'sprocket'
 

@@ -15,6 +15,7 @@ logs
 results
 
 bower_components
+coverage
 node_modules
 tmp
 
