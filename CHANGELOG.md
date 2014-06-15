@@ -1,3 +1,11 @@
+### 0.1.1 (2014-06-15)
+
+
+#### Bug Fixes
+
+* **package.json:** downgrade through2 to 0.5.1 ([f76333ff](https://github.com/tomchentw/sprocket/commit/f76333ff582886106355b82cabbe9c825cbf68d4))
+
+
 ## 0.1.0 (2014-06-15)
 
 
