@@ -1,7 +1,11 @@
 # sprocket [![Travis CI][travis-image]][travis-url] [![Quality][codeclimate-image]][codeclimate-url] [![Coverage][coveralls-image]][coveralls-url] [![Dependencies][gemnasium-image]][gemnasium-url]
-> Opinioned asset build tools. Inspired from ruby Sprocket and gulpjs.
+> Opinioned asset build tools for any javascript frameworks. Inspired from ruby Sprocket and gulpjs.
 
 [![Version][npm-image]][npm-url]
+
+It's designed for ExpressJS websites, SailsJS websites and even pure-static websites. Pure jQuery site? Or fancy AngularJS Apps? No problem!
+
+The only required dependency is [gulpjs](http://gulpjs.com/). We use `gulpfile` to build your workflow.
 
 
 ## Quick Overview
@@ -71,7 +75,7 @@ It will compile and concat javascripts and stylesheets into one files with versi
 </tr>
 <tr>
 <td>Description</td>
-<td>Opinioned asset build tools. Inspired from ruby Sprocket and gulpjs.</td>
+<td>Opinioned asset build tools for any javascript frameworks. Inspired from ruby Sprocket and gulpjs.</td>
 </tr>
 <tr>
 <td>Node Version</td>
