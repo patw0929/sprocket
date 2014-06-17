@@ -18,14 +18,19 @@ So that all files in the stream would have relative set to:
 
 `<%= bower_component_name %>/<% main_file_name %>.js`
 
-`keyPath` is just `<%= bower_component_name %>/<% main_file_name %>`
+You can deduce that `keyPath` is just:
+`<%= bower_component_name %>/<% main_file_name %>`
+
+For example, these are libraries that would be hosted on `bower`:
 
 * [angular of bower](https://github.com/angular/bower-angular) would have `angular/angular.min` as `keyPath`
 * [jquery of bower](https://github.com/jquery/jquery) would have `jquery/dist/jquery` as `keyPath`
 
+Notice you could add `.min` with `keyPath`. Sprocketjs will look for the minified version first, resulting better performance.
+
 
 ## Dependency resolution is aware of language extensions
 
-Look at examples and you'll understand.
+Look at [`examples`](https://github.com/tomchentw/sprocket/tree/master/examples) and you'll understand.
 
 
