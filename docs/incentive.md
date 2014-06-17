@@ -16,17 +16,17 @@ The sprocket based projects have three conventions:
 
 Let's talk about them sequentially.
 
-### Seamless Integration (Optimization)
-Why seamless integration is so important? It makes developers **focus on the business logic**, don't care about optimization stuffs. It just works!
+### [Seamless Integration](https://github.com/tomchentw/sprocket/blob/master/docs/seamless_integration.md) (Optimization)
+Why this is so important? It makes developers **focus on the business logic**, don't care about optimization stuffs. It just works!
 
-When you're ready to release a new version, `sprocket` automatically *minify and concact* them together for you. Thus provides best network performance under the hood.
+When you're ready to release a new version, `sprocket` automatically *minify, concact and versioned* them together for you. Thus provides best network performance under the hood.
 
-### Dependency Management (Injection)
+### [Dependency Management](https://github.com/tomchentw/sprocket/blob/master/docs/dependency_management.md) (Injection)
 We always have to take good care about dependencies. While there's no standars yet and many tools like `require.js` or `commonjs`(`browserify`) are trying to solve this problem, sprocket use `require` *directive* to declare your depencency.
 
 Under development, the html looks like you're using standard `<script></script>` and `<link>` tags, with dependencies **automatically resolved** and flattened dependency tree into a list.
 
-### Language Extensions Support
+### [Language Extensions](https://github.com/tomchentw/sprocket/blob/master/docs/language_extensions.md) Support
 Thanks to the "great" JavaScript! There're [brunch of languages](https://github.com/jashkenas/coffeescript/wiki/List-of-languages-that-compile-to-JS) that compiles to it. The same thing also happens to the stylesheets. (Does anyone have the link?)
 
 If your team is in the transition state from one to another, say from JavaScript to LiveScript for readibility, or from pure CSS to Sass/LESS. It'll be really helpful to have a build tool that **treats them equally**.
