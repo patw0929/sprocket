@@ -1,6 +1,6 @@
 {
   "name": "sprocket",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Opinioned asset build tools for any javascript frameworks. Inspired from ruby Sprocket and gulpjs.",
   "main": "lib/index.js",
   "scripts": {

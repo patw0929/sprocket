@@ -1,3 +1,11 @@
+### 0.1.2 (2014-06-20)
+
+
+#### Features
+
+* **package.json:** add less extension support ([92bc3d0c](https://github.com/tomchentw/sprocket/commit/92bc3d0c331a49893a0488753f19ac3750d0a4cb))
+
+
 ### 0.1.1 (2014-06-15)
 
 
