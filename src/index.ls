@@ -13,5 +13,6 @@ function CoC
   .registerHandler 'javascripts' <[ ls ]> require('./sprocket/ext/ls')
   .registerHandler 'javascripts' <[ js ]> require('./sprocket/ext/js')
   #
+  .registerHandler 'stylesheets' <[ less ]> require('./sprocket/ext/less')
   .registerHandler 'stylesheets' <[ scss sass ]> require('./sprocket/ext/scss')
   .registerHandler 'stylesheets' <[ css ]> require('./sprocket/ext/css')
