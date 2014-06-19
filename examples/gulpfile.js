@@ -21,8 +21,9 @@ gulp.task('js', function () {
 
 gulp.task('css', function(){
   return gulp.src([
+    'bower_components/bootstrap/less/bootstrap.less',
     'bower_components/bootstrap-sass-official/vendor/assets/stylesheets/bootstrap.scss',
-    'client/stylesheets/application.scss',
+    'client/stylesheets/*',
     'bower_components/**/*.css'
   ])
   .pipe(sprocket.createStylesheetsStream())
