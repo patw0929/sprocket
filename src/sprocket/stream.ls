@@ -25,16 +25,13 @@ util.inherits SprocketStream, Transform
   @_environment = options.environment
   @_nodeCollection = options.collection
   @_nodeCollection.updateVersion!
-  createInternalStreams @, options.extname, options.extensions || {}
+  @_dispatchStream = createInternalStreams @, options.extname, options.extensions || {}
 
 SprocketStream::<<<{
-  _dispatchInternal: !(file) ->
-    @_internalStreams[path.extname file.path].write file
-
   _transform: !(file, _, done) ->
     @_environment.addBasePath file.base
     @_nodeCollection.createNode file, @_emitErrorInternal
-    @_dispatchInternal file
+    @_dispatchStream.write file
     done!
 
   # this stream will end some day, but not by default
@@ -55,13 +52,12 @@ SprocketStream::<<<{
 /*
  * Helpers
  */
-!function createInternalStreams (stream, targetExtname, extensions)
-  const _internalStreams = stream._internalStreams = {}
+function createInternalStreams (stream, targetExtname, extensions)
+  const _internalStreams = {}
 
-  const _dispatchEndStream = new Transform objectMode: true
-  _dispatchEndStream._transform = !(file, _, done) ->
-    stream._nodeCollection.updateNode file, stream._emitErrorInternal
-    stream._dispatchInternal file
+  const _dispatchStartStream = new Transform objectMode: true
+  _dispatchStartStream._transform = !(file, _, done) ->
+    _internalStreams[path.extname file.path].write file
     done!
 
   const _targetEndStream = new Transform objectMode: true
@@ -76,4 +72,6 @@ SprocketStream::<<<{
 
     configureFn stream._environment, passThrough, do
       if extname is targetExtname then _targetEndStream
-      else _dispatchEndStream
+      else _dispatchStartStream
+
+  _dispatchStartStream
