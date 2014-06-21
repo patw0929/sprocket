@@ -17,8 +17,6 @@ Sprocket.Stream = SprocketStream
   @_javascriptsExtensions = {}
   @_stylesheetsExtensions = {}
 
-  @_nodeCollections = {}
-
   @environment = new SprocketEnvironment @options.environment
 /*
  * Sprocket.prototype
@@ -36,7 +34,7 @@ prototype<<< {
     unless ancestor of SUPPORTED_ANCESTORS
       throw "Currently we only support #{ SUPPORTED_ANCESTORS.join ',' }"
 
-    @_nodeCollections[ancestor] ||= new SprocketCollection!
+    @environment.createNodeCollection ancestor
     extnames.forEach !(extension) -> @[extension] = handler
     , @["_#{ ancestor }Extensions"]
     @
@@ -47,7 +45,7 @@ prototype<<< {
 
     new SprocketStream do
       environment: @environment
-      collection: @_nodeCollections[ancestor]
+      collection: @environment.getNodeCollection(ancestor)
       extname: SUPPORTED_ANCESTORS[ancestor]
       extensions: @["_#{ ancestor }Extensions"]
 
@@ -57,7 +55,7 @@ prototype<<< {
     #
     Object.keys SUPPORTED_ANCESTORS .reduce (helpers, ancestor) ~>
       ~function helperFn
-        getManifestAsJson @, ancestor, it
+        getManifestAsJson @environment, ancestor, it
         .map getManifestAsJson["#{ ancestor }MapFn"], options
         .join os.EOL
 
@@ -70,10 +68,10 @@ prototype<<< {
     , {}
 }
 
-function getManifestAsJson (sprocket, ancestor, keyPath)
-  sprocket._nodeCollections[ancestor].getManifestContent do
+function getManifestAsJson (environment, ancestor, keyPath)
+  environment.getNodeCollection ancestor .getManifestContent do
     keyPath: keyPath
-    isProduction: sprocket.environment.isProduction
+    isProduction: environment.isProduction
     extname: ".#{ SUPPORTED_ANCESTORS[ancestor] }"
 
 getManifestAsJson.javascripts = 'javascriptIncludeTag'

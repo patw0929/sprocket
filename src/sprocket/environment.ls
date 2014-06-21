@@ -2,7 +2,7 @@ require! {
   path
 }
 require! {
-  SprocketRequireState: './vinyl_node/require_state'
+  SprocketCollection: './vinyl_node'
 }
 
 const SUPPORTED_ANCESTORS = {
@@ -20,6 +20,7 @@ module.exports = SprocketEnvironment
   [@[key] = val for key, val of options || {}]
   @_isProduction = 'production' is process.env.NODE_ENV
   @_basePaths = []
+  @_nodeCollections = {}
 /*
  * SprocketEnvironment.prototype
  */
@@ -41,4 +42,11 @@ prototype<<< {
     const {_basePaths} = @
     [return false for basePath in _basePaths when basePath is it]
     !!_basePaths.push it
+
+  createNodeCollection: !(ancestor) ->
+    @_nodeCollections[ancestor] ||= new SprocketCollection!
+
+  getNodeCollection: (ancestor) ->
+    # TODO: exception check
+    @_nodeCollections[ancestor]
 }
