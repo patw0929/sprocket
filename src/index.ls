@@ -59,8 +59,6 @@ exports.registerMimeType 'text/plain', extensions: <[ .txt .text ]>
 # register_preprocessor 'text/css', DirectiveProcessor
 # register_preprocessor 'application/javascript', DirectiveProcessor
 # --- sprocket.rb ---
-exports.registerPreprocessor 'application/javascript'
-exports.registerPreprocessor 'text/css'
 # --- sprocket.rb ---
 # register_bundle_processor 'application/javascript', Bundle
 # register_bundle_processor 'text/css', Bundle
@@ -76,9 +74,6 @@ exports.registerBundleProcessor 'text/css'
 # register_compressor 'application/javascript', :uglify, LazyProcessor.new { UglifierCompressor }
 # register_compressor 'application/javascript', :yui, LazyProcessor.new { YUICompressor }
 # --- sprocket.rb ---
-exports.registerCompressor 'application/javascript', 'uglifier'
-exports.registerCompressor 'text/css', 'scss'
-exports.registerCompressor 'text/css', 'sass'
 # --- sprocket.rb ---
 # # Mmm, CoffeeScript
 # register_engine '.coffee', LazyProcessor.new { CoffeeScriptTemplate }, mime_type: 'application/javascript'
