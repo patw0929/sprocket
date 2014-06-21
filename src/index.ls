@@ -2,7 +2,13 @@ require! {
   './sprockets/engines': Engines
   './sprockets/mime': Mime
 }
-
+require! {
+  './engines/js': JsEngine
+  './engines/ls': LsEngine
+  './engines/css': CssEngine
+  './engines/scss': ScssEngine
+  './engines/less': LessEngine
+}
 # --- sprocket.rb ---
 # # Extend Sprockets module to provide global registry
 # extend Engines, Mime, Processing, Compressing, Paths
@@ -77,7 +83,7 @@ exports.registerCompressor 'text/css', 'sass'
 # # Mmm, CoffeeScript
 # register_engine '.coffee', LazyProcessor.new { CoffeeScriptTemplate }, mime_type: 'application/javascript'
 # --- sprocket.rb ---
-exports.registerEngine '.ls', mime_type: 'application/javascript'
+exports.registerEngine '.ls', LsEngine, mime_type: 'application/javascript'
 # --- sprocket.rb ---
 # # JST engines
 # register_engine '.jst',    LazyProcessor.new { JstProcessor }, mime_type: 'application/javascript'
@@ -89,8 +95,9 @@ exports.registerEngine '.ls', mime_type: 'application/javascript'
 # register_engine '.sass',   LazyProcessor.new { SassTemplate }, mime_type: 'text/css'
 # register_engine '.scss',   LazyProcessor.new { ScssTemplate }, mime_type: 'text/css'
 # --- sprocket.rb ---
-exports.registerEngine '.scss', mime_type: 'text/css'
-exports.registerEngine '.sass', mime_type: 'text/css'
+exports.registerEngine '.scss', ScssEngine, mime_type: 'text/css'
+exports.registerEngine '.sass', ScssEngine, mime_type: 'text/css'
+exports.registerEngine '.less', LessEngine, mime_type: 'text/css'
 # --- sprocket.rb ---
 # # Other
 # register_engine '.erb',    LazyProcessor.new { ERBTemplate }
