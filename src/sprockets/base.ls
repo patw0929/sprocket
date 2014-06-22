@@ -2,13 +2,13 @@ require! {
   crypto
 }
 require! {
-  Bundle: './bundle'
   Manifest: './manifest'
   Mime: './mime'
   Engines: './engines'
+  Processors: './processors'
 }
 # `Base` class for `Environment` and `Cached`.
-module.exports = class implements Bundle, Manifest, Mime, Engines
+module.exports = class implements Manifest, Mime, Engines, Processors
   # Returns a `Digest` implementation class.
   #
   # Defaults to `Digest::SHA1`.
@@ -26,6 +26,8 @@ module.exports = class implements Bundle, Manifest, Mime, Engines
       # expire_cache!
       @_digestHashName = it
 
+  hexDigestFor: (contents) ->
+    @digestHash.update contents .digest 'hex' .slice 0, 32
   # The `Environment#version` is a custom value used for manually
   # expiring all asset caches.
   #

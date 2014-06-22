@@ -14,7 +14,7 @@ module.exports = do
   # attr_reader :mime_exts
 
   registerMimeType: !(mime_type, options || {}) ->
-    const extnames = Array options.extensions .map (extname) ->
+    const extnames = options.extensions.map (extname) ->
       # Sprockets::Utils.normalize_extension(extname)
       extname
 
@@ -32,6 +32,9 @@ module.exports = do
   mimeTypeForExtname: (extname) ->
     @mime_exts[extname] or 'application/octet-stream'
 
+
+  extnameForMimeType: (mime_type) ->
+    @mime_types[mime_type].extensions.0
 
   # Public: Test mime type against mime range.
   #

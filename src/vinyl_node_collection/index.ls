@@ -15,6 +15,9 @@ class Collection
     @_nodes = {}
     @_version = Date.now!
 
+  vinyls:~
+    -> [vn.vinyl for keyPath, vn of @_nodes]
+
   version:~
     -> @_version
 

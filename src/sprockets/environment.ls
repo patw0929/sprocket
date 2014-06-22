@@ -18,6 +18,7 @@ class Environment extends Base
     @engine_extensions = Object.create(Sprockets.engine_extensions)
     @mime_exts = Object.create(Sprockets.mime_exts)
     @mime_types = Object.create(Sprockets.mime_types)
+    @postprocessors = Object.create(Sprockets.postprocessors)
     @manifest_filepaths = {}
     @vinyl_node_collections = {}
     #
@@ -45,6 +46,9 @@ class Environment extends Base
 
   createStylesheetsStream: ->
     @_createStream 'text/css'
+
+  createHtmlsStream: ->
+    @_createStream 'text/html'
 
 module.exports =  Environment
 # 
@@ -101,8 +105,9 @@ Environment::<<< {
     }
 
   _endStream: !(stream) ->
-    const eachFn = (if @isProduction then @_bundle else @_manifest).bind @, stream
-    @vinyl_node_collections[stream.mimeType]
-      .createRequireStates!
-      .forEach eachFn
+    const {mimeType} = stream
+    const Postprocessor = @postprocessors[mimeType]
+    const collection = @vinyl_node_collections[mimeType]
+    new Postprocessor @, collection, stream
+    .process!
 }

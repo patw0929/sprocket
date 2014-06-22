@@ -1,16 +1,24 @@
 require! {
   Engines: './sprockets/engines'
   Mime: './sprockets/mime'
+  Processors: './sprockets/processors'
   Environment: './sprockets/environment'
 }
 # `Processing` module: not needed since Stream already handle that
 # `Compressing` module: not needed since it's built-in
 require! {
+  EjsEngine: './engines/ejs'
   JsEngine: './engines/js'
   LsEngine: './engines/ls'
   CssEngine: './engines/css'
   ScssEngine: './engines/scss'
   LessEngine: './engines/less'
+  HtmlEngine: './engines/html'
+  JadeEngine: './engines/jade'
+}
+require! {
+  BundleOrManifestPostprocessor: './processors/bundle_or_manifest'
+  PassThroughPostprocessor: './processors/pass_through'
 }
 exports <<< {Environment}
 # --- sprocket.rb ---
@@ -19,6 +27,7 @@ exports <<< {Environment}
 # --- sprocket.rb ---
 exports <<< Engines
 exports <<< Mime
+exports <<< Processors
 # --- sprocket.rb ---
 # @root              = File.expand_path('..', __FILE__)
 # @paths             = []
@@ -35,6 +44,7 @@ exports.engines           = {}
 exports.engine_extensions = {}
 exports.mime_exts         = {}
 exports.mime_types        = {}
+exports.postprocessors    = {}
 # --- sprocket.rb ---
 # # Common asset text types
 # register_mime_type 'application/javascript', extensions: ['.js'], charset: EncodingUtils::DETECT_UNICODE
@@ -61,6 +71,9 @@ exports.registerMimeType 'text/plain', extensions: <[ .txt .text ]>
 # register_bundle_processor 'application/javascript', Bundle
 # register_bundle_processor 'text/css', Bundle
 # --- sprocket.rb ---
+exports.registerPostprocessor 'application/javascript', BundleOrManifestPostprocessor
+exports.registerPostprocessor 'text/css', BundleOrManifestPostprocessor
+exports.registerPostprocessor 'text/html', PassThroughPostprocessor
 # --- sprocket.rb ---
 # register_compressor 'text/css', :sass, LazyProcessor.new { SassCompressor }
 # register_compressor 'text/css', :scss, LazyProcessor.new { SassCompressor }
@@ -95,4 +108,5 @@ exports.registerEngine '.less', LessEngine, mime_type: 'text/css'
 # # Other
 # register_engine '.erb',    LazyProcessor.new { ERBTemplate }
 # --- sprocket.rb ---
-# exports.registerEngine '.ejs'
+exports.registerEngine '.html', HtmlEngine, mime_type: 'text/html'
+exports.registerEngine '.jade', JadeEngine, mime_type: 'text/html'
