@@ -17,6 +17,7 @@ require! {
   JadeEngine: './engines/jade'
 }
 require! {
+  EjsPreprocessor: './processors/ejs'
   BundleOrManifestPostprocessor: './processors/bundle_or_manifest'
   PassThroughPostprocessor: './processors/pass_through'
 }
@@ -44,6 +45,7 @@ exports.engines           = {}
 exports.engine_extensions = {}
 exports.mime_exts         = {}
 exports.mime_types        = {}
+exports.preprocessors     = {}
 exports.postprocessors    = {}
 #
 # Public API
@@ -71,6 +73,9 @@ exports.registerMimeType 'text/plain', extensions: <[ .txt .text ]>
 # register_preprocessor 'text/css', DirectiveProcessor
 # register_preprocessor 'application/javascript', DirectiveProcessor
 # --- sprocket.rb ---
+exports.registerPreprocessor 'application/javascript', EjsPreprocessor
+exports.registerPreprocessor 'text/css', EjsPreprocessor
+exports.registerPreprocessor 'text/html', EjsPreprocessor
 # --- sprocket.rb ---
 # register_bundle_processor 'application/javascript', Bundle
 # register_bundle_processor 'text/css', Bundle

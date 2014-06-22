@@ -61,7 +61,7 @@ class BundleOrManifest
     const extname   = @environment.extnameForMimeType @mimeType
 
     @stream.push new File do
-      path: path.join dirname, "#basename-#MANIFEST_BASENAME#extname#MANIFEST_EXTNAME"
+      path: path.join dirname, "#basename#MANIFEST_BASENAME#extname#MANIFEST_EXTNAME"
       contents: new Buffer(JSON.stringify relativeFilepaths, null, 2)
 
 module.exports = BundleOrManifest

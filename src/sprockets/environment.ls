@@ -18,6 +18,7 @@ class Environment extends Base
     @engine_extensions  = Object.create(Sprockets.engine_extensions)
     @mime_exts          = Object.create(Sprockets.mime_exts)
     @mime_types         = Object.create(Sprockets.mime_types)
+    @preprocessors      = Object.create(Sprockets.preprocessors)
     @postprocessors     = Object.create(Sprockets.postprocessors)
     #
     @view_locals        = Object.create(Sprockets.viewLocals)
@@ -74,8 +75,15 @@ Environment::<<< {
     #
     const extEngines = {}
     const dispatchStartStream = new Transform objectMode: true
-    dispatchStartStream._transform = !(file, enc, done) ->
-      extEngines[path.extname file.path].write file
+    dispatchStartStream._transform = !(file, enc, done) ~>
+      const extname = path.extname file.path
+      const dispatchToStream = if extEngines[extname] then that
+      else if @preprocessors[mime_type]
+        const passThroughStream = new PassThrough objectMode: true
+        that @, passThroughStream, dispatchStartStream
+        passThroughStream
+      #
+      dispatchToStream.write file
       done!
     #
     # build up all extension engines
