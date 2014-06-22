@@ -1,3 +1,18 @@
+## 0.2.0 (2014-06-22)
+
+
+#### Features
+
+* **Sprocket:** rewrite module from ruby ([6c91e27f](https://github.com/tomchentw/sprocket/commit/6c91e27fb06ec4bda706b1fe5b8527e907ce1a6a))
+* **Sprockets:**
+  * add ejs template support ([ebd3a813](https://github.com/tomchentw/sprocket/commit/ebd3a813f2fe88e8182713a15c5a03d617676a7c))
+  * added viewLocals for prototype chain ([315990a1](https://github.com/tomchentw/sprocket/commit/315990a1c35e58b7838f0ce9be2ae922ce333bb7))
+  * added htmls stream support and postprocessors ([cacd1cd8](https://github.com/tomchentw/sprocket/commit/cacd1cd80dd97bce08fab5b33eea4f8ebb30a9d8))
+  * remove old sprocket ([4d6a8b87](https://github.com/tomchentw/sprocket/commit/4d6a8b87f98b1b9a8da7b8f826fe3602e47d7404))
+  * remove preprocessor and compressor ([a046396e](https://github.com/tomchentw/sprocket/commit/a046396e6aa66d6468190b03a161050fcdd1176e))
+* **package.json:** update dependencies for html and ejs ([0eea92d2](https://github.com/tomchentw/sprocket/commit/0eea92d29e24132765e8f5323879ead22218a1c6))
+
+
 ### 0.1.2 (2014-06-20)
 
 
