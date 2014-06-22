@@ -3,5 +3,6 @@
   "controllers/FooterCtrl.js",
   "models/User.js",
   "controllers/NavCtrl.js",
+  "config.js",
   "application.js"
 ]

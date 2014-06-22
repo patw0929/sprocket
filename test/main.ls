@@ -9,17 +9,15 @@ require! {
 
 const Sprocket = require if process.env.TRAVIS then '../lib' else '../src'
 
-(...) <-! describe 'sprocket'
+(...) <-! describe 'Environment'
 
 it 'should generate correct manifest json based on dependencies' !(done) ->
   @timeout 5000
-  const sprocket = Sprocket!
+  Sprocket.viewLocals.baseUrl = 'http://test/'
+  const environment = new Sprocket.Environment!
 
-  gulp.src <[
-    examples/client/javascripts/**/*.js
-    examples/client/javascripts/**/*.ls
-  ]>
-  .pipe sprocket.createJavascriptsStream!
+  gulp.src 'examples/client/javascripts/**/*.*'
+  .pipe environment.createJavascriptsStream!
   .on 'data' !(expectedFile) ->
     const basename = path.basename expectedFile.path
     return unless 'application-manifest.js.json' is basename
