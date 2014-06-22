@@ -1,14 +1,18 @@
 require! {
-  './sprockets/engines': Engines
-  './sprockets/mime': Mime
+  Engines: './sprockets/engines'
+  Mime: './sprockets/mime'
+  Environment: './sprockets/environment'
 }
+# `Processing` module: not needed since Stream already handle that
+# `Compressing` module: not needed since it's built-in
 require! {
-  './engines/js': JsEngine
-  './engines/ls': LsEngine
-  './engines/css': CssEngine
-  './engines/scss': ScssEngine
-  './engines/less': LessEngine
+  JsEngine: './engines/js'
+  LsEngine: './engines/ls'
+  CssEngine: './engines/css'
+  ScssEngine: './engines/scss'
+  LessEngine: './engines/less'
 }
+exports <<< {Environment}
 # --- sprocket.rb ---
 # # Extend Sprockets module to provide global registry
 # extend Engines, Mime, Processing, Compressing, Paths
@@ -27,16 +31,10 @@ exports <<< Mime
 # @bundle_processors = Hash.new { |h, k| h[k] = [] }
 # @compressors       = Hash.new { |h, k| h[k] = {} }
 # --- sprocket.rb ---
-exports.root              = '.'
-exports.paths             = []
-exports.mime_types        = {}
-exports.mime_exts         = {}
 exports.engines           = {}
 exports.engine_extensions = {}
-exports.preprocessors     = {}
-exports.postprocessors    = {}
-exports.bundle_processors = {}
-exports.compressors       = {}
+exports.mime_exts         = {}
+exports.mime_types        = {}
 # --- sprocket.rb ---
 # # Common asset text types
 # register_mime_type 'application/javascript', extensions: ['.js'], charset: EncodingUtils::DETECT_UNICODE
@@ -63,8 +61,6 @@ exports.registerMimeType 'text/plain', extensions: <[ .txt .text ]>
 # register_bundle_processor 'application/javascript', Bundle
 # register_bundle_processor 'text/css', Bundle
 # --- sprocket.rb ---
-exports.registerBundleProcessor 'application/javascript'
-exports.registerBundleProcessor 'text/css'
 # --- sprocket.rb ---
 # register_compressor 'text/css', :sass, LazyProcessor.new { SassCompressor }
 # register_compressor 'text/css', :scss, LazyProcessor.new { SassCompressor }
@@ -78,6 +74,7 @@ exports.registerBundleProcessor 'text/css'
 # # Mmm, CoffeeScript
 # register_engine '.coffee', LazyProcessor.new { CoffeeScriptTemplate }, mime_type: 'application/javascript'
 # --- sprocket.rb ---
+exports.registerEngine '.js', JsEngine, mime_type: 'application/javascript'
 exports.registerEngine '.ls', LsEngine, mime_type: 'application/javascript'
 # --- sprocket.rb ---
 # # JST engines
@@ -90,6 +87,7 @@ exports.registerEngine '.ls', LsEngine, mime_type: 'application/javascript'
 # register_engine '.sass',   LazyProcessor.new { SassTemplate }, mime_type: 'text/css'
 # register_engine '.scss',   LazyProcessor.new { ScssTemplate }, mime_type: 'text/css'
 # --- sprocket.rb ---
+exports.registerEngine '.css', CssEngine, mime_type: 'text/css'
 exports.registerEngine '.scss', ScssEngine, mime_type: 'text/css'
 exports.registerEngine '.sass', ScssEngine, mime_type: 'text/css'
 exports.registerEngine '.less', LessEngine, mime_type: 'text/css'
@@ -97,4 +95,4 @@ exports.registerEngine '.less', LessEngine, mime_type: 'text/css'
 # # Other
 # register_engine '.erb',    LazyProcessor.new { ERBTemplate }
 # --- sprocket.rb ---
-exports.registerEngine '.ejs'
+# exports.registerEngine '.ejs'

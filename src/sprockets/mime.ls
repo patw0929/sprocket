@@ -13,7 +13,7 @@ module.exports = do
   #
   # attr_reader :mime_exts
 
-  registerMimeType: (mime_type, options || {}) ->
+  registerMimeType: !(mime_type, options || {}) ->
     const extnames = Array options.extensions .map (extname) ->
       # Sprockets::Utils.normalize_extension(extname)
       extname
@@ -25,10 +25,9 @@ module.exports = do
       @mime_exts[extname] = mime_type
     , @
 
-    @mime_types[mime_type] = {}
-    @mime_types[mime_type].extensions = extnames
-    @mime_types[mime_type].charset = charset if charset
-    @mime_types[mime_type]
+    @mime_types[mime_type] = do
+      extensions: extnames
+      charset: charset if charset
 
   mimeTypeForExtname: (extname) ->
     @mime_exts[extname] or 'application/octet-stream'
