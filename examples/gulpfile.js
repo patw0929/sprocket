@@ -1,21 +1,22 @@
 var gulp = require('gulp');
 var gulpJade = require('gulp-jade');
 var gulpLivereload = require('gulp-livereload');
-var Sprocket = require('sprocket');
+require('LiveScript');
+var Sprocket = require('../src');
+Sprocket.viewLocals.pkg = require('./package.json');
+Sprocket.viewLocals.baseUrl = 'http://localhost:5000/';
+Sprocket.viewLocals.bootstrapFontPath = 'http://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/';
 
-var sprocket = Sprocket();
+var environment = new Sprocket.Environment();
 var PUBLIC_PATH = 'public/';
 var ASSETS_PATH = '/assets/';
-if (!sprocket.environment.isProduction) {
+if (!environment.isProduction) {
   PUBLIC_PATH = 'tmp/' + PUBLIC_PATH;
 }
 
 gulp.task('js', function () {
-  return gulp.src([
-    'client/javascripts/**/*.js',
-    'client/javascripts/**/*.ls'
-  ])
-  .pipe(sprocket.createJavascriptsStream())
+  return gulp.src('client/javascripts/**/*.*')
+  .pipe(environment.createJavascriptsStream())
   .pipe(gulp.dest(PUBLIC_PATH+ASSETS_PATH));
 });
 
@@ -26,23 +27,15 @@ gulp.task('css', function(){
     'client/stylesheets/*',
     'bower_components/**/*.css'
   ])
-  .pipe(sprocket.createStylesheetsStream())
+  .pipe(environment.createStylesheetsStream())
   .pipe(gulp.dest(PUBLIC_PATH+ASSETS_PATH));
 });
 
 gulp.task('html', ['js', 'css'], function(){
-  var locals = sprocket.createViewHelpers({
-    assetsPath: ASSETS_PATH
-  });
-  locals.pkg = require('./package.json');
-  var stream = gulp.src('client/views/**/*.jade')
-  .pipe(gulpJade({
-    pretty: true,
-    doctype: 'html',
-    locals: locals
-  }))
+  var stream = gulp.src('client/views/**/*.*')
+  .pipe(environment.createHtmlsStream())
   .pipe(gulp.dest(PUBLIC_PATH));
-  if (!sprocket.environment.isProduction) {
+  if (!environment.isProduction) {
     stream = stream.pipe(gulpLivereload());
   }
   return stream;
