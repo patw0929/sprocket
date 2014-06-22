@@ -14,11 +14,14 @@ require! {
 class Environment extends Base
 
   !->
-    @engines = Object.create(Sprockets.engines)
-    @engine_extensions = Object.create(Sprockets.engine_extensions)
-    @mime_exts = Object.create(Sprockets.mime_exts)
-    @mime_types = Object.create(Sprockets.mime_types)
-    @postprocessors = Object.create(Sprockets.postprocessors)
+    @engines            = Object.create(Sprockets.engines)
+    @engine_extensions  = Object.create(Sprockets.engine_extensions)
+    @mime_exts          = Object.create(Sprockets.mime_exts)
+    @mime_types         = Object.create(Sprockets.mime_types)
+    @postprocessors     = Object.create(Sprockets.postprocessors)
+    #
+    @view_locals        = Object.create(Sprockets.viewLocals)
+    #
     @manifest_filepaths = {}
     @vinyl_node_collections = {}
     #
@@ -39,7 +42,7 @@ class Environment extends Base
     -> @base_paths
 
   viewLocals:~
-    -> new Locals @
+    -> Locals.call Object.create(@view_locals), @
 
   createJavascriptsStream: ->
     @_createStream 'application/javascript'

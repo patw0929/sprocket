@@ -45,6 +45,10 @@ exports.engine_extensions = {}
 exports.mime_exts         = {}
 exports.mime_types        = {}
 exports.postprocessors    = {}
+#
+# Public API
+#
+exports.viewLocals        = {}
 # --- sprocket.rb ---
 # # Common asset text types
 # register_mime_type 'application/javascript', extensions: ['.js'], charset: EncodingUtils::DETECT_UNICODE

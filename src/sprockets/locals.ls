@@ -3,14 +3,16 @@ require! {
   url
 }
 
-class Locals
+module.exports = Locals
 
-  !(@_environment) ->
-    #
-    # We also create underscored version for you
-    #
-    [@[underscore(name)] = @[name] = fn.bind @ for name, fn of ::]
+function Locals (@_environment)
+  #
+  # We also create underscored version for you
+  #
+  [@[underscore(name)] = @[name] = fn.bind @ for name, fn of Locals::]
+  @
 
+Locals::<<< {
   javascriptIncludeTag: (keyPath, options || {}) ->
     options.assetsPath ||= '/assets/'
     options.indent ||= '  '*2# html->head/body->tag
@@ -26,8 +28,7 @@ class Locals
     @_environment.getManifestFilepaths 'text/css', keyPath
     .map createStyleTag, options
     .join os.EOL
-
-module.exports = Locals
+}
 /*
  * Private APIs
  */
