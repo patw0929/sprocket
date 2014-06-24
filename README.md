@@ -16,9 +16,9 @@ The only required dependency is [gulpjs](http://gulpjs.com/). We use `gulpfile` 
 
 ![2014-06-17 11 09 53](https://cloud.githubusercontent.com/assets/922234/3295893/f1f9da46-f5cc-11e3-99d3-79f5f2be5176.png)
 
-### And include it in your `index.jade`: 
+### And include it in your `index.jade` (or `admin.html.ejs`): 
 
-![2014-06-17 11 12 23](https://cloud.githubusercontent.com/assets/922234/3295906/44dcce30-f5cd-11e3-9a6b-015efd8f0ec2.png)
+![2014-06-24 6 28 41](https://cloud.githubusercontent.com/assets/922234/3370075/602d4332-fb8a-11e3-9365-a380e198173b.png)
 
 ### Running your [`gulpfile.js` with `server` task](#under-development) and open the browser:
 
