@@ -30,17 +30,16 @@ class Node
    * Returns false if it cannot unstablize (the content isn't changed!)
    */
   unstablize: (collection, vinyl) ->
-    const contents      = vinyl.contents.toString!
-    const dependencies  = parseDependencies contents
-    
-    const newDep  = JSON.stringify dependencies
-    const newHash = crypto.createHash 'sha1' .update contents .digest 'hex'
-    @_unstable    = newDep isnt @_cached_deps or newHash isnt @_cached_hash 
+    const contents  = vinyl.contents.toString!
+    const newHash   = crypto.createHash 'sha1' .update contents .digest 'hex'
+    @_unstable      = newHash isnt @_cached_hash
 
     if @_unstable
-      @_cached_deps = newDep
       @_cached_hash = newHash
       @_vinyl       = vinyl
+
+      const dependencies  = parseDependencies contents
+      @_cached_deps = JSON.stringify dependencies
       @_edges = dependencies.map ->
         new (getEdgeCtor it)(collection, @, it)
       , @
