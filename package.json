@@ -1,7 +1,7 @@
 {
   "name": "sprocket",
   "version": "0.2.1",
-  "description": "Opinioned asset build tools for any javascript frameworks. Inspired from ruby Sprocket and gulpjs.",
+  "description": "Opinioned, Convention over Configuration asset build tool for any javascript frameworks.",
   "main": "lib/index.js",
   "scripts": {
     "test": "mocha -R spec --compilers ls:LiveScript",
@@ -14,8 +14,15 @@
   "keywords": [
     "LiveScript",
     "gulp",
-    "sprocket",
-    "assets"
+    "sprockets",
+    "rails",
+    "assets",
+    "pipeline",
+    "assets pipeline",
+    "require",
+    "require_tree",
+    "javascripts_include_tag",
+    "stylesheets_link_tag"
   ],
   "author": {
     "name": "tomchentw",

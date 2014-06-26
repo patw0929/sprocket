@@ -1,5 +1,5 @@
 # sprocket [![Travis CI][travis-image]][travis-url] [![Quality][codeclimate-image]][codeclimate-url] [![Coverage][coveralls-image]][coveralls-url] [![Dependencies][gemnasium-image]][gemnasium-url]
-> Opinioned asset build tools for any javascript frameworks. Inspired from ruby Sprocket and gulpjs.
+> Opinioned, Convention over Configuration asset build tool for any javascript frameworks.
 
 [![Version][npm-image]][npm-url]
 
@@ -64,7 +64,7 @@ It's simple. Go to the [APIs](https://github.com/tomchentw/sprocket/blob/master/
 </tr>
 <tr>
 <td>Description</td>
-<td>Opinioned asset build tools for any javascript frameworks. Inspired from ruby Sprocket and gulpjs.</td>
+<td>Opinioned, Convention over Configuration asset build tool for any javascript frameworks.</td>
 </tr>
 <tr>
 <td>Node Version</td>
