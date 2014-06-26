@@ -10,61 +10,50 @@ The only required dependency is [gulpjs](http://gulpjs.com/). We use `gulpfile` 
 
 ## Quick Overview
 
-### With your `javascripts` like this:
+**4 Steps** to bring all goodies to your front end development!
 
-**Notice**: project structure in the left
+### 1. With your `assets` files:
 
-![2014-06-17 11 09 53](https://cloud.githubusercontent.com/assets/922234/3295893/f1f9da46-f5cc-11e3-99d3-79f5f2be5176.png)
+![2014-06-27 12 35 25](https://cloud.githubusercontent.com/assets/922234/3401418/39491f76-fd50-11e3-88ef-68a54f7a508e.png)
 
-### And include it in your `index.jade` (or `admin.html.ejs`): 
+**Notice** the project structure in the left
 
-![2014-06-24 6 28 41](https://cloud.githubusercontent.com/assets/922234/3370075/602d4332-fb8a-11e3-9365-a380e198173b.png)
+### 2. Specify the dependency in `admin.html.ejs` (or `index.jade`): 
 
-### Running your [`gulpfile.js` with `server` task](#under-development) and open the browser:
+![2014-06-27 12 36 58](https://cloud.githubusercontent.com/assets/922234/3401420/3aa3df1e-fd50-11e3-9edf-97f853a22d23.png)
 
-![2014-06-17 11 14 11](https://cloud.githubusercontent.com/assets/922234/3295916/8ce5484c-f5cd-11e3-98d9-9c9535c1c0d6.png)
+### 3. Running server under [development mode](#under-development):
 
-### [In production](#in-production), looks like this:
+![2014-06-27 12 33 04](https://cloud.githubusercontent.com/assets/922234/3401423/3c719200-fd50-11e3-96b8-52af187f7006.png)
 
-![2014-06-17 11 16 44](https://cloud.githubusercontent.com/assets/922234/3295928/d6ae0eaa-f5cd-11e3-8f28-5e39dcdb90de.png)
+* Resolving dependencies
+* Compiling languages extensions
+* Running linting tools
 
-### That's Awesome!
+### 4. [`npm start`](#in-production) on production:
+
+![2014-06-27 12 34 11](https://cloud.githubusercontent.com/assets/922234/3401425/3de9f6e0-fd50-11e3-8452-f6661c556eed.png)
+
+* Minifying
+* Concating
+* Reversioning
+
+**See** the [example project](https://github.com/tomchentw/sprocket/blob/master/examples) for these steps.
+
+### Convention over Configuration Wins
 
 
 ## Usage
 
-It's simple and works just like rails does. Typical steps are:
 
-1. create a [`application.js`](https://github.com/tomchentw/sprocket/blob/master/examples/client/javascripts/application.js), declare dependencies to mark it as an entry point.
-
-2. use [`javascriptIncludeTag`](https://github.com/tomchentw/sprocket/blob/master/docs/apis/sprocket.md#javascriptincludetagfilename--javascript_include_tagfilename) inside [`index.jade`](https://github.com/tomchentw/sprocket/blob/master/examples/client/views/index.jade#L19) to include `application.js` as script tag(s).
-
-3. create a [`gulpfile.js`](https://github.com/tomchentw/sprocket/blob/master/examples/gulpfile.js#L6) to initialize a [`sprocket`](https://github.com/tomchentw/sprocket/blob/master/docs/apis/index.md) instance and [compile assets](https://github.com/tomchentw/sprocket/blob/master/docs/apis/sprocket.md#sprocketcreatejavascriptsstream).
-
-4. output the compiled assets and htmls to a folder and serve them in [`index.js`](https://github.com/tomchentw/sprocket/blob/master/examples/index.js#L14)
+It's simple. Go to the [APIs](https://github.com/tomchentw/sprocket/blob/master/docs/apis/index.md) page and walk through it.
 
 
-## Example
+## Docs
 
-See the [`examples`](https://github.com/tomchentw/sprocket/tree/master/examples) folder and a complete [`gulpfile.js`](https://github.com/tomchentw/sprocket/blob/master/examples/gulpfile.js) for the above example.
+### [Incentive](https://github.com/tomchentw/sprocket/blob/master/docs/incentive.md)
 
-### Under Development
-
-```shell
-cd examples
-npm install
-gulp server
-```
-It will start a connect server on port 5000, as well as a livereload server on port 35729, automatically watch changes and recompile the aseets. Look at the compiled [`index.html`](https://github.com/tomchentw/sprocket/blob/master/examples/client/views/index.jade) to see how `javascript_include_tag` get transformed into the `<script ...>` tags.
-
-### In Production
-
-```shell
-export NODE_ENV=production
-npm start
-```
-
-It will compile and concat javascripts and stylesheets into one files with versioning support. You need to just run once `gulp html` before releasing your new version.
+### [APIs](https://github.com/tomchentw/sprocket/blob/master/docs/apis/index.md)
 
 
 ## Information
@@ -86,13 +75,6 @@ It will compile and concat javascripts and stylesheets into one files with versi
 <td>>= 3.5.0</td>
 </tr>
 </table>
-
-
-## Docs
-
-### [Incentive](https://github.com/tomchentw/sprocket/blob/master/docs/incentive.md)
-
-### [API](https://github.com/tomchentw/sprocket/blob/master/docs/apis/index.md)
 
 
 ## Contributing
