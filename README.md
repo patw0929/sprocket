@@ -22,21 +22,21 @@ The only required dependency is [gulpjs](http://gulpjs.com/). We use `gulpfile` 
 
 ![2014-06-27 12 36 58](https://cloud.githubusercontent.com/assets/922234/3401420/3aa3df1e-fd50-11e3-9edf-97f853a22d23.png)
 
-### 3. Running server under [development mode](#under-development):
+### 3. Running server under [development mode](https://github.com/tomchentw/sprocket/tree/master/examples#under-development):
 
 ![2014-06-27 12 33 04](https://cloud.githubusercontent.com/assets/922234/3401423/3c719200-fd50-11e3-96b8-52af187f7006.png)
 
-* Resolving dependencies
-* Compiling languages extensions
+* [Resolving dependencies](https://github.com/tomchentw/sprocket/blob/master/docs/dependency_management.md)
+* Compiling [languages extensions](https://github.com/tomchentw/sprocket/blob/master/docs/language_extensions.md)
 * Running linting tools
 
-### 4. [`npm start`](#in-production) on production:
+### 4. [`npm start`](https://github.com/tomchentw/sprocket/tree/master/examples#in-production) in production:
 
 ![2014-06-27 12 34 11](https://cloud.githubusercontent.com/assets/922234/3401425/3de9f6e0-fd50-11e3-8452-f6661c556eed.png)
 
-* Minifying
-* Concating
-* Reversioning
+* [Minifying](https://github.com/tomchentw/sprocket/blob/master/docs/seamless_integration.md#minification)
+* [Concating](https://github.com/tomchentw/sprocket/blob/master/docs/seamless_integration.md#concation)
+* [Reversioning](https://github.com/tomchentw/sprocket/blob/master/docs/seamless_integration.md#versioning-and-renaming)
 
 **See** the [example project](https://github.com/tomchentw/sprocket/blob/master/examples) for these steps.
 
