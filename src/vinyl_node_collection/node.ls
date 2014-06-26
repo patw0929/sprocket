@@ -1,16 +1,21 @@
 require! {
+  crypto
+}
+require! {
   Edge: './edge'
   SuperNode: './super_node'
 }
 
 class Node
+  # @_digestHash = crypto.createHash 'sha1'
 
   !(@keyPath) ->
-    @_dependencies = ''
-    @_edges = []
-    @_unstable = true
+    @_cached_deps = ''
+    @_cached_hash = void
     @_version = void
+    @_unstable = true
     @_vinyl = void
+    @_edges = []
 
   hasAnyEdges:~
     -> @_edges.length > 0
@@ -21,16 +26,26 @@ class Node
   isUnstable: (collection) ->
     @_unstable || @_version isnt collection.version
 
-  unstablize: !(collection, vinyl) ->
-    const dependencies = parseDependencies vinyl.contents.toString!
-    const stringified = JSON.stringify dependencies
-    if stringified isnt @_dependencies
-      @_unstable = true
-      @_dependencies = stringified
-      @_vinyl = vinyl
+  /*
+   * Returns false if it cannot unstablize (the content isn't changed!)
+   */
+  unstablize: (collection, vinyl) ->
+    const contents      = vinyl.contents.toString!
+    const dependencies  = parseDependencies contents
+    
+    const newDep  = JSON.stringify dependencies
+    const newHash = crypto.createHash 'sha1' .update contents .digest 'hex'
+    @_unstable    = newDep isnt @_cached_deps or newHash isnt @_cached_hash 
+
+    if @_unstable
+      @_cached_deps = newDep
+      @_cached_hash = newHash
+      @_vinyl       = vinyl
       @_edges = dependencies.map ->
         new (getEdgeCtor it)(collection, @, it)
       , @
+      console.log vinyl.path
+    @_unstable
 
   stablize: !(collection, vinyl) ->
     @_unstable = false

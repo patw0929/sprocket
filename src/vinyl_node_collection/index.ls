@@ -29,7 +29,7 @@ class Collection
       [return false for keyPath, vn of @_nodes when vn.isUnstable @] 
       true
 
-  createNode: !(vinyl, stream) ->
+  createNode: (vinyl, stream) ->
     @_createNodeWith vinyl.relative
       .unstablize @, vinyl
 
