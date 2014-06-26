@@ -9,10 +9,11 @@ var gulp = require('gulp');
 var Sprocket = require('sprocket');
 ```
 
-Then, create a `sprocket` instance:
+Then, create a `Sprocket.Environment` instance:
 
 ```javascript
-var sprocket = Sprocket();// create with conventions
+var environment = new Sprocket.Environment();// create with conventions
 ```
 
-Go [Sprocket](https://github.com/tomchentw/sprocket/blob/master/docs/apis/sprocket.md) docs on how to use `sprocket` instance.
+Okay, you're done... not yet.
+Go to the [Sprocket.Environment](https://github.com/tomchentw/sprocket/blob/master/docs/apis/environment.md) docs for next step.
