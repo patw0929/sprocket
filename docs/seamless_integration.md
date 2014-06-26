@@ -4,11 +4,11 @@ Two images are worth a thousand words.
 
 **Development**
 
-![2014-06-17 11 14 11](https://cloud.githubusercontent.com/assets/922234/3295916/8ce5484c-f5cd-11e3-98d9-9c9535c1c0d6.png)
+![2014-06-27 12 33 04](https://cloud.githubusercontent.com/assets/922234/3401423/3c719200-fd50-11e3-96b8-52af187f7006.png)
 
 **Production**
 
-![2014-06-17 11 16 44](https://cloud.githubusercontent.com/assets/922234/3295928/d6ae0eaa-f5cd-11e3-8f28-5e39dcdb90de.png)
+![2014-06-27 12 34 11](https://cloud.githubusercontent.com/assets/922234/3401425/3de9f6e0-fd50-11e3-8452-f6661c556eed.png)
 
 
 ## What does sprocketjs do in development?
@@ -28,10 +28,13 @@ For production, sprocketjs will automatically do these for your assets:
 2. concation
 3. versioning and renaming
 
-**Minification** will apply best practices in [MinifyResources @ Google PageSpeed](https://developers.google.com/speed/docs/insights/MinifyResources). This will dramitically reduce the size of code but don't affect any functionality. And you never and should't write the code with ugly naming like `a, b, c` just to reduce size. Let sprocketjs handles that.
+### Minification
+Minification will apply best practices in [MinifyResources @ Google PageSpeed](https://developers.google.com/speed/docs/insights/MinifyResources). This will dramitically reduce the size of code but don't affect any functionality. And you never and should't write the code with ugly naming like `a, b, c` just to reduce size. Let sprocketjs handles that.
 
 
-**Concation** of assets files would remove many small HTTP calls, saving the precious time of your consumer.
+### Concation
+Concation of assets files would remove many small HTTP calls, saving the precious time of your consumer.
 
-**Versioning and renaming** is applying best practices in [LeverageBrowserCaching @ Google PageSpeed](https://developers.google.com/speed/docs/insights/LeverageBrowserCaching). We're using MD5 hash from the file content, and postfixed it to the end of the filename. By doing this, you can set a maximun expiration date of your assets and leverage the best of browser cache.
+### Versioning and renaming
+Versioning and renaming is applying best practices in [LeverageBrowserCaching @ Google PageSpeed](https://developers.google.com/speed/docs/insights/LeverageBrowserCaching). We're using MD5 hash from the file content, and postfixed it to the end of the filename. By doing this, you can set a maximun expiration date of your assets and leverage the best of browser cache.
 
