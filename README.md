@@ -14,17 +14,17 @@ The only required dependency is [gulpjs](http://gulpjs.com/). We use `gulpfile` 
 
 ### 1. With your `assets` files:
 
-![2014-06-27 12 35 25](https://cloud.githubusercontent.com/assets/922234/3401418/39491f76-fd50-11e3-88ef-68a54f7a508e.png)
+![2014-06-27 11 58 18](https://cloud.githubusercontent.com/assets/922234/3414301/ffd91a9c-fe13-11e3-9132-cf6d08db0563.png)
 
 **Notice** the project structure in the left
 
-### 2. Specify the dependency in `admin.html.ejs` (or `index.jade`): 
+### 2. Specify the dependency in `admin.html.ejs` (or `index.jade`):
 
 ![2014-06-27 12 36 58](https://cloud.githubusercontent.com/assets/922234/3401420/3aa3df1e-fd50-11e3-9edf-97f853a22d23.png)
 
 ### 3. Running server under [development mode](https://github.com/tomchentw/sprocket/tree/master/examples#under-development):
 
-![2014-06-27 12 33 04](https://cloud.githubusercontent.com/assets/922234/3401423/3c719200-fd50-11e3-96b8-52af187f7006.png)
+![2014-06-27 11 56 47](https://cloud.githubusercontent.com/assets/922234/3414300/ffb905ea-fe13-11e3-885b-22f3876ffe0e.png)
 
 * [Resolving dependencies](https://github.com/tomchentw/sprocket/blob/master/docs/dependency_management.md)
 * Compiling [languages extensions](https://github.com/tomchentw/sprocket/blob/master/docs/language_extensions.md)

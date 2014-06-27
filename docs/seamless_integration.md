@@ -4,7 +4,7 @@ Two images are worth a thousand words.
 
 **Development**
 
-![2014-06-27 12 33 04](https://cloud.githubusercontent.com/assets/922234/3401423/3c719200-fd50-11e3-96b8-52af187f7006.png)
+![2014-06-27 11 56 47](https://cloud.githubusercontent.com/assets/922234/3414300/ffb905ea-fe13-11e3-885b-22f3876ffe0e.png)
 
 **Production**
 
