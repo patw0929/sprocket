@@ -1,5 +1,10 @@
 ### 0.2.2 (2014-06-27)
 
+#### Features
+
+* **Sprockets:** add to base_path for directory vinyls ([0bb54dc5](https://github.com/tomchentw/sprocket/commit/0bb54dc57fda47286c7486f29fdc24a92d62ba27))
+* **Node:** added full content cached support ([64ce2944](https://github.com/tomchentw/sprocket/commit/64ce2944bb13314749955925c955332e6eed619b))
+
 
 ### 0.2.1 (2014-06-22)
 
