@@ -43,7 +43,6 @@ class Node
       @_edges = dependencies.map ->
         new (getEdgeCtor it)(collection, @, it)
       , @
-      console.log vinyl.path
     @_unstable
 
   stablize: !(collection, vinyl) ->
