@@ -21,10 +21,11 @@ gulp.task('js', function () {
 
 gulp.task('css', function(){
   return gulp.src([
-    'bower_components/bootstrap/less/bootstrap.less',
-    'bower_components/bootstrap-sass-official/vendor/assets/stylesheets/bootstrap.scss',
+    'bower_components/bootstrap/less/',
+    'bower_components/bootstrap-sass-official/vendor/assets/stylesheets/',
     'client/stylesheets/*',
-    'bower_components/**/*.css'
+    'bower_components/**/*.css',
+    '!bower_components/bootstrap/dist/**/*',
   ])
   .pipe(environment.createStylesheetsStream())
   .pipe(gulp.dest(PUBLIC_PATH+ASSETS_PATH));
