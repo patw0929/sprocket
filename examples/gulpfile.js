@@ -14,7 +14,10 @@ if (!environment.isProduction) {
 }
 
 gulp.task('js', function () {
-  return gulp.src('client/javascripts/**/*.*')
+  return gulp.src([
+    'bower_components/**/*.min.js',
+    'client/javascripts/**/*.*'
+  ])
   .pipe(environment.createJavascriptsStream())
   .pipe(gulp.dest(PUBLIC_PATH+ASSETS_PATH));
 });
