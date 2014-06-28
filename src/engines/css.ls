@@ -5,7 +5,7 @@ require! {
 
 module.exports = !(environment, src, dest) ->
   if environment.isProduction
-    const filter = gulp-filter '!**/*.min.css'
+    const filter = gulp-filter <[ **/*.css !**/*.min.css ]>
     src.=pipe filter
     .pipe gulp-minify-css!
     .pipe filter.restore!

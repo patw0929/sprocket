@@ -5,7 +5,7 @@ require! {
 }
 
 module.exports = !(environment, src, dest) ->
-  const filter = gulp-filter '!**/*.min.js'
+  const filter = gulp-filter  <[ **/*.js !**/*.min.js ]>
   src.=pipe filter
   .pipe gulp-jshint!
   .pipe gulp-jshint.reporter('default')
