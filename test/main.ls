@@ -16,7 +16,10 @@ it 'should generate correct manifest json based on dependencies' !(done) ->
   Sprocket.viewLocals.baseUrl = 'http://test/'
   const environment = new Sprocket.Environment!
 
-  gulp.src 'examples/client/javascripts/**/*.*'
+  gulp.src <[
+    examples/bower_components/**/*.min.js
+    examples/client/javascripts/**/*.*
+  ]>
   .pipe environment.createJavascriptsStream!
   .on 'data' !(expectedFile) ->
     const basename = path.basename expectedFile.path

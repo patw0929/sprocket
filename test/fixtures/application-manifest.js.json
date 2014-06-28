@@ -1,4 +1,6 @@
 [
+  "jquery/dist/jquery.min.js",
+  "bootstrap/dist/js/bootstrap.min.js",
   "utils.js",
   "controllers/FooterCtrl.js",
   "models/User.js",
