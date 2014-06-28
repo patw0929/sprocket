@@ -2,6 +2,10 @@ language: node_js
 node_js:
 - '0.10'
 - '0.11'
+before_script:
+- cd examples
+- npm install
+- cd ..
 after_script:
 - npm run coveralls
 env:
