@@ -35,16 +35,14 @@ gulp.task('css', function(){
 });
 
 gulp.task('html', ['js', 'css'], function(){
-  var stream = gulp.src('client/views/**/*.*')
+  return gulp.src('client/views/**/*.*')
   .pipe(environment.createHtmlsStream())
   .pipe(gulp.dest(PUBLIC_PATH));
-  if (!environment.isProduction) {
-    stream = stream.pipe(gulpLivereload());
-  }
-  return stream;
 });
 
 gulp.task('server', ['html'], function(){
   gulp.watch(['client/**/*'], ['html']);
+  gulp.watch([PUBLIC_PATH + '/**/*']).on('change', gulpLivereload.changed);
+  gulpLivereload.listen();
   require('./index');
 });
