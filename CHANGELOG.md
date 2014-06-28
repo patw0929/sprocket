@@ -1,3 +1,11 @@
+### 0.2.3 (2014-06-28)
+
+
+#### Bug Fixes
+
+* **Engines:** correct multimatch pattern for gulp-filter ([f37cfa0d](https://github.com/tomchentw/sprocket/commit/f37cfa0da87edab18063d9555d72958332ebe6aa))
+
+
 ### 0.2.2 (2014-06-27)
 
 #### Features
