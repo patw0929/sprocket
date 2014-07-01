@@ -1,7 +1,16 @@
 var gulp = require('gulp');
 var gulpJade = require('gulp-jade');
 var gulpLivereload = require('gulp-livereload');
-var Sprocket = require('sprocket');
+var Sprocket;
+try {
+  // for development of sprocket, you could ignore it.
+  Sprocket = require('LiveScript') && require('../src');
+} catch (e) {
+  Sprocket = require('sprocket');
+}
+/*
+ * assign locals for views
+ */
 Sprocket.viewLocals.pkg = require('./package.json');
 Sprocket.viewLocals.baseUrl = 'http://localhost:5000/';
 Sprocket.viewLocals.bootstrapFontPath = 'http://netdna.bootstrapcdn.com/bootstrap/3.0.0/fonts/';
