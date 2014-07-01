@@ -31,7 +31,7 @@ class Collection
 
   createNode: (vinyl, stream) ->
     @_createNodeWith vinyl.relative
-      .unstablize @, vinyl
+      .tryUnstablize @, vinyl
 
   finalizeNode: !(vinyl, stream) ->
     const [keyPathWithMin, keyPath] = parseKeyPath vinyl.relative

@@ -29,7 +29,7 @@ class Node
   /*
    * Returns false if it cannot unstablize (the content isn't changed!)
    */
-  unstablize: (collection, vinyl) ->
+  tryUnstablize: (collection, vinyl) ->
     const contents  = vinyl.contents.toString!
     const newHash   = crypto.createHash 'sha1' .update contents .digest 'hex'
     @_unstable      = newHash isnt @_cached_hash
@@ -43,11 +43,16 @@ class Node
       @_edges = dependencies.map ->
         new (getEdgeCtor it)(collection, @, it)
       , @
+    else
+      @_updateVersion collection
     @_unstable
 
-  stablize: !(collection, vinyl) ->
-    @_unstable = false
+  _updateVersion: !(collection) ->
     @_version = collection.version
+
+  stablize: !(collection, vinyl) ->
+    @_updateVersion collection
+    @_unstable = false
     @_vinyl = vinyl
 
   pathMatches: (regex) ->

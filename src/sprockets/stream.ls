@@ -29,10 +29,7 @@ SprocketsTransform::<<< {
       @_environment._addBasePath file.path
     else
       @_environment._addBasePath file.base
-      if @_collection.createNode file, @
-        @_dispatchStartStream.write file
-      else
-        @_collection.finalizeNode file, @
+      @_dispatchStartStream.write file if @_collection.createNode file, @
     done!
 
   end: !->
