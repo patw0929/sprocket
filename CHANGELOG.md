@@ -1,3 +1,16 @@
+### 0.2.4 (2014-07-02)
+
+
+#### Bug Fixes
+
+* **Node:** update version directly if it's stable ([556132d6](https://github.com/tomchentw/sprocket/commit/556132d6036dbe4788ca3d71838dfc2d36d0fd10))
+
+
+#### Features
+
+* **package.json:** update dependencies ([072d3446](https://github.com/tomchentw/sprocket/commit/072d34460a8b2e6f75922331226b17c454fc19d5))
+
+
 ### 0.2.3 (2014-06-28)
 
 
