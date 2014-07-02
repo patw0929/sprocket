@@ -5,10 +5,11 @@ require! {
   Manifest: './manifest'
   Mime: './mime'
   Engines: './engines'
+  Templates: './templates'
   Processors: './processors'
 }
 # `Base` class for `Environment` and `Cached`.
-module.exports = class implements Manifest, Mime, Engines, Processors
+module.exports = class implements Manifest, Mime, Engines, Templates, Processors
   # Returns a `Digest` implementation class.
   #
   # Defaults to `Digest::SHA1`.

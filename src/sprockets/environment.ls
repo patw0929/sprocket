@@ -18,6 +18,7 @@ class Environment extends Base
     @engine_extensions  = Object.create(Sprockets.engine_extensions)
     @mime_exts          = Object.create(Sprockets.mime_exts)
     @mime_types         = Object.create(Sprockets.mime_types)
+    @templates          = Object.create(Sprockets.templates)
     @preprocessors      = Object.create(Sprockets.preprocessors)
     @postprocessors     = Object.create(Sprockets.postprocessors)
     #
@@ -71,29 +72,42 @@ Environment::<<< {
     const collection = @vinyl_node_collections[mime_type] ||= new VinylNodeCollection!
     collection.updateVersion!
     #
-    # create a engines stream map to to transformation
+    # create a templates, engines stream map to to transformation
     #
+    const tplEngines = {}
     const extEngines = {}
     const dispatchStartStream = new Transform objectMode: true
     dispatchStartStream._transform = !(file, enc, done) ~>
       const extname = path.extname file.path
-      const dispatchToStream = if extEngines[extname] then that
-      else if @preprocessors[mime_type]
-        const passThroughStream = new PassThrough objectMode: true
-        that @, passThroughStream, dispatchStartStream
-        passThroughStream
-      #
-      dispatchToStream.write file
+      # has more than one extname, treat last one as template
+      if path.extname(path.basename file.path, extname) and tplEngines[extname]
+        that.write file
+      else
+        extEngines[extname].write file
       done!
+
+    const dispatchEngineStream = new Transform objectMode: true
+    dispatchEngineStream._transform = !(file, enc, done) ~>
+      const extname = path.extname file.path
+      extEngines[extname].write file
+      done!
+    #
+    # build up all extension templates
+    #
+    for templateExtension, template of @templates
+      passThroughStream = new PassThrough objectMode: true
+      tplEngines[templateExtension] = passThroughStream
+      template(@, passThroughStream, dispatchEngineStream)
+    #
     #
     # build up all extension engines
     #
     for engineExtension, couldBeTargetExt of @engine_extensions
       continue if couldBeTargetExt isnt targetExtention
-      const passThroughStream = new PassThrough objectMode: true
+      passThroughStream = new PassThrough objectMode: true
       #
       extEngines[engineExtension] = passThroughStream
-      @engines[engineExtension](@, passThroughStream, dispatchStartStream)
+      @engines[engineExtension](@, passThroughStream, dispatchEngineStream)
     #
     # link the target extension stream up
     #

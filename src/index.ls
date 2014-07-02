@@ -1,10 +1,10 @@
 require! {
   Engines: './sprockets/engines'
   Mime: './sprockets/mime'
+  Templates: './sprockets/templates'
   Processors: './sprockets/processors'
   Environment: './sprockets/environment'
 }
-# `Processing` module: not needed since Stream already handle that
 # `Compressing` module: not needed since it's built-in
 require! {
   EjsEngine: './engines/ejs'
@@ -17,7 +17,9 @@ require! {
   JadeEngine: './engines/jade'
 }
 require! {
-  EjsPreprocessor: './processors/ejs'
+  EjsTemplate: './templates/ejs'
+}
+require! {
   BundleOrManifestPostprocessor: './processors/bundle_or_manifest'
   PassThroughPostprocessor: './processors/pass_through'
 }
@@ -28,6 +30,7 @@ exports <<< {Environment}
 # --- sprocket.rb ---
 exports <<< Engines
 exports <<< Mime
+exports <<< Templates
 exports <<< Processors
 # --- sprocket.rb ---
 # @root              = File.expand_path('..', __FILE__)
@@ -45,6 +48,7 @@ exports.engines           = {}
 exports.engine_extensions = {}
 exports.mime_exts         = {}
 exports.mime_types        = {}
+exports.templates         = {}
 exports.preprocessors     = {}
 exports.postprocessors    = {}
 #
@@ -73,9 +77,7 @@ exports.registerMimeType 'text/plain', extensions: <[ .txt .text ]>
 # register_preprocessor 'text/css', DirectiveProcessor
 # register_preprocessor 'application/javascript', DirectiveProcessor
 # --- sprocket.rb ---
-exports.registerPreprocessor 'application/javascript', EjsPreprocessor
-exports.registerPreprocessor 'text/css', EjsPreprocessor
-exports.registerPreprocessor 'text/html', EjsPreprocessor
+exports.registerTemplate '.ejs', EjsTemplate
 # --- sprocket.rb ---
 # register_bundle_processor 'application/javascript', Bundle
 # register_bundle_processor 'text/css', Bundle
@@ -119,3 +121,4 @@ exports.registerEngine '.less', LessEngine, mime_type: 'text/css'
 # --- sprocket.rb ---
 exports.registerEngine '.html', HtmlEngine, mime_type: 'text/html'
 exports.registerEngine '.jade', JadeEngine, mime_type: 'text/html'
+exports.registerEngine '.ejs', EjsEngine, mime_type: 'text/html'
