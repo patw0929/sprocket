@@ -1,9 +1,9 @@
-require! {
-  'gulp-htmlhint'
-  'gulp-minify-html'
-}
-
 module.exports = !(environment, src, dest) ->
+  require! {
+    'gulp-htmlhint'
+    'gulp-minify-html'
+  }
+
   src.=pipe gulp-htmlhint!
   .pipe gulp-htmlhint.reporter!
   #

@@ -1,8 +1,8 @@
-require! {
-  'gulp-jade'
-}
-
 module.exports = !(environment, src, dest) ->
+  require! {
+    'gulp-jade'
+  }
+
   const options = do
     pretty: !environment.isProduction,
     locals: environment.viewLocals

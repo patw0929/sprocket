@@ -1,8 +1,8 @@
-require! {
-  'gulp-sass'
-}
-
 module.exports = !(environment, src, dest) ->
+  require! {
+    'gulp-sass'
+  }
+
   const options = do
     includePaths: environment.basePaths
     outputStyle: if environment.isProduction then 'compressed' else 'nested'

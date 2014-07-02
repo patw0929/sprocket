@@ -1,10 +1,10 @@
-require! {
-  'gulp-jshint'
-  'gulp-filter'
-  'gulp-uglify'
-}
-
 module.exports = !(environment, src, dest) ->
+  require! {
+    'gulp-jshint'
+    'gulp-filter'
+    'gulp-uglify'
+  }
+
   const filter = gulp-filter  <[ **/*.js !**/*.min.js ]>
   src.=pipe filter
   .pipe gulp-jshint!
