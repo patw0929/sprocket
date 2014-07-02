@@ -1,3 +1,20 @@
+## 0.3.0 (2014-07-02)
+
+
+#### Bug Fixes
+
+* **VinylNodeCollection:** split src path with dest vinyl to resolve bug ([2ef393dd](https://github.com/tomchentw/sprocket/commit/2ef393dd6d97905937d22779e6d0a9c535a1fe2b))
+
+
+#### Features
+
+* **Engines:** lazy loaded engines depedencies ([6055aef4](https://github.com/tomchentw/sprocket/commit/6055aef4b979df8b0b7deb3d2d49345bae80a6e2))
+* **Preprocessors:** lazy loaded preprocessors depedencies ([63cd29d9](https://github.com/tomchentw/sprocket/commit/63cd29d9e19147b76643ae073563d8d0ed92e644))
+* **Sprockets:**
+  * lazily link engines and templates ([c2f60bca](https://github.com/tomchentw/sprocket/commit/c2f60bca682deb2e31db7605699cef779b3abef9))
+  * add templates support and ejs for html ([ce9260ba](https://github.com/tomchentw/sprocket/commit/ce9260ba6268e2f07ab53078a440770b495860c6))
+
+
 ### 0.2.4 (2014-07-02)
 
 
