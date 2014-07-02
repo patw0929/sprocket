@@ -1,4 +1,5 @@
 require! {
+  path
   crypto
 }
 require! {
@@ -14,14 +15,15 @@ class Node
     @_cached_hash = void
     @_version = void
     @_unstable = true
-    @_vinyl = void
+    @_src_path = void
+    @_dest_vinyl = void
     @_edges = []
 
   hasAnyEdges:~
     -> @_edges.length > 0
 
   vinyl:~
-    -> @_vinyl
+    -> @_dest_vinyl
 
   isUnstable: (collection) ->
     @_unstable || @_version isnt collection.version
@@ -36,7 +38,7 @@ class Node
 
     if @_unstable
       @_cached_hash = newHash
-      @_vinyl       = vinyl
+      @_src_path    = vinyl.path
 
       const dependencies  = parseDependencies contents
       @_cached_deps = JSON.stringify dependencies
@@ -53,10 +55,13 @@ class Node
   stablize: !(collection, vinyl) ->
     @_updateVersion collection
     @_unstable = false
-    @_vinyl = vinyl
+    @_dest_vinyl = vinyl
+
+  _resolveKeyPath: (keyPath) ->
+    path.join path.dirname(@_src_path), keyPath, path.sep
 
   pathMatches: (regex) ->
-    @_vinyl.path.match regex
+    @_src_path.match regex
   
   buildDependencies: (state) ->
     if state.needRequireOrInclude @

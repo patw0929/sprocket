@@ -25,7 +25,7 @@ function BaseSuperNode (collection, @fromNode, dependency)
   {@isRequireState, keyPath} = dependency
   if '.' is keyPath.charAt 0
     # is relative, translate to absolute path
-    path.join path.dirname(fromNode.vinyl.path), keyPath, path.sep
+    fromNode._resolveKeyPath keyPath
   else
     keyPath
 
