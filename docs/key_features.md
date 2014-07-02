@@ -2,7 +2,7 @@
 
 ## (Lazy Loaded) Extension Languages Support
 
-Support `.coffee`, `.sass`, `.less`, `.ls`, `.jade` ... out of the box.
+Support `.coffee`, `.sass`, `.less`, `.ls`, `.jade` ... out of the box.  
 Each extension languages are lazy loaded to reduce the commonjs `require` performance hit to minimal.
 
 ## Templating Languages Applys to Any Contents
@@ -24,7 +24,8 @@ You can declare dependencies on `.ls`, `.sass` files as well.
 
 ## BuiltIn Linting Tools
 
-Each compiled `.js`, `.css` and `.html` files are passed to their linters. Minified files like `.min.js` and `.min.css` will be ignored.
+Each compiled `.js`, `.css` and `.html` files are passed to their linters.  
+Minified files like `.min.js` and `.min.css` will be ignored.
 
 ## Compatible with LiveReload
 
@@ -32,7 +33,8 @@ Works well with `gulp.watch` and `gulp-livereload` plugin.
 
 ## Compile/Lint only on Content Changes
 
-During the LiveReload phase, contents passed in to Sprocket will be cached and just run compile/lint on changes ones. This make changes during development really fast.
+During the LiveReload phase, contents passed in to Sprocket will be cached and just run compile/lint on changes ones.  
+This make changes during development really fast.
 
 ## BuiltIn Minification Tools
 
@@ -49,7 +51,7 @@ The file `app-1696ce2424a5aed2c810774ec5e0fcb4.min.js` would never expires.
 
 ## Compatible with gulpjs
 
-We create streams tha handle `vinyl` objects and many `gulp-plugins` for extension languages so gulp is the best mate.
+We create streams tha handle `vinyl` objects and many `gulp-plugins` for extension languages so gulp is the best mate.  
 Or you'd like to write a Grunt plugin to support that, too?
 
 ## Build with Full Streaming Support
