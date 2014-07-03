@@ -1,6 +1,7 @@
 require! {
   path
   crypto
+  File: vinyl
 }
 require! {
   Edge: './edge'
@@ -8,15 +9,17 @@ require! {
 }
 
 class Node
-  # @_digestHash = crypto.createHash 'sha1'
+  @_null_file = new File!
 
   !(@keyPath) ->
     @_cached_deps = ''
     @_cached_hash = void
-    @_version = void
-    @_unstable = true
+    @_unstable = false
+    # Make all Nodes default to stable and only be unstable when tryUnstablize
+    # successes. This can let us find out the missing node that doens't go
+    # through the state from tryUnstablize to stablize
     @_src_path = void
-    @_dest_vinyl = void
+    @_dest_vinyl = @@_null_file
     @_edges = []
 
   hasAnyEdges:~
@@ -25,8 +28,8 @@ class Node
   vinyl:~
     -> @_dest_vinyl
 
-  isUnstable: (collection) ->
-    @_unstable || @_version isnt collection.version
+  isUnstable:~
+    -> @_unstable
 
   /*
    * Returns false if it cannot unstablize (the content isn't changed!)
@@ -45,15 +48,9 @@ class Node
       @_edges = dependencies.map ->
         new (getEdgeCtor it)(collection, @, it)
       , @
-    else
-      @_updateVersion collection
     @_unstable
 
-  _updateVersion: !(collection) ->
-    @_version = collection.version
-
-  stablize: !(collection, vinyl) ->
-    @_updateVersion collection
+  stablize: !(vinyl) ->
     @_unstable = false
     @_dest_vinyl = vinyl
 

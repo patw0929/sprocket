@@ -31,9 +31,22 @@ module.exports = class
       true
 
   addNodeIfNeeded: !(node) ->
-    if @needRequireOrInclude node
-      const {vinyl} = node
+    return unless @needRequireOrInclude node
+    const {vinyl} = node
+
+    if vinyl.isBuffer!
       @_keyPaths[node.keyPath] = true
-      if vinyl.isBuffer!
-        @_vinyls.push vinyl
-        @_totalBufferSize += vinyl.contents.length
+      @_vinyls.push vinyl
+      @_totalBufferSize += vinyl.contents.length
+    else
+      errorMessage = if vinyl.isNull!
+        "we can't find it in the files you passed in."
+      else if vinyl.isStream!
+        "we currently doesn't support streaming files."
+      else
+        "some unknown file error happens."
+      errorMessage = """
+You require #{ node.keyPath } but #{ errorMessage }
+Make sure gulp.src did select the file you wants.
+      """
+      throw errorMessage
