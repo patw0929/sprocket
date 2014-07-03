@@ -8,6 +8,6 @@ module.exports = !(environment, src, dest) ->
   .pipe gulp-htmlhint.reporter!
   #
   if environment.isProduction
-    src.=pipe gulp-minify-html comments: true, spare: true
+    src.=pipe gulp-minify-html comments: true, spare: true, empty: true
   #
   src.pipe dest
