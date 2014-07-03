@@ -1,3 +1,11 @@
+### 0.3.1 (2014-07-03)
+
+
+#### Bug Fixes
+
+* **HTML Engine:** Preserve empty attributes since angular attributes are often empty. ([9b4593a9](https://github.com/tomchentw/sprocket/commit/9b4593a90bc4171946ddd684bf5e3ac9ff8c4bad))
+
+
 ## 0.3.0 (2014-07-02)
 
 
