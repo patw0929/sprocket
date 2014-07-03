@@ -46,14 +46,17 @@ class BundleOrManifest
       contents: new Buffer(JSON.stringify relativeFilepaths)
 
   manifest: !(requireState) ->
-    const relativeFilepaths = requireState.vinyls.map (vinyl) ->
-      unless @outputtedPaths[vinyl.path]
-        @outputtedPaths[vinyl.path] = true
+    const {pathsChanged, nothingChanged, vinyls, keyPath} = requireState
+    return if nothingChanged
+
+    const relativeFilepaths = vinyls.map (vinyl) ->
+      const {path} = vinyl
+      if pathsChanged[path] and !@outputtedPaths[path]
+        @outputtedPaths[path] = true
         @stream.push vinyl
       vinyl.relative
     , @
 
-    const {keyPath} = requireState
     @environment.setManifestFilepaths @mimeType, keyPath, relativeFilepaths
 
     const dirname   = path.dirname keyPath
