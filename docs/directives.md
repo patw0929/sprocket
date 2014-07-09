@@ -34,7 +34,7 @@ In `env.createJavascriptsStream()`, `env.createStylesheetsStream()` and `env.cre
 
 The directive declares the dependency between the current file and a specific file. The dependencies are referred by their `keyPath`, as explained in the [dependency management documentation](https://github.com/tomchentw/sprocket/blob/master/docs/dependency_management.md).
 
-### Usage
+#### Usage
 
 In `apple.js`:
 
@@ -49,7 +49,7 @@ In `apple.js`:
 
 This directive inserts the content of the current file. It is useful when we need to declare dependencies after the body of current document.
 
-### Usage
+#### Usage
 
 In `apple.js`:
 
@@ -68,7 +68,7 @@ In `apple.js`:
 
 The directive pulls in all files under a directory. The child directories are not traversed. The dependencies are specified by relative path, starting from the current file.
 
-### Usage
+#### Usage
 
 In `apple.js`:
 
@@ -81,7 +81,7 @@ In `apple.js`:
 
 Similar to `require_directory`, but `require_tree` traverses the child directories.
 
-### Usage
+#### Usage
 
 In `apple.js`:
 
@@ -122,6 +122,6 @@ The current implementation of the directive does not support the existence of ot
 /*= require banana.js */
 ```
 
-### `require` specifies its path differently from `require_directory` and `require_tree`
+#### `require` specifies its path differently from `require_directory` and `require_tree`
 
 The `require` directive uses `keyPath`. `require_directory` and `require_tree` uses relative paths. This is because `require` matches wildcard and glob patterns, while it does not make sense for the latter two.
