@@ -26,7 +26,7 @@ class Collection
 
   isStable:~
     ->
-      [return false for keyPath, vn of @_nodes when vn.isUnstable @] 
+      [return false for keyPath, vn of @_nodes when vn.isUnstable]
       true
 
   createNode: (vinyl, stream) ->
@@ -37,7 +37,7 @@ class Collection
     const [keyPathWithMin, keyPath] = parseKeyPath vinyl.relative
     const fromNode = (keyPathWithMin and @_nodes[keyPathWithMin]) or @_nodes[keyPath]
     if fromNode
-      fromNode.stablize @, vinyl
+      fromNode.stablize vinyl
     else
       stream.emit 'error' "[VinylNode.Collection] Can't finalize node (#{ vinyl.path })"
 
