@@ -125,3 +125,10 @@ The current implementation of the directive does not support the existence of ot
 #### `require` specifies its path differently from `require_directory` and `require_tree`
 
 The `require` directive uses `keyPath`. `require_directory` and `require_tree` uses relative paths. This is because `require` matches wildcard and glob patterns, while it does not make sense for the latter two.
+
+
+#### "Cannot call method `map` of `undefined`" thrown by `stylesheetLinkTag` or `javascriptIncludeTag`
+
+The asset file specified in `stylesheetLinkTag` or `javascriptIncludeTag` must contain at least one sprocket directive. If the asset file requires no extra dependency, just put a `require_self`.
+
+This behavior is different from [Sprockets](https://github.com/sstephenson/sprockets/)'. There is [a reason](https://github.com/tomchentw/sprocket/issues/11) for this. A pull request to improve this is highly welcomed!
