@@ -1,3 +1,13 @@
+### 0.3.2 (2014-07-10)
+
+
+#### Features
+
+* **VinylNodeCollection:**
+  * only output files that just changed * same rule applied to manifest.json files * ([2b16fd2b](https://github.com/tomchentw/sprocket/commit/2b16fd2b39af6576f3cc16042ab33d7d04559d2d), closes [#16](https://github.com/tomchentw/sprocket/issues/16))
+  * change default behavior of node ([2bb8ad7a](https://github.com/tomchentw/sprocket/commit/2bb8ad7a18b63da3a742deb4bd4c99e66add0419))
+
+
 ### 0.3.1 (2014-07-03)
 
 
