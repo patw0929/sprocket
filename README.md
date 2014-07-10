@@ -18,6 +18,8 @@ The only required dependency is [gulpjs](http://gulpjs.com/). We use `gulpfile` 
 
 **Notice** the project structure in the left
 
+* [Supported sprocket directives](https://github.com/tomchentw/sprocket/blob/master/docs/directives.md)
+
 ### 2. Specify the dependency in `admin.html.ejs` (or `index.jade`):
 
 ![2014-06-27 12 36 58](https://cloud.githubusercontent.com/assets/922234/3401420/3aa3df1e-fd50-11e3-9edf-97f853a22d23.png)
