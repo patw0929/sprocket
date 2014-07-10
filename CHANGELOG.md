@@ -1,3 +1,11 @@
+### 0.3.3 (2014-07-11)
+
+
+#### Bug Fixes
+
+* **VinylNodeCollection:** added default unstable for a Node ([ce197637](https://github.com/tomchentw/sprocket/commit/ce197637eb5514a28d8324e0e123ab987acaf074), closes [#19](https://github.com/tomchentw/sprocket/issues/19))
+
+
 ### 0.3.2 (2014-07-10)
 
 
