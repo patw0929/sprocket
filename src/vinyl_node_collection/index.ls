@@ -11,7 +11,7 @@ require! {
 
 class Collection
 
-  !->
+  !(@_default_unstable) ->
     @_nodes = {}
     @_version = Date.now!
 
@@ -60,5 +60,5 @@ Collection::<<< {
   _createNodeWith: (/* relative_or_rawKeyPath */) ->
     const parsedKeyPaths = parseKeyPath it
     const keyPath = parsedKeyPaths.shift! or parsedKeyPaths.0
-    @_nodes[keyPath] ||= new Node keyPath
+    @_nodes[keyPath] ||= new Node keyPath, @_default_unstable
 }

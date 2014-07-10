@@ -69,7 +69,7 @@ Environment::<<< {
 
   _createStream: (mime_type) ->
     const targetExtention = @mime_types[mime_type].extensions.0
-    const collection = @vinyl_node_collections[mime_type] ||= new VinylNodeCollection!
+    const collection = @vinyl_node_collections[mime_type] ||= new VinylNodeCollection('text/html' is mime_type)
     collection.updateVersion!
 
     ~function createTemplates(extname)

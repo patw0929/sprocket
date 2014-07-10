@@ -11,12 +11,13 @@ require! {
 class Node
   @_null_file = new File!
 
-  !(@keyPath) ->
+  !(@keyPath, @_default_unstable) ->
     @_cached_deps = ''
     @_cached_hash = void
-    @_unstable = false
-    # Make all Nodes default to stable and only be unstable when tryUnstablize
-    # successes. This can let us find out the missing node that doens't go
+    @_unstable    = false
+    # Make all Nodes default to stable (unless specified)
+    # and only be unstable when tryUnstablize successes.
+    # This can let us find out the missing node that doens't go
     # through the state from tryUnstablize to stablize
     @_src_path = void
     @_dest_vinyl = @@_null_file
@@ -41,7 +42,7 @@ class Node
   tryUnstablize: (collection, vinyl) ->
     const contents  = vinyl.contents.toString!
     const newHash   = crypto.createHash 'sha1' .update contents .digest 'hex'
-    @_unstable      = newHash isnt @_cached_hash
+    @_unstable      = @_default_unstable or newHash isnt @_cached_hash
 
     if @_unstable
       @_cached_hash = newHash
