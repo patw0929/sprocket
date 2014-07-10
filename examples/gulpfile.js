@@ -5,6 +5,7 @@ var Sprocket;
 try {
   // for development of sprocket, you could ignore it.
   Sprocket = require('LiveScript') && require('../src');
+  console.log('Sprocket in development');
 } catch (e) {
   Sprocket = require('sprocket');
 }
