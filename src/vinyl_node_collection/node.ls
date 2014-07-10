@@ -20,6 +20,7 @@ class Node
     # through the state from tryUnstablize to stablize
     @_src_path = void
     @_dest_vinyl = @@_null_file
+    @_just_changed = true
     @_edges = []
 
   hasAnyEdges:~
@@ -30,6 +31,9 @@ class Node
 
   isUnstable:~
     -> @_unstable
+
+  justChanged:~
+    -> @_just_changed
 
   /*
    * Returns false if it cannot unstablize (the content isn't changed!)
@@ -48,11 +52,14 @@ class Node
       @_edges = dependencies.map ->
         new (getEdgeCtor it)(collection, @, it)
       , @
+    else
+      @_just_changed = false
     @_unstable
 
   stablize: !(vinyl) ->
     @_unstable = false
     @_dest_vinyl = vinyl
+    @_just_changed = true
 
   _resolveKeyPath: (keyPath) ->
     path.join path.dirname(@_src_path), keyPath, path.sep
