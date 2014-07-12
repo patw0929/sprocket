@@ -7,13 +7,13 @@ class SuperNode
 
   !->
     const keyPath = BaseSuperNode ...
-    @_filepathMatcher = new RegExp "^#{ keyPath }"
+    @_filepath_matcher = new RegExp "^#{ keyPath }"
 
 class Directory
 
   !->
     const keyPath = BaseSuperNode ...
-    @_filepathMatcher = new RegExp "^#{ keyPath }((?!#{ path.sep }).)*$"
+    @_filepath_matcher = new RegExp "^#{ keyPath }((?!#{ path.sep }).)*$"
 
 SuperNode <<< {Directory}
 
@@ -40,9 +40,9 @@ const prototype = do
     .forEach !-> it.buildDependencies state
 
   _filepathMatchedNodes: (_nodes) ->
-    const {fromNode, _filepathMatcher} = @
+    const {fromNode, _filepath_matcher} = @
     for keyPath, vn of _nodes
-      vn if vn isnt fromNode and vn.pathMatches _filepathMatcher
+      vn if vn isnt fromNode and vn.pathMatches _filepath_matcher
 
 SuperNode::<<< prototype
 Directory::<<< prototype
