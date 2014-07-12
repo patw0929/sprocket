@@ -69,7 +69,7 @@ class Node
     @_src_path.match regex
   
   buildDependencies: (state) ->
-    if state.needRequireOrInclude @
+    if state.should_include_node @
       @_edges.forEach state.build_dependencies_in_state, state
       #
       # add self to the end if it's not circular referred

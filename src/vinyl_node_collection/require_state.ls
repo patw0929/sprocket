@@ -32,7 +32,7 @@ module.exports = class
     try     edge._build_dependencies @
     finally @_in_require_states.pop!
 
-  needRequireOrInclude: (node) ->
+  should_include_node: (node) ->
     if @_in_require_states[*-1]
       not @_key_path_added[node.keyPath]
     else
@@ -42,7 +42,7 @@ module.exports = class
       true
 
   addNodeIfNeeded: !(node) ->
-    return unless @needRequireOrInclude node
+    return unless @should_include_node node
     const {vinyl, justChanged} = node
     @_paths_changed[vinyl.path] = justChanged
     @_nothing_changed = false if justChanged
