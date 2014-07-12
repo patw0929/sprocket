@@ -35,11 +35,11 @@ function pathSortFn (l, r)
 const prototype = do
 
   _build_dependencies: !(state) ->
-    @_filepathMatchedNodes state._collection._nodes
+    @_nodes_match_filepath state._collection._nodes
     .sort pathSortFn
     .forEach !-> it.buildDependencies state
 
-  _filepathMatchedNodes: (_nodes) ->
+  _nodes_match_filepath: (_nodes) ->
     const {fromNode, _filepath_matcher} = @
     for keyPath, vn of _nodes
       vn if vn isnt fromNode and vn.pathMatches _filepath_matcher
