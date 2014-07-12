@@ -12,7 +12,7 @@ module.exports = class
     @_paths_changed = {}
     @_nothing_changed = true
     @_vinyls = []
-    @_totalBufferSize = 0
+    @_total_buffer_size = 0
 
   pathsChanged:~
     -> @_paths_changed
@@ -25,7 +25,7 @@ module.exports = class
 
   bufferWithSeperator: (seperator) ->
     new Buffer do
-      @_totalBufferSize + @_vinyls.length * seperator.length
+      @_total_buffer_size + @_vinyls.length * seperator.length
 
   buildDependenciesInState: (edge) ->
     @_in_require_states.push edge.isRequireState
@@ -50,7 +50,7 @@ module.exports = class
     if vinyl.isBuffer!
       @_key_path_added[node.keyPath] = true
       @_vinyls.push vinyl
-      @_totalBufferSize += vinyl.contents.length
+      @_total_buffer_size += vinyl.contents.length
     else
       errorFn = if vinyl.isNull!
         NullFileError
