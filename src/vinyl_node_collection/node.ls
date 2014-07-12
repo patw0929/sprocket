@@ -74,7 +74,7 @@ class Node
       #
       # add self to the end if it's not circular referred
       #
-      state.addNodeIfNeeded @
+      state.include_node @
     state
 
 module.exports = Node

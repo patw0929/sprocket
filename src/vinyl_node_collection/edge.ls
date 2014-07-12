@@ -16,4 +16,4 @@ Circular::_build_dependencies = !(state) ->
   # We cannot call toNode.buildDependencies here since
   # it would call recursively and overflow the stack!
   #
-  state.addNodeIfNeeded @toNode
+  state.include_node @toNode

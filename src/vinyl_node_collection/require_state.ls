@@ -41,7 +41,7 @@ module.exports = class
       #
       true
 
-  addNodeIfNeeded: !(node) ->
+  include_node: !(node) ->
     return unless @should_include_node node
     const {vinyl, justChanged} = node
     @_paths_changed[vinyl.path] = justChanged
