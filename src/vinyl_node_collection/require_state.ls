@@ -9,13 +9,13 @@ module.exports = class
   !(@keyPath, @_collection) ->
     @_in_require_states = [true]
     @_key_path_added = {}
-    @_pathsChanged = {}
+    @_paths_changed = {}
     @_nothingChanged = true
     @_vinyls = []
     @_totalBufferSize = 0
 
   pathsChanged:~
-    -> @_pathsChanged
+    -> @_paths_changed
 
   nothingChanged:~
     -> @_nothingChanged
@@ -44,7 +44,7 @@ module.exports = class
   addNodeIfNeeded: !(node) ->
     return unless @needRequireOrInclude node
     const {vinyl, justChanged} = node
-    @_pathsChanged[vinyl.path] = justChanged
+    @_paths_changed[vinyl.path] = justChanged
     @_nothingChanged = false if justChanged
 
     if vinyl.isBuffer!
