@@ -27,7 +27,7 @@ module.exports = class
     new Buffer do
       @_total_buffer_size + @_vinyls.length * seperator.length
 
-  buildDependenciesInState: (edge) ->
+  build_dependencies_in_state: (edge) ->
     @_in_require_states.push edge.isRequireState
     try     edge._build_dependencies @
     finally @_in_require_states.pop!

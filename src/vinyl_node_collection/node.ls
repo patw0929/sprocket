@@ -70,7 +70,7 @@ class Node
   
   buildDependencies: (state) ->
     if state.needRequireOrInclude @
-      @_edges.forEach state.buildDependenciesInState, state
+      @_edges.forEach state.build_dependencies_in_state, state
       #
       # add self to the end if it's not circular referred
       #
