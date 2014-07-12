@@ -42,7 +42,7 @@ const prototype = do
   _nodes_match_filepath: (_nodes) ->
     const {fromNode, _filepath_matcher} = @
     for keyPath, vn of _nodes
-      vn if vn isnt fromNode and vn.pathMatches _filepath_matcher
+      vn if vn isnt fromNode and vn.path_matches _filepath_matcher
 
 SuperNode::<<< prototype
 Directory::<<< prototype

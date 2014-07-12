@@ -65,7 +65,7 @@ class Node
   resolve_key_path: (keyPath) ->
     path.join path.dirname(@_src_path), keyPath, path.sep
 
-  pathMatches: (regex) ->
+  path_matches: (regex) ->
     @_src_path.match regex
   
   buildDependencies: (state) ->
