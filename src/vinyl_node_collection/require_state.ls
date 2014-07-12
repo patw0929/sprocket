@@ -1,3 +1,9 @@
+require! {
+  AddNodeError: '../errors/add_node_error'
+  NullFileError: '../errors/null_file_error'
+  StreamContentError: '../errors/stream_content_error'
+}
+
 module.exports = class
 
   !(@keyPath, @_collection) ->
@@ -46,14 +52,10 @@ module.exports = class
       @_vinyls.push vinyl
       @_totalBufferSize += vinyl.contents.length
     else
-      errorMessage = if vinyl.isNull!
-        "we can't find it in the files you passed in."
+      errorFn = if vinyl.isNull!
+        NullFileError
       else if vinyl.isStream!
-        "we currently doesn't support streaming files."
+        StreamContentError
       else
-        "some unknown file error happens."
-      errorMessage = """
-You require #{ node.keyPath } but #{ errorMessage }
-Make sure gulp.src did select the file you wants.
-      """
-      throw errorMessage
+        AddNodeError
+      throw errorFn node.keyPath
