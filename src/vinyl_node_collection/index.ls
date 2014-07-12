@@ -3,6 +3,7 @@ require! {
   path
 }
 require! {
+  NodeFinalizationError: '../errors/node_finalization_error'
   Node: './node'
   Edge: './edge'
   SuperNode: './super_node'
@@ -39,7 +40,7 @@ class Collection
     if fromNode
       fromNode.stablize vinyl
     else
-      stream.emit 'error' "[VinylNode.Collection] Can't finalize node (#{ vinyl.path })"
+      stream.emit 'error' NodeFinalizationError keyPath, vinyl.path
 
   createRequireStates: ->
     for keyPath, node of @_nodes when node.hasAnyEdges
