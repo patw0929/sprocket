@@ -25,7 +25,7 @@ function BaseSuperNode (collection, @fromNode, dependency)
   {@isRequireState, keyPath} = dependency
   if '.' is keyPath.charAt 0
     # is relative, translate to absolute path
-    fromNode._resolveKeyPath keyPath
+    fromNode.resolve_key_path keyPath
   else
     keyPath
 

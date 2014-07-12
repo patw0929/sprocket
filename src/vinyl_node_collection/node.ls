@@ -62,7 +62,7 @@ class Node
     @_dest_vinyl = vinyl
     @_just_changed = true
 
-  _resolveKeyPath: (keyPath) ->
+  resolve_key_path: (keyPath) ->
     path.join path.dirname(@_src_path), keyPath, path.sep
 
   pathMatches: (regex) ->
