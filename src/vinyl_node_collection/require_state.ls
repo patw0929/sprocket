@@ -7,7 +7,7 @@ require! {
 module.exports = class
 
   !(@keyPath, @_collection) ->
-    @_inRequireStates = [true]
+    @_in_require_states = [true]
     @_keyPathAdded = {}
     @_pathsChanged = {}
     @_nothingChanged = true
@@ -28,12 +28,12 @@ module.exports = class
       @_totalBufferSize + @_vinyls.length * seperator.length
 
   buildDependenciesInState: (edge) ->
-    @_inRequireStates.push edge.isRequireState
+    @_in_require_states.push edge.isRequireState
     try     edge._build_dependencies @
-    finally @_inRequireStates.pop!
+    finally @_in_require_states.pop!
 
   needRequireOrInclude: (node) ->
-    if @_inRequireStates[*-1]
+    if @_in_require_states[*-1]
       not @_keyPathAdded[node.keyPath]
     else
       #
