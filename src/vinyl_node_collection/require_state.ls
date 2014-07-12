@@ -8,7 +8,7 @@ module.exports = class
 
   !(@keyPath, @_collection) ->
     @_in_require_states = [true]
-    @_keyPathAdded = {}
+    @_key_path_added = {}
     @_pathsChanged = {}
     @_nothingChanged = true
     @_vinyls = []
@@ -34,7 +34,7 @@ module.exports = class
 
   needRequireOrInclude: (node) ->
     if @_in_require_states[*-1]
-      not @_keyPathAdded[node.keyPath]
+      not @_key_path_added[node.keyPath]
     else
       #
       # include, so whatever do it
@@ -48,7 +48,7 @@ module.exports = class
     @_nothingChanged = false if justChanged
 
     if vinyl.isBuffer!
-      @_keyPathAdded[node.keyPath] = true
+      @_key_path_added[node.keyPath] = true
       @_vinyls.push vinyl
       @_totalBufferSize += vinyl.contents.length
     else
