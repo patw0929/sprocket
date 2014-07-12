@@ -34,7 +34,7 @@ function pathSortFn (l, r)
 
 const prototype = do
 
-  _buildDependencies: !(state) ->
+  _build_dependencies: !(state) ->
     @_filepathMatchedNodes state._collection._nodes
     .sort pathSortFn
     .forEach !-> it.buildDependencies state

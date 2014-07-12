@@ -29,7 +29,7 @@ module.exports = class
 
   buildDependenciesInState: (edge) ->
     @_inRequireStates.push edge.isRequireState
-    try     edge._buildDependencies @
+    try     edge._build_dependencies @
     finally @_inRequireStates.pop!
 
   needRequireOrInclude: (node) ->
