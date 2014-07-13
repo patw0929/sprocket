@@ -37,7 +37,7 @@ const prototype = do
   _build_dependencies: !(state) ->
     @_nodes_match_filepath state._collection._nodes
     .sort pathSortFn
-    .forEach !-> it.buildDependencies state
+    .forEach !-> it.build_dependencies state
 
   _nodes_match_filepath: (_nodes) ->
     const {fromNode, _filepath_matcher} = @

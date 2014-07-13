@@ -68,7 +68,7 @@ class Node
   path_matches: (regex) ->
     @_src_path.match regex
   
-  buildDependencies: (state) ->
+  build_dependencies: (state) ->
     if state.should_include_node @
       @_edges.forEach state.build_dependencies_in_state, state
       #
