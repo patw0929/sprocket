@@ -54,18 +54,19 @@ class Environment extends Base
 
   createHtmlsStream: ->
     @_createStream 'text/html'
-
-module.exports =  Environment
-# 
-# Private APIs
-# 
-const {Transform, PassThrough} = Stream
-Environment::<<< {
-
-  _addBasePath: ->
+  #
+  # Private APIs
+  #
+  add_base_path: ->
     const {_base_paths} = @
     [return false for basePath in _base_paths when basePath is it]
     !!_base_paths.push it
+
+
+module.exports =  Environment
+
+const {Transform, PassThrough} = Stream
+Environment::<<< {
 
   _createStream: (mime_type) ->
     const targetExtention = @_mime_types[mime_type].extensions.0

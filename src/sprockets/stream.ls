@@ -26,9 +26,9 @@ util.inherits SprocketsTransform, Transform
 SprocketsTransform::<<< {
   _transform: !(file, enc, done) ->
     if file.isDirectory!
-      @_environment._addBasePath file.path
+      @_environment.add_base_path file.path
     else
-      @_environment._addBasePath file.base
+      @_environment.add_base_path file.base
       @_dispatchStartStream.write file if @_collection.createNode file, @
     done!
 
