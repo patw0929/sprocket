@@ -49,7 +49,7 @@ exports._engine_extensions  = {}
 exports._mime_exts          = {}
 exports._mime_types         = {}
 exports._templates          = {}
-exports.preprocessors     = {}
+exports._preprocessors      = {}
 exports.postprocessors    = {}
 #
 # Public API

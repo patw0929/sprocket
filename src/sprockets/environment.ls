@@ -19,7 +19,7 @@ class Environment extends Base
     @_mime_exts          = Object.create(Sprockets._mime_exts)
     @_mime_types         = Object.create(Sprockets._mime_types)
     @_templates          = Object.create(Sprockets._templates)
-    @preprocessors      = Object.create(Sprockets.preprocessors)
+    @_preprocessors      = Object.create(Sprockets._preprocessors)
     @postprocessors     = Object.create(Sprockets.postprocessors)
     #
     @view_locals        = Object.create(Sprockets.viewLocals)
