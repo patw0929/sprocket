@@ -24,7 +24,7 @@ class Environment extends Base
     #
     @_view_locals        = Object.create(Sprockets.viewLocals)
     #
-    @manifest_filepaths = {}
+    @_manifest_filepaths = {}
     @vinyl_node_collections = {}
     #
     @is_produciton = process.env.NODE_ENV is 'production'
