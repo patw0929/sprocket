@@ -46,7 +46,7 @@ exports <<< Processors
 # --- sprocket.rb ---
 exports._engines            = {}
 exports._engine_extensions  = {}
-exports.mime_exts         = {}
+exports._mime_exts          = {}
 exports.mime_types        = {}
 exports.templates         = {}
 exports.preprocessors     = {}

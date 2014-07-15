@@ -22,7 +22,7 @@ module.exports = do
     # charset ||= EncodingUtils::DETECT if mime_type.start_with?('text/')
 
     extnames.forEach !(extname) ->
-      @mime_exts[extname] = mime_type
+      @_mime_exts[extname] = mime_type
     , @
 
     @mime_types[mime_type] = do
@@ -30,7 +30,7 @@ module.exports = do
       charset: charset if charset
 
   mimeTypeForExtname: (extname) ->
-    @mime_exts[extname] or 'application/octet-stream'
+    @_mime_exts[extname] or 'application/octet-stream'
 
 
   extnameForMimeType: (mime_type) ->
