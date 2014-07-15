@@ -12,7 +12,7 @@ const MANIFEST_EXTNAME = '.json'
 class BundleOrManifest
 
   !(@_environment, @_collection, @_stream) ->
-    {@mimeType} = stream
+    @_mime_type = _stream.mimeType
     @outputtedPaths = {}
 
   process: !->
@@ -23,7 +23,7 @@ class BundleOrManifest
     const {keyPath, vinyls} = requireState
     const dirname   = path.dirname keyPath
     const basename  = path.basename keyPath
-    const extname   = ".min#{ @_environment.extnameForMimeType @mimeType }"    
+    const extname   = ".min#{ @_environment.extnameForMimeType @_mime_type }"    
     const contents  = requireState.bufferWithSeperator(EOL_BUF)
     #
     targetStart = 0
@@ -40,7 +40,7 @@ class BundleOrManifest
       contents: contents
     
     const relativeFilepaths = [filepath]
-    @_environment.setManifestFilepaths @mimeType, keyPath, relativeFilepaths
+    @_environment.setManifestFilepaths @_mime_type, keyPath, relativeFilepaths
     @_stream.push new File do
       path: path.join dirname, "#basename#MANIFEST_BASENAME#extname#MANIFEST_EXTNAME"
       contents: new Buffer(JSON.stringify relativeFilepaths)
@@ -57,11 +57,11 @@ class BundleOrManifest
       vinyl.relative
     , @
 
-    @_environment.setManifestFilepaths @mimeType, keyPath, relativeFilepaths
+    @_environment.setManifestFilepaths @_mime_type, keyPath, relativeFilepaths
 
     const dirname   = path.dirname keyPath
     const basename  = path.basename keyPath
-    const extname   = @_environment.extnameForMimeType @mimeType
+    const extname   = @_environment.extnameForMimeType @_mime_type
 
     @_stream.push new File do
       path: path.join dirname, "#basename#MANIFEST_BASENAME#extname#MANIFEST_EXTNAME"
