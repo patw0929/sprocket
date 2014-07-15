@@ -17,13 +17,16 @@ util.inherits SprocketsTransform, Transform
   @_bounded_end_fn = Transform::end.bind @
   @_stream_has_ended = false
   #
-  {@mimeType} = options
+  @_mime_type = options.mimeType
   @_environment = options.environment
   @_collection = options.collection
   @_dispatch_start_stream = options.dispatchStartStream
 
 
 SprocketsTransform::<<< {
+  mimeType:~
+    -> @_mime_type
+
   _transform: !(file, enc, done) ->
     if file.isDirectory!
       @_environment.add_base_path file.path
