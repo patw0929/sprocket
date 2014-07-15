@@ -16,10 +16,10 @@ class BundleOrManifest
     @outputtedPaths = {}
 
   process: !->
-    const fn = if @_environment.isProduction then @bundle else @manifest
+    const fn = if @_environment.isProduction then @_bundle else @_manifest
     @_collection.createRequireStates!.forEach fn, @
 
-  bundle: !(requireState) ->
+  _bundle: !(requireState) ->
     const {keyPath, vinyls} = requireState
     const dirname   = path.dirname keyPath
     const basename  = path.basename keyPath
@@ -45,7 +45,7 @@ class BundleOrManifest
       path: path.join dirname, "#basename#MANIFEST_BASENAME#extname#MANIFEST_EXTNAME"
       contents: new Buffer(JSON.stringify relativeFilepaths)
 
-  manifest: !(requireState) ->
+  _manifest: !(requireState) ->
     const {pathsChanged, nothingChanged, vinyls, keyPath} = requireState
     return if nothingChanged
 
