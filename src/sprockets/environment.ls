@@ -28,7 +28,7 @@ class Environment extends Base
     @_vinyl_node_collections = {}
     #
     @_is_produciton = process.env.NODE_ENV is 'production'
-    @base_paths = []
+    @_base_paths = []
     
   isProduction:~
     -> @_is_produciton
@@ -41,7 +41,7 @@ class Environment extends Base
     # gulp-less.options.paths
     # since it is lazy evaluated during transforming state
     #
-    -> @base_paths
+    -> @_base_paths
 
   viewLocals:~
     -> Locals.call Object.create(@_view_locals), @
@@ -63,9 +63,9 @@ const {Transform, PassThrough} = Stream
 Environment::<<< {
 
   _addBasePath: ->
-    const {base_paths} = @
-    [return false for basePath in base_paths when basePath is it]
-    !!base_paths.push it
+    const {_base_paths} = @
+    [return false for basePath in _base_paths when basePath is it]
+    !!_base_paths.push it
 
   _createStream: (mime_type) ->
     const targetExtention = @_mime_types[mime_type].extensions.0
