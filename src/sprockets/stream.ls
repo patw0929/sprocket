@@ -20,7 +20,7 @@ util.inherits SprocketsTransform, Transform
   {@mimeType} = options
   @_environment = options.environment
   @_collection = options.collection
-  @_dispatchStartStream = options.dispatchStartStream
+  @_dispatch_start_stream = options.dispatchStartStream
 
 
 SprocketsTransform::<<< {
@@ -29,7 +29,7 @@ SprocketsTransform::<<< {
       @_environment.add_base_path file.path
     else
       @_environment.add_base_path file.base
-      @_dispatchStartStream.write file if @_collection.createNode file, @
+      @_dispatch_start_stream.write file if @_collection.createNode file, @
     done!
 
   end: !->
@@ -44,5 +44,5 @@ SprocketsTransform::<<< {
     @_bounded_end_fn = void
     #
     @_environment.end_stream @
-    @_environment = @_collection = @_dispatchStartStream = void
+    @_environment = @_collection = @_dispatch_start_stream = void
 }
