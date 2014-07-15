@@ -25,7 +25,7 @@ module.exports = do
       @_mime_exts[extname] = mime_type
     , @
 
-    @mime_types[mime_type] = do
+    @_mime_types[mime_type] = do
       extensions: extnames
       charset: charset if charset
 
@@ -34,7 +34,7 @@ module.exports = do
 
 
   extnameForMimeType: (mime_type) ->
-    @mime_types[mime_type].extensions.0
+    @_mime_types[mime_type].extensions.0
 
   # Public: Test mime type against mime range.
   #

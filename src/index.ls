@@ -47,7 +47,7 @@ exports <<< Processors
 exports._engines            = {}
 exports._engine_extensions  = {}
 exports._mime_exts          = {}
-exports.mime_types        = {}
+exports._mime_types         = {}
 exports.templates         = {}
 exports.preprocessors     = {}
 exports.postprocessors    = {}

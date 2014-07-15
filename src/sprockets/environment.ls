@@ -17,7 +17,7 @@ class Environment extends Base
     @_engines            = Object.create(Sprockets._engines)
     @_engine_extensions  = Object.create(Sprockets._engine_extensions)
     @_mime_exts          = Object.create(Sprockets._mime_exts)
-    @mime_types         = Object.create(Sprockets.mime_types)
+    @_mime_types         = Object.create(Sprockets._mime_types)
     @templates          = Object.create(Sprockets.templates)
     @preprocessors      = Object.create(Sprockets.preprocessors)
     @postprocessors     = Object.create(Sprockets.postprocessors)
@@ -68,7 +68,7 @@ Environment::<<< {
     !!base_paths.push it
 
   _createStream: (mime_type) ->
-    const targetExtention = @mime_types[mime_type].extensions.0
+    const targetExtention = @_mime_types[mime_type].extensions.0
     const collection = @vinyl_node_collections[mime_type] ||= new VinylNodeCollection('text/html' is mime_type)
     collection.updateVersion!
 
