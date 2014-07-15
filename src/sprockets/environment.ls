@@ -15,7 +15,7 @@ class Environment extends Base
 
   !->
     @_engines            = Object.create(Sprockets._engines)
-    @engine_extensions  = Object.create(Sprockets.engine_extensions)
+    @_engine_extensions  = Object.create(Sprockets._engine_extensions)
     @mime_exts          = Object.create(Sprockets.mime_exts)
     @mime_types         = Object.create(Sprockets.mime_types)
     @templates          = Object.create(Sprockets.templates)

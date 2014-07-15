@@ -45,7 +45,7 @@ exports <<< Processors
 # @compressors       = Hash.new { |h, k| h[k] = {} }
 # --- sprocket.rb ---
 exports._engines            = {}
-exports.engine_extensions = {}
+exports._engine_extensions  = {}
 exports.mime_exts         = {}
 exports.mime_types        = {}
 exports.templates         = {}

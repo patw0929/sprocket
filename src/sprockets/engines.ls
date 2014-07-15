@@ -57,7 +57,7 @@ module.exports = do
     # ext = Sprockets::Utils.normalize_extension(ext)
     @_engines[ext] = engineFn
     if options.mime_type
-      @engine_extensions[ext] = @mime_types[that].extensions.0
+      @_engine_extensions[ext] = @mime_types[that].extensions.0
 
   # private
   #   def deep_copy_hash(hash)
