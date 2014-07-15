@@ -98,8 +98,8 @@ exports.registerPostprocessor 'text/html', PassThroughPostprocessor
 # # Mmm, CoffeeScript
 # register_engine '.coffee', LazyProcessor.new { CoffeeScriptTemplate }, mime_type: 'application/javascript'
 # --- sprocket.rb ---
-exports.registerEngine '.js', JsEngine, mime_type: 'application/javascript'
-exports.registerEngine '.ls', LsEngine, mime_type: 'application/javascript'
+exports.registerEngine '.js', JsEngine, mimeType: 'application/javascript'
+exports.registerEngine '.ls', LsEngine, mimeType: 'application/javascript'
 # --- sprocket.rb ---
 # # JST engines
 # register_engine '.jst',    LazyProcessor.new { JstProcessor }, mime_type: 'application/javascript'
@@ -111,14 +111,14 @@ exports.registerEngine '.ls', LsEngine, mime_type: 'application/javascript'
 # register_engine '.sass',   LazyProcessor.new { SassTemplate }, mime_type: 'text/css'
 # register_engine '.scss',   LazyProcessor.new { ScssTemplate }, mime_type: 'text/css'
 # --- sprocket.rb ---
-exports.registerEngine '.css', CssEngine, mime_type: 'text/css'
-exports.registerEngine '.scss', ScssEngine, mime_type: 'text/css'
-exports.registerEngine '.sass', ScssEngine, mime_type: 'text/css'
-exports.registerEngine '.less', LessEngine, mime_type: 'text/css'
+exports.registerEngine '.css', CssEngine, mimeType: 'text/css'
+exports.registerEngine '.scss', ScssEngine, mimeType: 'text/css'
+exports.registerEngine '.sass', ScssEngine, mimeType: 'text/css'
+exports.registerEngine '.less', LessEngine, mimeType: 'text/css'
 # --- sprocket.rb ---
 # # Other
 # register_engine '.erb',    LazyProcessor.new { ERBTemplate }
 # --- sprocket.rb ---
-exports.registerEngine '.html', HtmlEngine, mime_type: 'text/html'
-exports.registerEngine '.jade', JadeEngine, mime_type: 'text/html'
-exports.registerEngine '.ejs', EjsEngine, mime_type: 'text/html'
+exports.registerEngine '.html', HtmlEngine, mimeType: 'text/html'
+exports.registerEngine '.jade', JadeEngine, mimeType: 'text/html'
+exports.registerEngine '.ejs', EjsEngine, mimeType: 'text/html'

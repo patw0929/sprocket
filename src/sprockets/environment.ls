@@ -64,9 +64,9 @@ class Environment extends Base
 
   const {Transform, PassThrough} = Stream
 
-  _create_stream: (mime_type) ->
-    const targetExtention = @_mime_types[mime_type].extensions.0
-    const collection = @_vinyl_node_collections[mime_type] ||= new VinylNodeCollection('text/html' is mime_type)
+  _create_stream: (mimeType) ->
+    const targetExtention = @_mime_types[mimeType].extensions.0
+    const collection = @_vinyl_node_collections[mimeType] ||= new VinylNodeCollection('text/html' is mimeType)
     collection.updateVersion!
 
     ~function createTemplates(extname)
@@ -119,8 +119,8 @@ class Environment extends Base
     # setup stream that we want to return
     #
     const stream = new SprocketsStream {
-      mimeType: mime_type
       environment: @
+      mimeType
       collection
       dispatchStartStream
     }

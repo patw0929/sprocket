@@ -56,7 +56,7 @@ module.exports = do
   registerEngine: !(ext, engineFn, options) ->
     # ext = Sprockets::Utils.normalize_extension(ext)
     @_engines[ext] = engineFn
-    if options.mime_type
+    if options.mimeType
       @_engine_extensions[ext] = @_mime_types[that].extensions.0
 
   # private
