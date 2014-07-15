@@ -14,7 +14,7 @@ util.inherits SprocketsTransform, Transform
   options.objectMode = true
   Transform ...
   #
-  @_boundedEndFn = Transform::end.bind @
+  @_bounded_end_fn = Transform::end.bind @
   @_streamEnded = false
   #
   {@mimeType} = options
@@ -38,10 +38,10 @@ SprocketsTransform::<<< {
 
   _endEventually: !->
     return unless @_streamEnded and @_collection.isStable
-    return @emit 'error', 'Stream already ended!' unless @_boundedEndFn
+    return @emit 'error', 'Stream already ended!' unless @_bounded_end_fn
 
-    process.nextTick @_boundedEndFn
-    @_boundedEndFn = void
+    process.nextTick @_bounded_end_fn
+    @_bounded_end_fn = void
     #
     @_environment.end_stream @
     @_environment = @_collection = @_dispatchStartStream = void
