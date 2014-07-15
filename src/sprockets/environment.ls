@@ -47,13 +47,13 @@ class Environment extends Base
     -> Locals.call Object.create(@_view_locals), @
 
   createJavascriptsStream: ->
-    @_createStream 'application/javascript'
+    @_create_stream 'application/javascript'
 
   createStylesheetsStream: ->
-    @_createStream 'text/css'
+    @_create_stream 'text/css'
 
   createHtmlsStream: ->
-    @_createStream 'text/html'
+    @_create_stream 'text/html'
   #
   # Private APIs
   #
@@ -62,13 +62,9 @@ class Environment extends Base
     [return false for basePath in _base_paths when basePath is it]
     !!_base_paths.push it
 
+  const {Transform, PassThrough} = Stream
 
-module.exports =  Environment
-
-const {Transform, PassThrough} = Stream
-Environment::<<< {
-
-  _createStream: (mime_type) ->
+  _create_stream: (mime_type) ->
     const targetExtention = @_mime_types[mime_type].extensions.0
     const collection = @_vinyl_node_collections[mime_type] ||= new VinylNodeCollection('text/html' is mime_type)
     collection.updateVersion!
@@ -128,6 +124,12 @@ Environment::<<< {
       collection
       dispatchStartStream
     }
+
+module.exports =  Environment
+
+Environment::<<< {
+
+  
 
   _endStream: !(stream) ->
     const {mimeType} = stream
