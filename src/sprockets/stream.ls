@@ -43,6 +43,6 @@ SprocketsTransform::<<< {
     process.nextTick @_boundedEndFn
     @_boundedEndFn = void
     #
-    @_environment._endStream @
+    @_environment.end_stream @
     @_environment = @_collection = @_dispatchStartStream = void
 }

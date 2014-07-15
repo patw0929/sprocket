@@ -125,16 +125,11 @@ class Environment extends Base
       dispatchStartStream
     }
 
-module.exports =  Environment
-
-Environment::<<< {
-
-  
-
-  _endStream: !(stream) ->
+  end_stream: !(stream) ->
     const {mimeType} = stream
     const Postprocessor = @_postprocessors[mimeType]
     const collection = @_vinyl_node_collections[mimeType]
     new Postprocessor @, collection, stream
     .process!
-}
+
+module.exports =  Environment
