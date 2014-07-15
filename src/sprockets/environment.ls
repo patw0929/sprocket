@@ -27,11 +27,11 @@ class Environment extends Base
     @_manifest_filepaths = {}
     @_vinyl_node_collections = {}
     #
-    @is_produciton = process.env.NODE_ENV is 'production'
+    @_is_produciton = process.env.NODE_ENV is 'production'
     @base_paths = []
     
   isProduction:~
-    -> @is_produciton
+    -> @_is_produciton
 
   basePaths:~
     #
