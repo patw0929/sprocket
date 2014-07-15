@@ -50,7 +50,7 @@ exports._mime_exts          = {}
 exports._mime_types         = {}
 exports._templates          = {}
 exports._preprocessors      = {}
-exports.postprocessors    = {}
+exports._postprocessors     = {}
 #
 # Public API
 #

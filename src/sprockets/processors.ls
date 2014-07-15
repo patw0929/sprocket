@@ -4,4 +4,4 @@ module.exports = do
     @_preprocessors[mime_type] = preprocessor
 
   registerPostprocessor: !(mime_type, postprocessor) ->
-    @postprocessors[mime_type] = postprocessor
+    @_postprocessors[mime_type] = postprocessor

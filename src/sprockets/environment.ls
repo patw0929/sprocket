@@ -20,7 +20,7 @@ class Environment extends Base
     @_mime_types         = Object.create(Sprockets._mime_types)
     @_templates          = Object.create(Sprockets._templates)
     @_preprocessors      = Object.create(Sprockets._preprocessors)
-    @postprocessors     = Object.create(Sprockets.postprocessors)
+    @_postprocessors     = Object.create(Sprockets._postprocessors)
     #
     @view_locals        = Object.create(Sprockets.viewLocals)
     #
@@ -130,7 +130,7 @@ Environment::<<< {
 
   _endStream: !(stream) ->
     const {mimeType} = stream
-    const Postprocessor = @postprocessors[mimeType]
+    const Postprocessor = @_postprocessors[mimeType]
     const collection = @vinyl_node_collections[mimeType]
     new Postprocessor @, collection, stream
     .process!
