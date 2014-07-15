@@ -25,7 +25,7 @@ class Environment extends Base
     @_view_locals        = Object.create(Sprockets.viewLocals)
     #
     @_manifest_filepaths = {}
-    @vinyl_node_collections = {}
+    @_vinyl_node_collections = {}
     #
     @is_produciton = process.env.NODE_ENV is 'production'
     @base_paths = []
@@ -69,7 +69,7 @@ Environment::<<< {
 
   _createStream: (mime_type) ->
     const targetExtention = @_mime_types[mime_type].extensions.0
-    const collection = @vinyl_node_collections[mime_type] ||= new VinylNodeCollection('text/html' is mime_type)
+    const collection = @_vinyl_node_collections[mime_type] ||= new VinylNodeCollection('text/html' is mime_type)
     collection.updateVersion!
 
     ~function createTemplates(extname)
@@ -131,7 +131,7 @@ Environment::<<< {
   _endStream: !(stream) ->
     const {mimeType} = stream
     const Postprocessor = @_postprocessors[mimeType]
-    const collection = @vinyl_node_collections[mimeType]
+    const collection = @_vinyl_node_collections[mimeType]
     new Postprocessor @, collection, stream
     .process!
 }
