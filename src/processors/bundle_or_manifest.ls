@@ -11,7 +11,7 @@ const MANIFEST_EXTNAME = '.json'
 
 class BundleOrManifest
 
-  !(@_environment, @_collection, @stream) ->
+  !(@_environment, @_collection, @_stream) ->
     {@mimeType} = stream
     @outputtedPaths = {}
 
@@ -35,13 +35,13 @@ class BundleOrManifest
     const fingerprint = @_environment.hexDigestFor contents
     const filepath = path.join dirname, "#basename-#fingerprint#extname"
     #
-    @stream.push new File do
+    @_stream.push new File do
       path: filepath
       contents: contents
     
     const relativeFilepaths = [filepath]
     @_environment.setManifestFilepaths @mimeType, keyPath, relativeFilepaths
-    @stream.push new File do
+    @_stream.push new File do
       path: path.join dirname, "#basename#MANIFEST_BASENAME#extname#MANIFEST_EXTNAME"
       contents: new Buffer(JSON.stringify relativeFilepaths)
 
@@ -53,7 +53,7 @@ class BundleOrManifest
       const {path} = vinyl
       if pathsChanged[path] and !@outputtedPaths[path]
         @outputtedPaths[path] = true
-        @stream.push vinyl
+        @_stream.push vinyl
       vinyl.relative
     , @
 
@@ -63,7 +63,7 @@ class BundleOrManifest
     const basename  = path.basename keyPath
     const extname   = @_environment.extnameForMimeType @mimeType
 
-    @stream.push new File do
+    @_stream.push new File do
       path: path.join dirname, "#basename#MANIFEST_BASENAME#extname#MANIFEST_EXTNAME"
       contents: new Buffer(JSON.stringify relativeFilepaths, null, 2)
 
