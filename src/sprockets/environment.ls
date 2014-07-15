@@ -22,7 +22,7 @@ class Environment extends Base
     @_preprocessors      = Object.create(Sprockets._preprocessors)
     @_postprocessors     = Object.create(Sprockets._postprocessors)
     #
-    @view_locals        = Object.create(Sprockets.viewLocals)
+    @_view_locals        = Object.create(Sprockets.viewLocals)
     #
     @manifest_filepaths = {}
     @vinyl_node_collections = {}
@@ -44,7 +44,7 @@ class Environment extends Base
     -> @base_paths
 
   viewLocals:~
-    -> Locals.call Object.create(@view_locals), @
+    -> Locals.call Object.create(@_view_locals), @
 
   createJavascriptsStream: ->
     @_createStream 'application/javascript'
