@@ -48,7 +48,7 @@ exports._engines            = {}
 exports._engine_extensions  = {}
 exports._mime_exts          = {}
 exports._mime_types         = {}
-exports.templates         = {}
+exports._templates          = {}
 exports.preprocessors     = {}
 exports.postprocessors    = {}
 #

@@ -7,4 +7,4 @@ module.exports = do
   #
   registerTemplate: !(ext, templateFn) ->
     # ext = Sprockets::Utils.normalize_extension(ext)
-    @templates[ext] = templateFn
+    @_templates[ext] = templateFn

@@ -18,7 +18,7 @@ class Environment extends Base
     @_engine_extensions  = Object.create(Sprockets._engine_extensions)
     @_mime_exts          = Object.create(Sprockets._mime_exts)
     @_mime_types         = Object.create(Sprockets._mime_types)
-    @templates          = Object.create(Sprockets.templates)
+    @_templates          = Object.create(Sprockets._templates)
     @preprocessors      = Object.create(Sprockets.preprocessors)
     @postprocessors     = Object.create(Sprockets.postprocessors)
     #
@@ -74,7 +74,7 @@ Environment::<<< {
 
     ~function createTemplates(extname)
       const passThroughStream = new PassThrough objectMode: true
-      @templates[extname](@, passThroughStream, dispatchEngineStream)
+      @_templates[extname](@, passThroughStream, dispatchEngineStream)
       passThroughStream
 
     function getOrCreateTemplates(extname)
@@ -97,7 +97,7 @@ Environment::<<< {
     dispatchStartStream._transform = !(file, enc, done) ~>
       const extname = path.extname file.path
       # has more than one extname, treat last one as template
-      if path.extname(path.basename file.path, extname) and @templates[extname]
+      if path.extname(path.basename file.path, extname) and @_templates[extname]
         getOrCreateTemplates(extname).write file
       else
         getOrCreateEngines(extname).write file
