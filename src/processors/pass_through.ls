@@ -1,6 +1,6 @@
 module.exports = class PassThrough
 
-  !(@_environment, @collection, @stream) ->
+  !(@_environment, @_collection, @stream) ->
 
   process: !->
-    @collection.vinyls.forEach @stream.push, @stream
+    @_collection.vinyls.forEach @stream.push, @stream

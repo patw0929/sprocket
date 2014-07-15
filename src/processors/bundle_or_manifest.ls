@@ -11,13 +11,13 @@ const MANIFEST_EXTNAME = '.json'
 
 class BundleOrManifest
 
-  !(@_environment, @collection, @stream) ->
+  !(@_environment, @_collection, @stream) ->
     {@mimeType} = stream
     @outputtedPaths = {}
 
   process: !->
     const fn = if @_environment.isProduction then @bundle else @manifest
-    @collection.createRequireStates!.forEach fn, @
+    @_collection.createRequireStates!.forEach fn, @
 
   bundle: !(requireState) ->
     const {keyPath, vinyls} = requireState
