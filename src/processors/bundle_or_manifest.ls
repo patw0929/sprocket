@@ -11,19 +11,19 @@ const MANIFEST_EXTNAME = '.json'
 
 class BundleOrManifest
 
-  !(@environment, @collection, @stream) ->
+  !(@_environment, @collection, @stream) ->
     {@mimeType} = stream
     @outputtedPaths = {}
 
   process: !->
-    const fn = if @environment.isProduction then @bundle else @manifest
+    const fn = if @_environment.isProduction then @bundle else @manifest
     @collection.createRequireStates!.forEach fn, @
 
   bundle: !(requireState) ->
     const {keyPath, vinyls} = requireState
     const dirname   = path.dirname keyPath
     const basename  = path.basename keyPath
-    const extname   = ".min#{ @environment.extnameForMimeType @mimeType }"    
+    const extname   = ".min#{ @_environment.extnameForMimeType @mimeType }"    
     const contents  = requireState.bufferWithSeperator(EOL_BUF)
     #
     targetStart = 0
@@ -32,7 +32,7 @@ class BundleOrManifest
         sourceBuffer.copy contents, targetStart
         targetStart += sourceBuffer.length
     #
-    const fingerprint = @environment.hexDigestFor contents
+    const fingerprint = @_environment.hexDigestFor contents
     const filepath = path.join dirname, "#basename-#fingerprint#extname"
     #
     @stream.push new File do
@@ -40,7 +40,7 @@ class BundleOrManifest
       contents: contents
     
     const relativeFilepaths = [filepath]
-    @environment.setManifestFilepaths @mimeType, keyPath, relativeFilepaths
+    @_environment.setManifestFilepaths @mimeType, keyPath, relativeFilepaths
     @stream.push new File do
       path: path.join dirname, "#basename#MANIFEST_BASENAME#extname#MANIFEST_EXTNAME"
       contents: new Buffer(JSON.stringify relativeFilepaths)
@@ -57,11 +57,11 @@ class BundleOrManifest
       vinyl.relative
     , @
 
-    @environment.setManifestFilepaths @mimeType, keyPath, relativeFilepaths
+    @_environment.setManifestFilepaths @mimeType, keyPath, relativeFilepaths
 
     const dirname   = path.dirname keyPath
     const basename  = path.basename keyPath
-    const extname   = @environment.extnameForMimeType @mimeType
+    const extname   = @_environment.extnameForMimeType @mimeType
 
     @stream.push new File do
       path: path.join dirname, "#basename#MANIFEST_BASENAME#extname#MANIFEST_EXTNAME"
