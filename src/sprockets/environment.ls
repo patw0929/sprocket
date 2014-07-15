@@ -14,7 +14,7 @@ require! {
 class Environment extends Base
 
   !->
-    @engines            = Object.create(Sprockets.engines)
+    @_engines            = Object.create(Sprockets._engines)
     @engine_extensions  = Object.create(Sprockets.engine_extensions)
     @mime_exts          = Object.create(Sprockets.mime_exts)
     @mime_types         = Object.create(Sprockets.mime_types)
@@ -83,7 +83,7 @@ Environment::<<< {
     ~function createEngines(extname)
       const passThroughStream = new PassThrough objectMode: true
       #
-      @engines[extname](@, passThroughStream, dispatchEngineStream)
+      @_engines[extname](@, passThroughStream, dispatchEngineStream)
       passThroughStream
 
     function getOrCreateEngines(extname)
@@ -117,7 +117,7 @@ Environment::<<< {
       done!
    
     extEngines[targetExtention] = new PassThrough objectMode: true
-    @engines[targetExtention](@, extEngines[targetExtention], dispatchEndStream)
+    @_engines[targetExtention](@, extEngines[targetExtention], dispatchEndStream)
     #
     # setup stream that we want to return
     #
