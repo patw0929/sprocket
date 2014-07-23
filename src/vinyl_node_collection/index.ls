@@ -44,7 +44,7 @@ class Collection
 
   createRequireStates: ->
     for keyPath, node of @_nodes when node.hasAnyEdges
-      node.buildDependencies new RequireState(keyPath, @)
+      node.build_dependencies new RequireState(keyPath, @)
 
 module.exports = Collection
 /*

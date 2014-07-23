@@ -1,7 +1,7 @@
 module.exports = do
 
-  registerPreprocessor: !(mime_type, preprocessor) ->
-    @preprocessors[mime_type] = preprocessor
+  registerPreprocessor: !(mimeType, preprocessor) ->
+    @_preprocessors[mimeType] = preprocessor
 
-  registerPostprocessor: !(mime_type, postprocessor) ->
-    @postprocessors[mime_type] = postprocessor
+  registerPostprocessor: !(mimeType, postprocessor) ->
+    @_postprocessors[mimeType] = postprocessor

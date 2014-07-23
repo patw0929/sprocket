@@ -7,13 +7,13 @@ class SuperNode
 
   !->
     const keyPath = BaseSuperNode ...
-    @_filepathMatcher = new RegExp "^#{ keyPath }"
+    @_filepath_matcher = new RegExp "^#{ keyPath }"
 
 class Directory
 
   !->
     const keyPath = BaseSuperNode ...
-    @_filepathMatcher = new RegExp "^#{ keyPath }((?!#{ path.sep }).)*$"
+    @_filepath_matcher = new RegExp "^#{ keyPath }((?!#{ path.sep }).)*$"
 
 SuperNode <<< {Directory}
 
@@ -25,7 +25,7 @@ function BaseSuperNode (collection, @fromNode, dependency)
   {@isRequireState, keyPath} = dependency
   if '.' is keyPath.charAt 0
     # is relative, translate to absolute path
-    fromNode._resolveKeyPath keyPath
+    fromNode.resolve_key_path keyPath
   else
     keyPath
 
@@ -34,15 +34,15 @@ function pathSortFn (l, r)
 
 const prototype = do
 
-  _buildDependencies: !(state) ->
-    @_filepathMatchedNodes state._collection._nodes
+  _build_dependencies: !(state) ->
+    @_nodes_match_filepath state._collection._nodes
     .sort pathSortFn
-    .forEach !-> it.buildDependencies state
+    .forEach !-> it.build_dependencies state
 
-  _filepathMatchedNodes: (_nodes) ->
-    const {fromNode, _filepathMatcher} = @
+  _nodes_match_filepath: (_nodes) ->
+    const {fromNode, _filepath_matcher} = @
     for keyPath, vn of _nodes
-      vn if vn isnt fromNode and vn.pathMatches _filepathMatcher
+      vn if vn isnt fromNode and vn.path_matches _filepath_matcher
 
 SuperNode::<<< prototype
 Directory::<<< prototype

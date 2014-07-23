@@ -7,50 +7,50 @@ require! {
 module.exports = class
 
   !(@keyPath, @_collection) ->
-    @_inRequireStates = [true]
-    @_keyPathAdded = {}
-    @_pathsChanged = {}
-    @_nothingChanged = true
+    @_in_require_states = [true]
+    @_key_path_added = {}
+    @_paths_changed = {}
+    @_nothing_changed = true
     @_vinyls = []
-    @_totalBufferSize = 0
+    @_total_buffer_size = 0
 
   pathsChanged:~
-    -> @_pathsChanged
+    -> @_paths_changed
 
   nothingChanged:~
-    -> @_nothingChanged
+    -> @_nothing_changed
 
   vinyls:~
     -> @_vinyls
 
   bufferWithSeperator: (seperator) ->
     new Buffer do
-      @_totalBufferSize + @_vinyls.length * seperator.length
+      @_total_buffer_size + @_vinyls.length * seperator.length
 
-  buildDependenciesInState: (edge) ->
-    @_inRequireStates.push edge.isRequireState
-    try     edge._buildDependencies @
-    finally @_inRequireStates.pop!
+  build_dependencies_in_state: (edge) ->
+    @_in_require_states.push edge.isRequireState
+    try     edge._build_dependencies @
+    finally @_in_require_states.pop!
 
-  needRequireOrInclude: (node) ->
-    if @_inRequireStates[*-1]
-      not @_keyPathAdded[node.keyPath]
+  should_include_node: (node) ->
+    if @_in_require_states[*-1]
+      not @_key_path_added[node.keyPath]
     else
       #
       # include, so whatever do it
       #
       true
 
-  addNodeIfNeeded: !(node) ->
-    return unless @needRequireOrInclude node
+  include_node: !(node) ->
+    return unless @should_include_node node
     const {vinyl, justChanged} = node
-    @_pathsChanged[vinyl.path] = justChanged
-    @_nothingChanged = false if justChanged
+    @_paths_changed[vinyl.path] = justChanged
+    @_nothing_changed = false if justChanged
 
     if vinyl.isBuffer!
-      @_keyPathAdded[node.keyPath] = true
+      @_key_path_added[node.keyPath] = true
       @_vinyls.push vinyl
-      @_totalBufferSize += vinyl.contents.length
+      @_total_buffer_size += vinyl.contents.length
     else
       errorFn = if vinyl.isNull!
         NullFileError

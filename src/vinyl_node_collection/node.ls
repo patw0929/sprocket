@@ -62,19 +62,19 @@ class Node
     @_dest_vinyl = vinyl
     @_just_changed = true
 
-  _resolveKeyPath: (keyPath) ->
+  resolve_key_path: (keyPath) ->
     path.join path.dirname(@_src_path), keyPath, path.sep
 
-  pathMatches: (regex) ->
+  path_matches: (regex) ->
     @_src_path.match regex
   
-  buildDependencies: (state) ->
-    if state.needRequireOrInclude @
-      @_edges.forEach state.buildDependenciesInState, state
+  build_dependencies: (state) ->
+    if state.should_include_node @
+      @_edges.forEach state.build_dependencies_in_state, state
       #
       # add self to the end if it's not circular referred
       #
-      state.addNodeIfNeeded @
+      state.include_node @
     state
 
 module.exports = Node

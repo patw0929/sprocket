@@ -14,24 +14,24 @@ require! {
 class Environment extends Base
 
   !->
-    @engines            = Object.create(Sprockets.engines)
-    @engine_extensions  = Object.create(Sprockets.engine_extensions)
-    @mime_exts          = Object.create(Sprockets.mime_exts)
-    @mime_types         = Object.create(Sprockets.mime_types)
-    @templates          = Object.create(Sprockets.templates)
-    @preprocessors      = Object.create(Sprockets.preprocessors)
-    @postprocessors     = Object.create(Sprockets.postprocessors)
+    @_engines            = Object.create(Sprockets._engines)
+    @_engine_extensions  = Object.create(Sprockets._engine_extensions)
+    @_mime_exts          = Object.create(Sprockets._mime_exts)
+    @_mime_types         = Object.create(Sprockets._mime_types)
+    @_templates          = Object.create(Sprockets._templates)
+    @_preprocessors      = Object.create(Sprockets._preprocessors)
+    @_postprocessors     = Object.create(Sprockets._postprocessors)
     #
-    @view_locals        = Object.create(Sprockets.viewLocals)
+    @_view_locals        = Object.create(Sprockets.viewLocals)
     #
-    @manifest_filepaths = {}
-    @vinyl_node_collections = {}
+    @_manifest_filepaths = {}
+    @_vinyl_node_collections = {}
     #
-    @is_produciton = process.env.NODE_ENV is 'production'
-    @base_paths = []
+    @_is_produciton = process.env.NODE_ENV is 'production'
+    @_base_paths = []
     
   isProduction:~
-    -> @is_produciton
+    -> @_is_produciton
 
   basePaths:~
     #
@@ -41,40 +41,37 @@ class Environment extends Base
     # gulp-less.options.paths
     # since it is lazy evaluated during transforming state
     #
-    -> @base_paths
+    -> @_base_paths
 
   viewLocals:~
-    -> Locals.call Object.create(@view_locals), @
+    -> Locals.call Object.create(@_view_locals), @
 
   createJavascriptsStream: ->
-    @_createStream 'application/javascript'
+    @_create_stream 'application/javascript'
 
   createStylesheetsStream: ->
-    @_createStream 'text/css'
+    @_create_stream 'text/css'
 
   createHtmlsStream: ->
-    @_createStream 'text/html'
+    @_create_stream 'text/html'
+  #
+  # Private APIs
+  #
+  add_base_path: ->
+    const {_base_paths} = @
+    [return false for basePath in _base_paths when basePath is it]
+    !!_base_paths.push it
 
-module.exports =  Environment
-# 
-# Private APIs
-# 
-const {Transform, PassThrough} = Stream
-Environment::<<< {
+  const {Transform, PassThrough} = Stream
 
-  _addBasePath: ->
-    const {base_paths} = @
-    [return false for basePath in base_paths when basePath is it]
-    !!base_paths.push it
-
-  _createStream: (mime_type) ->
-    const targetExtention = @mime_types[mime_type].extensions.0
-    const collection = @vinyl_node_collections[mime_type] ||= new VinylNodeCollection('text/html' is mime_type)
+  _create_stream: (mimeType) ->
+    const targetExtention = @_mime_types[mimeType].extensions.0
+    const collection = @_vinyl_node_collections[mimeType] ||= new VinylNodeCollection('text/html' is mimeType)
     collection.updateVersion!
 
     ~function createTemplates(extname)
       const passThroughStream = new PassThrough objectMode: true
-      @templates[extname](@, passThroughStream, dispatchEngineStream)
+      @_templates[extname](@, passThroughStream, dispatchEngineStream)
       passThroughStream
 
     function getOrCreateTemplates(extname)
@@ -83,7 +80,7 @@ Environment::<<< {
     ~function createEngines(extname)
       const passThroughStream = new PassThrough objectMode: true
       #
-      @engines[extname](@, passThroughStream, dispatchEngineStream)
+      @_engines[extname](@, passThroughStream, dispatchEngineStream)
       passThroughStream
 
     function getOrCreateEngines(extname)
@@ -97,7 +94,7 @@ Environment::<<< {
     dispatchStartStream._transform = !(file, enc, done) ~>
       const extname = path.extname file.path
       # has more than one extname, treat last one as template
-      if path.extname(path.basename file.path, extname) and @templates[extname]
+      if path.extname(path.basename file.path, extname) and @_templates[extname]
         getOrCreateTemplates(extname).write file
       else
         getOrCreateEngines(extname).write file
@@ -117,21 +114,22 @@ Environment::<<< {
       done!
    
     extEngines[targetExtention] = new PassThrough objectMode: true
-    @engines[targetExtention](@, extEngines[targetExtention], dispatchEndStream)
+    @_engines[targetExtention](@, extEngines[targetExtention], dispatchEndStream)
     #
     # setup stream that we want to return
     #
     const stream = new SprocketsStream {
-      mimeType: mime_type
       environment: @
+      mimeType
       collection
       dispatchStartStream
     }
 
-  _endStream: !(stream) ->
+  end_stream: !(stream) ->
     const {mimeType} = stream
-    const Postprocessor = @postprocessors[mimeType]
-    const collection = @vinyl_node_collections[mimeType]
+    const Postprocessor = @_postprocessors[mimeType]
+    const collection = @_vinyl_node_collections[mimeType]
     new Postprocessor @, collection, stream
     .process!
-}
+
+module.exports =  Environment

@@ -22,10 +22,10 @@ module.exports = class implements Manifest, Mime, Engines, Templates, Processors
   #     environment.digest_class = Digest::MD5
   #
   digestHash:~
-    -> crypto.createHash @_digestHashName || 'sha1'
+    -> crypto.createHash @_digest_hash_name || 'sha1'
     (it) ->
       # expire_cache!
-      @_digestHashName = it
+      @_digest_hash_name = it
 
   hexDigestFor: (contents) ->
     @digestHash.update contents .digest 'hex' .slice 0, 32

@@ -5,15 +5,15 @@ Edge <<< {Circular}
   {@isRequireState} = dependency
   @toNode = collection._createNodeWith dependency.keyPath
 
-Edge::_buildDependencies = !(state) ->
-  @toNode.buildDependencies state
+Edge::_build_dependencies = !(state) ->
+  @toNode.build_dependencies state
 
 !function Circular (collection, @fromNode, {@isRequireState})
   @toNode = fromNode
 
-Circular::_buildDependencies = !(state) ->
+Circular::_build_dependencies = !(state) ->
   #
-  # We cannot call toNode.buildDependencies here since
+  # We cannot call toNode.build_dependencies here since
   # it would call recursively and overflow the stack!
   #
-  state.addNodeIfNeeded @toNode
+  state.include_node @toNode

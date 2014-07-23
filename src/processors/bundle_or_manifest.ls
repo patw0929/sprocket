@@ -11,19 +11,19 @@ const MANIFEST_EXTNAME = '.json'
 
 class BundleOrManifest
 
-  !(@environment, @collection, @stream) ->
-    {@mimeType} = stream
+  !(@_environment, @_collection, @_stream) ->
+    @_mime_type = _stream.mimeType
     @outputtedPaths = {}
 
   process: !->
-    const fn = if @environment.isProduction then @bundle else @manifest
-    @collection.createRequireStates!.forEach fn, @
+    const fn = if @_environment.isProduction then @_bundle else @_manifest
+    @_collection.createRequireStates!.forEach fn, @
 
-  bundle: !(requireState) ->
+  _bundle: !(requireState) ->
     const {keyPath, vinyls} = requireState
     const dirname   = path.dirname keyPath
     const basename  = path.basename keyPath
-    const extname   = ".min#{ @environment.extnameForMimeType @mimeType }"    
+    const extname   = ".min#{ @_environment.extnameForMimeType @_mime_type }"    
     const contents  = requireState.bufferWithSeperator(EOL_BUF)
     #
     targetStart = 0
@@ -32,20 +32,20 @@ class BundleOrManifest
         sourceBuffer.copy contents, targetStart
         targetStart += sourceBuffer.length
     #
-    const fingerprint = @environment.hexDigestFor contents
+    const fingerprint = @_environment.hexDigestFor contents
     const filepath = path.join dirname, "#basename-#fingerprint#extname"
     #
-    @stream.push new File do
+    @_stream.push new File do
       path: filepath
       contents: contents
     
     const relativeFilepaths = [filepath]
-    @environment.setManifestFilepaths @mimeType, keyPath, relativeFilepaths
-    @stream.push new File do
+    @_environment.setManifestFilepaths @_mime_type, keyPath, relativeFilepaths
+    @_stream.push new File do
       path: path.join dirname, "#basename#MANIFEST_BASENAME#extname#MANIFEST_EXTNAME"
       contents: new Buffer(JSON.stringify relativeFilepaths)
 
-  manifest: !(requireState) ->
+  _manifest: !(requireState) ->
     const {pathsChanged, nothingChanged, vinyls, keyPath} = requireState
     return if nothingChanged
 
@@ -53,17 +53,17 @@ class BundleOrManifest
       const {path} = vinyl
       if pathsChanged[path] and !@outputtedPaths[path]
         @outputtedPaths[path] = true
-        @stream.push vinyl
+        @_stream.push vinyl
       vinyl.relative
     , @
 
-    @environment.setManifestFilepaths @mimeType, keyPath, relativeFilepaths
+    @_environment.setManifestFilepaths @_mime_type, keyPath, relativeFilepaths
 
     const dirname   = path.dirname keyPath
     const basename  = path.basename keyPath
-    const extname   = @environment.extnameForMimeType @mimeType
+    const extname   = @_environment.extnameForMimeType @_mime_type
 
-    @stream.push new File do
+    @_stream.push new File do
       path: path.join dirname, "#basename#MANIFEST_BASENAME#extname#MANIFEST_EXTNAME"
       contents: new Buffer(JSON.stringify relativeFilepaths, null, 2)
 

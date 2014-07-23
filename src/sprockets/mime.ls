@@ -13,28 +13,28 @@ module.exports = do
   #
   # attr_reader :mime_exts
 
-  registerMimeType: !(mime_type, options || {}) ->
+  registerMimeType: !(mimeType, options || {}) ->
     const extnames = options.extensions.map (extname) ->
       # Sprockets::Utils.normalize_extension(extname)
       extname
 
     {charset} = options
-    # charset ||= EncodingUtils::DETECT if mime_type.start_with?('text/')
+    # charset ||= EncodingUtils::DETECT if mimeType.start_with?('text/')
 
     extnames.forEach !(extname) ->
-      @mime_exts[extname] = mime_type
+      @_mime_exts[extname] = mimeType
     , @
 
-    @mime_types[mime_type] = do
+    @_mime_types[mimeType] = do
       extensions: extnames
       charset: charset if charset
 
   mimeTypeForExtname: (extname) ->
-    @mime_exts[extname] or 'application/octet-stream'
+    @_mime_exts[extname] or 'application/octet-stream'
 
 
-  extnameForMimeType: (mime_type) ->
-    @mime_types[mime_type].extensions.0
+  extnameForMimeType: (mimeType) ->
+    @_mime_types[mimeType].extensions.0
 
   # Public: Test mime type against mime range.
   #

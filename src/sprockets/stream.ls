@@ -14,35 +14,38 @@ util.inherits SprocketsTransform, Transform
   options.objectMode = true
   Transform ...
   #
-  @_boundedEndFn = Transform::end.bind @
-  @_streamEnded = false
+  @_bounded_end_fn = Transform::end.bind @
+  @_stream_has_ended = false
   #
-  {@mimeType} = options
+  @_mime_type = options.mimeType
   @_environment = options.environment
   @_collection = options.collection
-  @_dispatchStartStream = options.dispatchStartStream
+  @_dispatch_start_stream = options.dispatchStartStream
 
 
 SprocketsTransform::<<< {
+  mimeType:~
+    -> @_mime_type
+
   _transform: !(file, enc, done) ->
     if file.isDirectory!
-      @_environment._addBasePath file.path
+      @_environment.add_base_path file.path
     else
-      @_environment._addBasePath file.base
-      @_dispatchStartStream.write file if @_collection.createNode file, @
+      @_environment.add_base_path file.base
+      @_dispatch_start_stream.write file if @_collection.createNode file, @
     done!
 
   end: !->
-    @_streamEnded = true
+    @_stream_has_ended = true
     @_endEventually!
 
   _endEventually: !->
-    return unless @_streamEnded and @_collection.isStable
-    return @emit 'error', 'Stream already ended!' unless @_boundedEndFn
+    return unless @_stream_has_ended and @_collection.isStable
+    return @emit 'error', 'Stream already ended!' unless @_bounded_end_fn
 
-    process.nextTick @_boundedEndFn
-    @_boundedEndFn = void
+    process.nextTick @_bounded_end_fn
+    @_bounded_end_fn = void
     #
-    @_environment._endStream @
-    @_environment = @_collection = @_dispatchStartStream = void
+    @_environment.end_stream @
+    @_environment = @_collection = @_dispatch_start_stream = void
 }
