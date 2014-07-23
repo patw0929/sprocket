@@ -1,3 +1,36 @@
+## 0.4.0 (2014-07-23)
+
+
+#### Bug Fixes
+
+* **Environment:** only javascript is default stable ([58e4fc9a](https://github.com/tomchentw/sprocket/commit/58e4fc9aba1865abf7c153fa443b92501b91a950))
+
+
+#### Features
+
+* **errors:**
+  * added error messages and fixed #11 ([04900840](https://github.com/tomchentw/sprocket/commit/04900840d1f2af37dfe9ad81c3c9ad8c3e0e86a9))
+  * extracted from VinylNodeCollection#finalizeNode ([4346d8df](https://github.com/tomchentw/sprocket/commit/4346d8dfea24bfccc8cd5a2a2bbf3dae0abb5380))
+  * extracted out from RequireState#addNodeIfNeeded ([8b13f04f](https://github.com/tomchentw/sprocket/commit/8b13f04fa0a7f678360e00a679f550575df54ead))
+
+
+#### Breaking Changes
+
+* change mime_type key in options to mimeType
+The mime_type is legacy naming convention from ruby's sprockets.
+In this project we use camelCased for public APIs.
+
+Before:
+Sprocket.registerEngine('.js', JsEngine, mime_type: 'application/javascript')
+
+After:
+Sprocket.registerEngine('.js', JsEngine, mimeType: 'application/javascript')
+
+And there's no fallback on this change
+
+ ([72127a23](https://github.com/tomchentw/sprocket/commit/72127a2376644e2980daa3bc6f7160c3ad082ecb))
+
+
 ### 0.3.3 (2014-07-11)
 
 

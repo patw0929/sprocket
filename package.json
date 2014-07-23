@@ -1,6 +1,6 @@
 {
   "name": "sprocket",
-  "version": "0.3.3",
+  "version": "0.4.0",
   "description": "Opinioned, Convention over Configuration asset build tool for any javascript frameworks.",
   "main": "lib/index.js",
   "scripts": {
