@@ -36,9 +36,10 @@ gulp.task('css', function(){
   return gulp.src([
     'bower_components/bootstrap/less/',
     'bower_components/bootstrap-sass-official/vendor/assets/stylesheets/',
-    'client/stylesheets/*',
     'bower_components/**/*.css',
+    'client/stylesheets/*.*',
     '!bower_components/bootstrap/dist/**/*',
+    '!client/stylesheets/_*.scss'
   ])
   .pipe(environment.createStylesheetsStream())
   .pipe(gulp.dest(PUBLIC_PATH+ASSETS_PATH));
