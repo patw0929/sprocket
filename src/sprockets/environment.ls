@@ -66,7 +66,7 @@ class Environment extends Base
 
   _create_stream: (mimeType) ->
     const targetExtention = @_mime_types[mimeType].extensions.0
-    const collection = @_vinyl_node_collections[mimeType] ||= new VinylNodeCollection('text/html' is mimeType)
+    const collection = @_vinyl_node_collections[mimeType] ||= new VinylNodeCollection('application/javascript' isnt mimeType)
     collection.updateVersion!
 
     ~function createTemplates(extname)
