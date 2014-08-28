@@ -4,7 +4,7 @@ module.exports = !(environment, src, dest) ->
     'gulp-minify-css'
   }
 
-  if environment.isProduction
+  if environment.minifyCSS
     const filter = gulp-filter <[ **/*.css !**/*.min.css ]>
     src.=pipe filter
     .pipe gulp-minify-css!

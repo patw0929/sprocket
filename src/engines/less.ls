@@ -5,6 +5,6 @@ module.exports = !(environment, src, dest) ->
 
   const options = do
     paths: environment.basePaths
-    compress: environment.isProduction
+    compress: environment.minifyCSS
   src.pipe gulp-less options
   .pipe dest

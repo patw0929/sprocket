@@ -16,14 +16,14 @@ class BundleOrManifest
     @outputtedPaths = {}
 
   process: !->
-    const fn = if @_environment.isProduction then @_bundle else @_manifest
+    const fn = if @_environment.useManifest then @_bundle else @_manifest
     @_collection.createRequireStates!.forEach fn, @
 
   _bundle: !(requireState) ->
     const {keyPath, vinyls} = requireState
     const dirname   = path.dirname keyPath
     const basename  = path.basename keyPath
-    const extname   = ".min#{ @_environment.extnameForMimeType @_mime_type }"    
+    const extname   = ".min#{ @_environment.extnameForMimeType @_mime_type }"
     const contents  = requireState.bufferWithSeperator(EOL_BUF)
     #
     targetStart = 0
@@ -38,7 +38,7 @@ class BundleOrManifest
     @_stream.push new File do
       path: filepath
       contents: contents
-    
+
     const relativeFilepaths = [filepath]
     @_environment.setManifestFilepaths @_mime_type, keyPath, relativeFilepaths
     @_stream.push new File do
@@ -68,4 +68,4 @@ class BundleOrManifest
       contents: new Buffer(JSON.stringify relativeFilepaths, null, 2)
 
 module.exports = BundleOrManifest
-  
+

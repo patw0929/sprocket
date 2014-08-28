@@ -28,14 +28,46 @@ class Environment extends Base
     @_vinyl_node_collections = {}
     #
     @_is_produciton = process.env.NODE_ENV is 'production'
+    @_minify_html = false
+    @_minify_js = false
+    @_minify_css = false
+    @_use_manifest = false
     @_base_paths = []
-    
+
   isProduction:~
     -> @_is_produciton
 
+  Object.defineProperty prototype, 'minifyHTML', {
+    get: -> @_minify_html
+    set: (value) -> @_minify_html = !!value
+    configurable: true
+    enumerable: true
+  }
+
+  Object.defineProperty prototype, 'minifyJS', {
+    get: -> @_minify_js
+    set: (value) -> @_minify_js = !!value
+    configurable: true
+    enumerable: true
+  }
+
+  Object.defineProperty prototype, 'minifyCSS', {
+    get: -> @_minify_css
+    set: (value) -> @_minify_css = !!value
+    configurable: true
+    enumerable: true
+  }
+
+  Object.defineProperty prototype, 'useManifest', {
+    get: -> @_use_manifest
+    set: (value) -> @_use_manifest = !!value
+    configurable: true
+    enumerable: true
+  }
+
   basePaths:~
     #
-    # HACK: 
+    # HACK:
     # returns a direct reference for Sass/LESS @import paths
     # gulp-sass.options.includePaths
     # gulp-less.options.paths
@@ -112,7 +144,7 @@ class Environment extends Base
       collection.finalizeNode file, stream
       stream._endEventually!
       done!
-   
+
     extEngines[targetExtention] = new PassThrough objectMode: true
     @_engines[targetExtention](@, extEngines[targetExtention], dispatchEndStream)
     #

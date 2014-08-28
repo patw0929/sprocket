@@ -4,7 +4,7 @@ module.exports = !(environment, src, dest) ->
   }
 
   const options = do
-    pretty: !environment.isProduction,
+    pretty: !environment.minifyHTML,
     locals: environment.viewLocals
   src.pipe gulp-jade options
   .pipe dest

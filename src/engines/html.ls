@@ -7,7 +7,7 @@ module.exports = !(environment, src, dest) ->
   src.=pipe gulp-htmlhint!
   .pipe gulp-htmlhint.reporter!
   #
-  if environment.isProduction
+  if environment.minifyHTML
     src.=pipe gulp-minify-html comments: true, spare: true, empty: true
   #
   src.pipe dest

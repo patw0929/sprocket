@@ -10,7 +10,7 @@ module.exports = !(environment, src, dest) ->
   .pipe gulp-jshint!
   .pipe gulp-jshint.reporter('default')
   #
-  src.=pipe gulp-uglify! if environment.isProduction
+  src.=pipe gulp-uglify! if environment.minifyJS
   src.=pipe filter.restore!
   #
   src.pipe dest
